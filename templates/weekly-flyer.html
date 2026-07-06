@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Weekly Flyer - {{ settings.business_name }}{% endblock %}
+{% block content %}
+<section class="page-hero" style="background: linear-gradient(135deg, #4FB151 0%, #2D8A30 100%);">
+    <div class="container">
+        <h1>Weekly Flyer & Savings</h1>
+        <p>Great deals on your favourite health and wellness products.</p>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div style="text-align:center;margin-bottom:40px;">
+            <h2 class="section-title">This Week's Deals</h2>
+            <p style="color:var(--color-text-body);">While supplies last.</p>
+        </div>
+        <div class="flyer-grid">
+            {% for deal in deals %}
+            <div class="flyer-card">
+                <div class="flyer-img" style="background:linear-gradient(135deg, {{ deal.color_start }}, {{ deal.color_end }});"><i class="{{ deal.icon }}" style="color:{{ deal.icon_color }};"></i></div>
+                <div class="flyer-body">
+                    <h3>{{ deal.title }}</h3>
+                    <p>{{ deal.description }}</p>
+                    {% if deal.valid_until %}<span class="flyer-date">Offer ends {{ deal.valid_until }}</span>{% endif %}
+                </div>
+            </div>
+            {% else %}
+            <p>Check back soon for new deals!</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="page-section page-section-alt">
+    <div class="container" style="text-align:center;">
+        <h2 class="section-title">Visit Us Today</h2>
+        <p style="max-width:600px;margin:0 auto 32px;color:var(--color-text-body);">Come by our location to see all the deals in person. Our friendly staff is ready to assist you!</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary">Get Directions <i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+</section>
+{% endblock %}

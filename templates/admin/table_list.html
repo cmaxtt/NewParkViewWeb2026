@@ -1,0 +1,88 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ meta.label }}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <h2><i class="{{ meta.icon }}" style="color:var(--green);"></i> {{ meta.label }}</h2>
+        <p class="subtitle">Manage {{ meta.label|lower }}</p>
+    </div>
+    <div style="display:flex;gap:8px;">
+        {% if not meta.readonly %}
+        <a href="{{ url_for('admin_table_add', table_name=table_name) }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add New</a>
+        {% endif %}
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-wrap">
+        {% if rows %}
+        <table>
+            <thead>
+                <tr>
+                    {% for field_name, field_meta in meta.fields.items() %}
+                    {% if field_name != 'page_content' %}
+                    <th>{{ field_meta.label }}</th>
+                    {% endif %}
+                    {% endfor %}
+                    <th style="width:120px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set pk = meta.get('pk', 'id') %}
+                {% for row in rows %}
+                <tr>
+                    {% for field_name, field_meta in meta.fields.items() %}
+                    {% if field_name != 'page_content' %}
+                    <td>
+                        {% if field_name == 'is_read' %}
+                            <span class="badge-read {{ 'unread' if not row[field_name] else 'read' }}">
+                                {{ 'Unread' if not row[field_name] else 'Read' }}
+                            </span>
+                        {% elif field_meta.type == 'checkbox' %}
+                            {{ 'Yes' if row[field_name] else 'No' }}
+                        {% elif field_meta.type == 'color' and row[field_name] %}
+                            <span style="display:inline-block;width:20px;height:20px;border-radius:4px;background:{{ row[field_name] }};border:1px solid var(--border);vertical-align:middle;"></span>
+                            <span style="font-size:12px;color:var(--text-muted);">{{ row[field_name] }}</span>
+                        {% elif field_name == 'message' or field_name == 'description' %}
+                            <span class="text-truncate">{{ row[field_name] or '' }}</span>
+                        {% elif field_name == 'created_at' or field_name == 'subscribed_at' %}
+                            {% if row[field_name] %}
+                                {% set parts = row[field_name].split(' ') %}
+                                {{ parts[0] if parts|length > 0 else row[field_name] }}
+                            {% endif %}
+                        {% else %}
+                            {{ row[field_name] or '' }}
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                    {% endfor %}
+                    <td class="cell-actions">
+                        {% if not meta.readonly %}
+                        <a href="{{ url_for('admin_table_edit', table_name=table_name, record_id=row[pk]) }}" class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></a>
+                        <form method="post" action="{{ url_for('admin_table_delete', table_name=table_name, record_id=row[pk]) }}" onsubmit="return confirm('Delete this record?')">
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                        </form>
+                        {% endif %}
+                        {% if table_name == 'contact_messages' %}
+                        <form method="post" action="{{ url_for('admin_toggle_read', msg_id=row[pk]) }}">
+                            <button type="submit" class="btn btn-outline btn-sm" title="Toggle read/unread"><i class="fas {{ 'fa-envelope-open' if row['is_read'] else 'fa-envelope' }}"></i></button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-database"></i>
+            <p>No records found.</p>
+            {% if not meta.readonly %}
+            <a href="{{ url_for('admin_table_add', table_name=table_name) }}" class="btn btn-primary mt-2"><i class="fas fa-plus"></i> Add First Record</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

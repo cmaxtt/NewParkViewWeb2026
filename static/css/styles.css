@@ -1,0 +1,1273 @@
+/* ============================================
+   PARK VIEW DRUGS - Main Styles
+   Inspired by pharmachoice.com, rebranded for Park View Drugs
+   Font: Plus Jakarta Sans
+   Brand Green: #1E7D29
+   ============================================ */
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #1E7D29;
+    --color-primary-dark: #1E471C;
+    --color-primary-light: #4FB151;
+    --color-accent: #1E7D29;
+    --color-accent-dark: #166B22;
+    --color-footer-bg: #1E471C;
+    --color-text: #3F322D;
+    --color-text-body: #5C524C;
+    --color-text-light: #8A7E78;
+    --color-white: #FFFFFF;
+    --color-bg-light: #F5F7F2;
+    --color-border: #E0E4DB;
+
+    --font-heading: 'Outfit', 'Poppins', sans-serif;
+    --font-body: 'Inter', 'Open Sans', sans-serif;
+    --font-alt: 'Raleway', sans-serif;
+    --font-primary: 'Inter', 'Open Sans', sans-serif;
+
+    --btn-radius: 999px;
+    --container-max: 1280px;
+    --header-height: 125px;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.1);
+    --shadow-green: 0 8px 30px rgba(30,125,41,0.08);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --transition: all 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-body);
+    background: var(--color-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-text);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--color-primary-dark);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* --- Skip Link --- */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: var(--color-primary);
+    color: white;
+    padding: 8px 16px;
+    z-index: 10000;
+    transition: top 0.3s;
+}
+.skip-link:focus {
+    top: 0;
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--btn-radius);
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    line-height: 1.2;
+}
+.btn-primary {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+.btn-primary:hover {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    color: var(--color-white);
+}
+.btn-white {
+    background: var(--color-white);
+    color: var(--color-text);
+    border-color: var(--color-white);
+}
+.btn-white:hover {
+    background: transparent;
+    color: var(--color-white);
+    border-color: var(--color-white);
+}
+.btn-outline {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.btn-outline:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+.btn-lg {
+    padding: 16px 36px;
+    font-size: 18px;
+}
+.btn-pharmacy {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: var(--btn-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.3s;
+}
+.btn-pharmacy:hover {
+    background: var(--color-primary-dark);
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.site-header {
+    background: var(--color-white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.header-top {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
+.header-search {
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-form {
+    display: flex;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 45px 10px 18px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--btn-radius);
+    font-family: var(--font-primary);
+    font-size: 14px;
+    color: var(--color-text);
+    background: var(--color-bg-light);
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.search-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(30, 125, 41, 0.1);
+}
+
+.search-btn {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--color-text-light);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 50%;
+    transition: color 0.3s;
+}
+.search-btn:hover {
+    color: var(--color-primary);
+}
+
+.mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+.mobile-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+/* --- Navigation --- */
+.main-nav {
+    background: var(--color-white);
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-item > a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 18px;
+    color: var(--color-text);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.nav-item > a:hover {
+    color: var(--color-primary);
+}
+.nav-item > a i {
+    font-size: 10px;
+}
+
+.nav-find {
+    background: var(--color-primary);
+    color: var(--color-white) !important;
+    border-radius: var(--btn-radius);
+    padding: 8px 18px !important;
+    margin-left: 12px;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+}
+.nav-find:hover {
+    background: var(--color-primary-dark) !important;
+    color: var(--color-white) !important;
+}
+
+/* Dropdown */
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--color-white);
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    min-width: 320px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    z-index: 100;
+    padding: 20px;
+}
+.has-dropdown:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.dropdown-col h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.dropdown-col h4 a {
+    color: var(--color-text);
+}
+.dropdown-col h4 a:hover {
+    color: var(--color-primary);
+}
+.dropdown-col ul li {
+    margin-bottom: 6px;
+}
+.dropdown-col ul li a {
+    color: var(--color-text-body);
+    font-size: 14px;
+    font-weight: 400;
+    padding: 4px 0;
+    display: block;
+}
+.dropdown-col ul li a:hover {
+    color: var(--color-primary);
+}
+
+/* ============================================
+   HERO CAROUSEL
+   ============================================ */
+.hero-carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-container {
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-slide {
+    min-width: 100%;
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    padding: 60px 0;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.02) 40px,
+        rgba(255,255,255,0.02) 41px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.slide-content {
+    max-width: 580px;
+    padding: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.slide-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    color: var(--color-white);
+    padding: 6px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.slide-title {
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--color-white);
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.slide-desc {
+    font-size: 18px;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Carousel buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: var(--color-white);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 10;
+}
+.carousel-btn:hover {
+    background: rgba(255,255,255,0.35);
+}
+.carousel-prev {
+    left: 20px;
+}
+.carousel-next {
+    right: 20px;
+}
+
+/* Dots */
+.carousel-dots {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+.carousel-dots button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.6);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0;
+}
+.carousel-dots button.active {
+    background: var(--color-white);
+    border-color: var(--color-white);
+    transform: scale(1.2);
+}
+
+/* ============================================
+   QUICK SERVICE CARDS
+   ============================================ */
+.quick-services {
+    padding: 40px 0;
+    background: var(--color-white);
+}
+
+.service-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 32px 20px;
+    background: var(--color-bg-light);
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+}
+.service-card:hover {
+    border-color: var(--color-primary);
+    background: var(--color-white);
+    box-shadow: 0 8px 30px rgba(30,125,41,0.08);
+    transform: translateY(-3px);
+}
+.service-card .service-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s;
+}
+.service-card:hover .service-icon {
+    background: var(--color-primary-dark);
+}
+.service-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: center;
+}
+
+/* ============================================
+   FYE / ESSENTIALS SECTION
+   ============================================ */
+.fye-section {
+    padding: 70px 0;
+    background: var(--color-bg-light);
+    text-align: center;
+}
+
+.fye-header {
+    max-width: 650px;
+    margin: 0 auto 40px;
+}
+.fye-header .fye-logo {
+    margin: 0 auto 20px;
+    height: 40px;
+}
+.fye-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 12px;
+}
+.fye-header p {
+    font-size: 16px;
+    color: var(--color-text-body);
+    margin-bottom: 24px;
+}
+
+.fye-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.fye-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 32px 20px;
+    background: var(--color-white);
+    border-radius: 16px;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    transition: all 0.3s;
+}
+.fye-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(30,125,41,0.1);
+}
+.fye-card span {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+/* ============================================
+   APP / REWARDS SECTION
+   ============================================ */
+.app-section {
+    padding: 80px 0;
+    background: var(--color-white);
+}
+
+.app-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.app-text h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 12px;
+}
+.app-text > p {
+    font-size: 16px;
+    color: var(--color-text-body);
+    margin-bottom: 30px;
+}
+
+.app-features {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.app-feature {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+.app-feature i {
+    font-size: 22px;
+    color: var(--color-primary);
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 125, 41, 0.08);
+    border-radius: 10px;
+    margin-top: 2px;
+}
+.app-feature h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 4px;
+}
+.app-feature p {
+    font-size: 14px;
+    color: var(--color-text-body);
+}
+
+.app-badges {
+    display: flex;
+    gap: 12px;
+}
+.app-badges a img {
+    height: 44px;
+    width: auto;
+}
+
+.app-image {
+    display: flex;
+    justify-content: center;
+}
+.app-image img {
+    max-height: 500px;
+}
+
+/* ============================================
+   PHARMACIST / ABOUT SECTION
+   ============================================ */
+.pharmacist-section {
+    padding: 80px 0;
+    background: var(--color-bg-light);
+}
+
+.pharmacist-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.afl-logo {
+    margin-bottom: 16px;
+    height: 40px;
+}
+
+.pharmacist-text h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 12px;
+}
+.pharmacist-text > p {
+    font-size: 16px;
+    color: var(--color-text-body);
+    margin-bottom: 24px;
+}
+
+.pharmacist-services {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+.pharmacist-services li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+.pharmacist-services li i {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.pharmacist-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.pharmacist-image {
+    display: flex;
+    justify-content: center;
+}
+.pharmacist-img {
+    max-height: 420px;
+    border-radius: 16px;
+}
+
+/* ============================================
+   RESOURCES SECTION
+   ============================================ */
+.resources-section {
+    padding: 70px 0;
+    background: var(--color-white);
+}
+
+.resource-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.resource-card {
+    padding: 24px 16px;
+    border-radius: 16px;
+    background: var(--color-bg-light);
+    transition: all 0.3s;
+    text-align: center;
+}
+.resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(30,125,41,0.06);
+}
+
+.resource-img {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+.resource-img img, .resource-img .placeholder-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.resource-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+.resource-card p {
+    font-size: 13px;
+    color: var(--color-text-body);
+    line-height: 1.5;
+    margin-bottom: 14px;
+}
+
+.resource-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.3s;
+}
+.resource-link:hover {
+    gap: 10px;
+    color: var(--color-primary-dark);
+}
+.resource-link i {
+    font-size: 12px;
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+.cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.cta-content h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: 12px;
+}
+.cta-content p {
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 28px;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.site-footer {
+    background: var(--color-footer-bg);
+    color: rgba(255,255,255,0.85);
+    padding: 60px 0 30px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.3fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-col h4 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-white);
+    margin-bottom: 16px;
+}
+.footer-col h4 a {
+    color: var(--color-white);
+}
+.footer-col ul li {
+    margin-bottom: 8px;
+}
+.footer-col ul li a {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    font-weight: 400;
+}
+.footer-col ul li a:hover {
+    color: var(--color-white);
+}
+
+.footer-app-logo {
+    margin-bottom: 12px;
+    height: 40px;
+    width: auto;
+}
+.footer-app h4 {
+    font-size: 16px;
+    text-transform: none;
+    letter-spacing: normal;
+    margin-bottom: 8px;
+}
+.footer-app p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.footer-badges {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.footer-badges a img {
+    height: 38px;
+    width: auto;
+}
+
+.footer-social {
+    display: flex;
+    gap: 12px;
+}
+.social-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    text-decoration: none;
+    font-size: 16px;
+}
+.social-link:hover {
+    background: var(--color-primary-light);
+    color: var(--color-white);
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 24px;
+}
+.footer-bottom p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+}
+.footer-logo-bottom img {
+    height: 36px;
+    width: auto;
+}
+
+/* ============================================
+   MODAL
+   ============================================ */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--color-white);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-light);
+    line-height: 1;
+}
+.modal-close:hover {
+    color: var(--color-text);
+}
+
+.modal-content h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+.modal-content > p {
+    font-size: 14px;
+    color: var(--color-text-body);
+    margin-bottom: 24px;
+}
+
+.pharmacy-search-form {
+    display: flex;
+    gap: 10px;
+}
+.pharmacy-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    font-family: var(--font-primary);
+    font-size: 14px;
+    outline: none;
+}
+.pharmacy-input:focus {
+    border-color: var(--color-primary);
+}
+
+.pharmacy-note {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--color-text-light);
+}
+
+/* ============================================
+   CONTACT INFO ROW
+   /* --- Contact Info Row --- */
+   .contact-bar {
+       background: var(--color-primary-dark);
+       padding: 8px 0;
+       color: rgba(255,255,255,0.9);
+       font-size: 13px;
+       position: relative;
+       z-index: 1001;
+   }
+   .contact-bar .container {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       flex-wrap: wrap;
+       gap: 8px;
+   }
+   .contact-bar a {
+       color: rgba(255,255,255,0.9);
+       font-weight: 600;
+   }
+   .contact-bar a:hover {
+       color: var(--color-white);
+   }
+   .contact-bar i {
+       margin-right: 6px;
+       color: var(--color-primary-light);
+   }
+
+   /* --- Scroll animations --- */
+   .fade-in {
+       opacity: 0;
+       transform: translateY(30px);
+       transition: opacity 0.7s ease, transform 0.7s ease;
+   }
+   .fade-in.visible {
+       opacity: 1;
+       transform: translateY(0);
+   }
+
+   /* --- Section dividers --- */
+   .section-divider {
+       width: 60px;
+       height: 4px;
+       background: var(--color-primary-light);
+       border-radius: 2px;
+       margin: 0 auto 20px;
+   }
+
+   /* --- Image shadow helper --- */
+   .img-shadow {
+       box-shadow: 0 8px 40px rgba(30,125,41,0.12);
+       border-radius: 16px;
+   }
+
+   /* --- Hover lift effect --- */
+   .hover-lift {
+       transition: transform 0.3s ease, box-shadow 0.3s ease;
+   }
+   .hover-lift:hover {
+       transform: translateY(-4px);
+       box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+   }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .resource-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .app-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .app-image {
+        order: -1;
+    }
+    .pharmacist-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .pharmacist-image {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-search {
+        display: none;
+    }
+    .btn-pharmacy {
+        display: none;
+    }
+    .mobile-toggle {
+        display: flex;
+    }
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--color-white);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    .main-nav.open {
+        display: block;
+    }
+    .nav-list {
+        flex-direction: column;
+        gap: 0;
+    }
+    .nav-item {
+        width: 100%;
+    }
+    .nav-item > a {
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--color-border);
+    }
+    .dropdown {
+        position: static;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        padding: 10px 20px 20px;
+        display: none;
+    }
+    .has-dropdown.open .dropdown {
+        display: block;
+    }
+    .dropdown-grid {
+        grid-template-columns: 1fr;
+    }
+    .nav-find {
+        margin-left: 0;
+        border-radius: 0 !important;
+    }
+
+    .service-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .fye-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .resource-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .slide-title {
+        font-size: 32px;
+    }
+    .slide-badge {
+        font-size: 11px;
+        padding: 4px 14px;
+    }
+    .carousel-slide {
+        min-height: 360px;
+    }
+    .slide-content {
+        padding: 30px;
+    }
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    .contact-bar .container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-cards {
+        grid-template-columns: 1fr;
+    }
+    .fye-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .resource-cards {
+        grid-template-columns: 1fr;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    .slide-title {
+        font-size: 26px;
+    }
+    .slide-badge {
+        font-size: 10px;
+        padding: 3px 12px;
+    }
+    .pharmacist-actions {
+        flex-direction: column;
+    }
+    .app-badges {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

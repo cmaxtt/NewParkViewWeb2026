@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Products - {{ settings.business_name }}{% endblock %}
+{% block content %}
+<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #0C4A13 100%);">
+    <div class="container">
+        <h1>Products & Rewards</h1>
+        <p>Quality products and great value for the whole family.</p>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="product-grid">
+            <a href="{{ url_for('products') }}?category=OTC" class="product-card"><i class="fas fa-tablets"></i><h3>Over-the-Counter</h3><p>Pain relief, allergy, cold & flu, and digestive health products.</p></a>
+            <a href="{{ url_for('products') }}?category=Vitamins" class="product-card"><i class="fas fa-leaf"></i><h3>Vitamins & Supplements</h3><p>Daily vitamins, minerals, and specialty supplements for every need.</p></a>
+            <a href="{{ url_for('products') }}?category=Natural" class="product-card"><i class="fas fa-seedling"></i><h3>Natural Health</h3><p>Herbal remedies, natural products, and traditional medicines.</p></a>
+            <a href="{{ url_for('products') }}?category=Personal+Care" class="product-card"><i class="fas fa-hand-sparkles"></i><h3>Personal Care</h3><p>Skin care, oral care, bath & body, and hygiene essentials.</p></a>
+        </div>
+    </div>
+</section>
+
+<section class="page-section page-section-alt">
+    <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:900px;margin:0 auto;">
+            <div style="text-align:center;"><div style="width:60px;height:60px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--color-primary);"><i class="fas fa-shopping-bag"></i></div><h3 style="font-size:18px;font-weight:600;color:var(--color-text);margin-bottom:6px;">1. Shop</h3><p style="font-size:14px;color:var(--color-text-body);">Purchase eligible products at {{ settings.business_name }}.</p></div>
+            <div style="text-align:center;"><div style="width:60px;height:60px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--color-primary);"><i class="fas fa-star"></i></div><h3 style="font-size:18px;font-weight:600;color:var(--color-text);margin-bottom:6px;">2. Earn</h3><p style="font-size:14px;color:var(--color-text-body);">Earn rewards points on every qualifying purchase.</p></div>
+            <div style="text-align:center;"><div style="width:60px;height:60px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--color-primary);"><i class="fas fa-gift"></i></div><h3 style="font-size:18px;font-weight:600;color:var(--color-text);margin-bottom:6px;">3. Redeem</h3><p style="font-size:14px;color:var(--color-text-body);">Redeem your rewards for savings on future purchases.</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+</section>
+{% endblock %}

@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% block title %}Park View Drugs | Your Local Pharmacy - San Fernando{% endblock %}
+{% block content %}
+<!-- Hero Carousel -->
+<section class="hero-carousel" aria-label="Featured promotions">
+    <div class="carousel-container">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #1E7D29 0%, #14521E 50%, #0C3A13 100%);">
+                <div class="container">
+                    <div class="slide-content">
+                        <span class="slide-badge">Welcome</span>
+                        <h2 class="slide-title">Your Health,<br>Our Priority</h2>
+                        <p class="slide-desc">At {{ settings.business_name }}, we're committed to providing personalized pharmacy care for you and your family.</p>
+                        <a href="{{ url_for('about') }}" class="btn btn-white">Learn More About Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #1E471C 0%, #0F2B0E 50%, #081A07 100%);">
+                <div class="container">
+                    <div class="slide-content">
+                        <span class="slide-badge">Pharmacy Services</span>
+                        <h2 class="slide-title">Fast & Easy<br>Prescription Refills</h2>
+                        <p class="slide-desc">Need a refill? We make it quick and simple. Call ahead or visit us to have your prescriptions ready when you arrive.</p>
+                        <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="btn btn-white">Request a Refill</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #4FB151 0%, #2D8A30 50%, #1E6B21 100%);">
+                <div class="container">
+                    <div class="slide-content">
+                        <span class="slide-badge">Savings</span>
+                        <h2 class="slide-title">Great Deals<br>Waiting For You</h2>
+                        <p class="slide-desc">Check out our weekly flyer for amazing savings on vitamins, health products, and everyday essentials.</p>
+                        <a href="{{ url_for('weekly_flyer') }}" class="btn btn-white">View Weekly Flyer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #1E7D29 0%, #166B22 50%, #0C4A13 100%);">
+                <div class="container">
+                    <div class="slide-content">
+                        <span class="slide-badge">Healthcare</span>
+                        <h2 class="slide-title">Minor Ailment<br>Treatment</h2>
+                        <p class="slide-desc">Skip the wait. Our pharmacists can assess and prescribe for common minor ailments — right here, right now.</p>
+                        <a href="{{ url_for('minor_ailment') }}" class="btn btn-white">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #0F5C1A 0%, #083810 50%, #05240A 100%);">
+                <div class="container">
+                    <div class="slide-content">
+                        <span class="slide-badge">Community</span>
+                        <h2 class="slide-title">Trusted Care,<br>Close to Home</h2>
+                        <p class="slide-desc">Your family's health is in good hands. From vaccinations to medication reviews, we're here for every step.</p>
+                        <a href="{{ url_for('services') }}" class="btn btn-white">Our Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #2D8A30 0%, #1E6B21 50%, #1E471C 100%);">
+                <div class="container">
+                    <div class="slide-content">
+                        <span class="slide-badge">Rewards</span>
+                        <h2 class="slide-title">Get Rewarded<br>For Your Health</h2>
+                        <p class="slide-desc">Join our rewards program and earn on every purchase. Ask us about it on your next visit!</p>
+                        <a href="{{ url_for('products') }}" class="btn btn-white">Explore Rewards</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+</section>
+
+<!-- Quick Service Cards -->
+<section class="quick-services fade-in">
+    <div class="container">
+        <div class="service-cards">
+            <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="service-card">
+                <div class="service-icon"><i class="fas fa-prescription-bottle-alt"></i></div>
+                <h3>Refill a Prescription</h3>
+            </a>
+            <a href="{{ url_for('minor_ailment') }}" class="service-card">
+                <div class="service-icon"><i class="fas fa-stethoscope"></i></div>
+                <h3>Minor Ailment Treatment</h3>
+            </a>
+            <a href="{{ url_for('weekly_flyer') }}" class="service-card">
+                <div class="service-icon"><i class="fas fa-tags"></i></div>
+                <h3>Weekly Flyer & Savings</h3>
+            </a>
+            <a href="{{ url_for('contact') }}" class="service-card">
+                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Contact Us</h3>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="fye-section fade-in">
+    <div class="container">
+        <div class="fye-header">
+            <h2>Quality Products For Everyday Living</h2>
+            <p>Discover a wide range of high-quality health products, vitamins, and essentials at great value.</p>
+            <a href="{{ url_for('products') }}" class="btn btn-primary">Shop Our Products</a>
+        </div>
+        <div class="fye-grid">
+            <a href="{{ url_for('products') }}?category=Vitamins" class="fye-card">
+                <div class="fye-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.1);display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--color-primary);"><i class="fas fa-leaf"></i></div>
+                <span>Vitamins</span>
+            </a>
+            <a href="{{ url_for('products') }}?category=OTC" class="fye-card">
+                <div class="fye-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.1);display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--color-primary);"><i class="fas fa-tablets"></i></div>
+                <span>Medications</span>
+            </a>
+            <a href="{{ url_for('products') }}?category=Personal+Care" class="fye-card">
+                <div class="fye-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.1);display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--color-primary);"><i class="fas fa-hand-sparkles"></i></div>
+                <span>Personal Care</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Services / Rewards Section -->
+<section class="app-section fade-in">
+    <div class="container">
+        <div class="app-content">
+            <div class="app-text">
+                <h2>Personalized Pharmacy Care You Can Trust</h2>
+                <p>At {{ settings.business_name }}, we go beyond just dispensing medication. We're here to support your health every step of the way.</p>
+                <div class="app-features">
+                    <div class="app-feature">
+                        <i class="fas fa-prescription"></i>
+                        <div>
+                            <h4>Expert Medication Management</h4>
+                            <p>Our pharmacists review your medications to ensure safety and effectiveness. Refills made simple.</p>
+                        </div>
+                    </div>
+                    <div class="app-feature">
+                        <i class="fas fa-gift"></i>
+                        <div>
+                            <h4>Savings & Rewards</h4>
+                            <p>Earn rewards on qualifying purchases and take advantage of our weekly specials and promotions.</p>
+                        </div>
+                    </div>
+                    <div class="app-feature">
+                        <i class="fas fa-heartbeat"></i>
+                        <div>
+                            <h4>Health & Wellness Support</h4>
+                            <p>Get expert health advice, medication information, and personalized consultations in a private setting.</p>
+                        </div>
+                    </div>
+                    <div class="app-feature">
+                        <i class="fas fa-calendar-check"></i>
+                        <div>
+                            <h4>Convenient Appointments</h4>
+                            <p>Schedule health consultations, medication reviews, and vaccinations at your convenience.</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ url_for('services') }}" class="btn btn-primary">View All Services <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="app-image">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }}" style="max-height:350px;object-fit:contain;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="pharmacist-section fade-in">
+    <div class="container">
+        <div class="pharmacist-content">
+            <div class="pharmacist-text">
+                <h3>Your Trusted Local Pharmacist</h3>
+                <p>At {{ settings.business_name }}, our experienced team is dedicated to providing friendly, professional healthcare services to the community.</p>
+                <ul class="pharmacist-services">
+                    <li><i class="fas fa-comments"></i><span>Private Health Consultations</span></li>
+                    <li><i class="fas fa-pills"></i><span>Prescription Compounding</span></li>
+                    <li><i class="fas fa-truck"></i><span>Home Delivery Available</span></li>
+                </ul>
+                <div class="pharmacist-actions">
+                    <a href="{{ url_for('about') }}" class="btn btn-primary">About Us</a>
+                    <a href="{{ url_for('services') }}" class="btn btn-outline">View Services</a>
+                </div>
+            </div>
+            <div class="pharmacist-image">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }}" class="pharmacist-img" style="max-height:300px;object-fit:contain;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Resource Cards -->
+<section class="resources-section fade-in">
+    <div class="container">
+        <div class="resource-cards">
+            <div class="resource-card">
+                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-search"></i></div></div>
+                <h4>Medication Search</h4>
+                <p>Explore our database to learn about medications and their uses.</p>
+                <a href="#" class="resource-link">Search <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="resource-card">
+                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-notes-medical"></i></div></div>
+                <h4>Medical Conditions</h4>
+                <p>Learn about conditions, their causes, symptoms and treatments.</p>
+                <a href="#" class="resource-link">Search <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="resource-card">
+                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-seedling"></i></div></div>
+                <h4>Natural Health</h4>
+                <p>Discover natural products to support your wellness journey.</p>
+                <a href="#" class="resource-link">Find Products <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="resource-card">
+                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-blog"></i></div></div>
+                <h4>Health Blog</h4>
+                <p>Read expert health advice and tips from our pharmacists.</p>
+                <a href="#" class="resource-link">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="resource-card">
+                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-hands-helping"></i></div></div>
+                <h4>Community Support</h4>
+                <p>Find community programs and health resources near you.</p>
+                <a href="#" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready To Visit? Come See Us Today</h2>
+            <p>We're conveniently located in Esperance and ready to help with all your health needs.</p>
+            <a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Get Directions <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{% if record %}Edit{% else %}Add{% endif %} {{ meta.label }}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <h2>{% if record %}Edit{% else %}Add{% endif %} {{ meta.label }}</h2>
+        <p class="subtitle">{{ meta.label }}</p>
+    </div>
+    <a href="{{ url_for('admin_table_list', table_name=table_name) }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to List</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% set pk = meta.get('pk', 'id') %}
+            {% for field_name, field_meta in meta.fields.items() %}
+            {% if field_name == pk or field_meta.type == 'readonly' %}
+                {% set val = record.get(field_name) if record else '' %}
+                {% if val %}
+                <div class="form-group">
+                    <label>{{ field_meta.label }}</label>
+                    <input type="text" value="{{ val }}" readonly style="background:var(--bg);">
+                </div>
+                {% endif %}
+            {% elif field_meta.type == 'textarea' %}
+            <div class="form-group">
+                <label for="{{ field_name }}">{{ field_meta.label }} {% if field_meta.required %}<span style="color:var(--danger);">*</span>{% endif %}</label>
+                <textarea id="{{ field_name }}" name="{{ field_name }}" {% if field_meta.required %}required{% endif %} placeholder="{{ field_meta.placeholder or '' }}">{{ record[field_name] if record else '' }}</textarea>
+            </div>
+            {% elif field_meta.type == 'select' %}
+            <div class="form-group">
+                <label for="{{ field_name }}">{{ field_meta.label }} {% if field_meta.required %}<span style="color:var(--danger);">*</span>{% endif %}</label>
+                <select id="{{ field_name }}" name="{{ field_name }}" {% if field_meta.required %}required{% endif %}>
+                    <option value="">— Select —</option>
+                    {% for opt in field_meta.options %}
+                    <option value="{{ opt }}" {% if record and record[field_name] == opt %}selected{% endif %}>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% elif field_meta.type == 'checkbox' %}
+            <div class="form-group">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" id="{{ field_name }}" name="{{ field_name }}" {% if record and record[field_name] %}checked{% endif %}>
+                    {{ field_meta.label }}
+                </label>
+            </div>
+            {% elif field_meta.type == 'color' %}
+            <div class="form-group">
+                <label for="{{ field_name }}">{{ field_meta.label }}</label>
+                <input type="color" id="{{ field_name }}" name="{{ field_name }}" value="{{ record[field_name] if record and record[field_name] else field_meta.placeholder or '#000000' }}">
+            </div>
+            {% else %}
+            <div class="form-group">
+                <label for="{{ field_name }}">{{ field_meta.label }} {% if field_meta.required %}<span style="color:var(--danger);">*</span>{% endif %}</label>
+                <input type="{{ field_meta.type }}" id="{{ field_name }}" name="{{ field_name }}" value="{{ record[field_name] if record else '' }}" {% if field_meta.required %}required{% endif %} placeholder="{{ field_meta.placeholder or '' }}" {% if field_meta.step %}step="{{ field_meta.step }}"{% endif %}>
+                {% if field_meta.type == 'text' and field_name == 'slug' %}
+                <div class="hint">URL-friendly identifier, e.g. "prescription-refills"</div>
+                {% endif %}
+                {% if field_meta.type == 'text' and field_name == 'icon' %}
+                <div class="hint">FontAwesome class, e.g. "fas fa-prescription"</div>
+                {% endif %}
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {% if record %}Save Changes{% else %}Create{% endif %}</button>
+                <a href="{{ url_for('admin_table_list', table_name=table_name) }}" class="btn btn-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

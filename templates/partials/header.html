@@ -1,0 +1,111 @@
+<header class="site-header">
+    <div class="header-top">
+        <div class="container header-inner">
+            <a href="{{ url_for('home') }}" class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }} Logo" height="50">
+            </a>
+
+            <div class="header-search">
+                <form role="search" class="search-form" action="{{ url_for('products') }}" method="get">
+                    <label for="header-search" class="sr-only">Search</label>
+                    <input type="search" id="header-search" name="keywords" class="search-input" placeholder="Search products..." autocomplete="off">
+                    <button type="submit" class="search-btn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <button class="btn btn-pharmacy" onclick="openPharmacyFinder()">
+                <i class="fas fa-map-marker-alt"></i> Visit Our Store
+            </button>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+
+    <nav class="main-nav" id="mainNav" role="navigation" aria-label="Menu">
+        <div class="container">
+            <ul class="nav-list">
+                <li class="nav-item has-dropdown">
+                    <a href="{{ url_for('services') }}">Services <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <h4><a href="{{ url_for('services') }}">Clinical Services</a></h4>
+                                <ul>
+                                    <li><a href="{{ url_for('service_detail', slug='minor-ailment') }}">Minor Ailment Assessment</a></li>
+                                    <li><a href="{{ url_for('service_detail', slug='vaccinations') }}">Vaccinations</a></li>
+                                    <li><a href="{{ url_for('service_detail', slug='prescription-refills') }}">Prescription Refills</a></li>
+                                    <li><a href="{{ url_for('service_detail', slug='compounding') }}">Compounding</a></li>
+                                    <li><a href="{{ url_for('service_detail', slug='medication-review') }}">Medication Review</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-col">
+                                <h4><a href="{{ url_for('services') }}">Pharmacy Services</a></h4>
+                                <ul>
+                                    <li><a href="{{ url_for('service_detail', slug='delivery') }}">Home Delivery</a></li>
+                                    <li><a href="{{ url_for('minor_ailment') }}">Minor Ailment Treatment</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="{{ url_for('products') }}">Products & Rewards <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <h4><a href="{{ url_for('products') }}">Products</a></h4>
+                                <ul>
+                                    <li><a href="{{ url_for('products') }}?category=OTC">Over-the-Counter</a></li>
+                                    <li><a href="{{ url_for('products') }}?category=Vitamins">Vitamins & Supplements</a></li>
+                                    <li><a href="{{ url_for('products') }}?category=Natural">Natural Health</a></li>
+                                    <li><a href="{{ url_for('products') }}?category=Personal+Care">Personal Care</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-col">
+                                <h4>Rewards</h4>
+                                <ul>
+                                    <li><a href="{{ url_for('weekly_flyer') }}">Weekly Flyer</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="#">Health Advice <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <ul>
+                                    <li><a href="#">Medication Search</a></li>
+                                    <li><a href="#">Medical Conditions</a></li>
+                                    <li><a href="#">Natural Health Products</a></li>
+                                    <li><a href="#">Health Blog</a></li>
+                                    <li><a href="#">Community Support</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="{{ url_for('about') }}">About Us <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <ul>
+                                    <li><a href="{{ url_for('about') }}">Our Story</a></li>
+                                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="{{ url_for('weekly_flyer') }}">Weekly Flyer</a></li>
+                <li class="nav-item"><a href="{{ url_for('contact') }}" class="nav-find"><i class="fas fa-search-location"></i> Find Us</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>

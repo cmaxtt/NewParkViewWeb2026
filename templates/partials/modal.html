@@ -1,0 +1,14 @@
+<div class="modal-overlay" id="pharmacyModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closePharmacyFinder()">&times;</button>
+        <h3>Visit {{ settings.business_name }}</h3>
+        <p>We're located near San Fernando. Give us a call or stop by during business hours.</p>
+        <div style="margin-bottom: 20px;">
+            <p style="margin-bottom: 8px;"><i class="fas fa-map-marker-alt" style="color: var(--color-primary); width: 20px;"></i> {{ settings.full_address }}</p>
+            <p style="margin-bottom: 8px;"><i class="fas fa-phone-alt" style="color: var(--color-primary); width: 20px;"></i> <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}">{{ settings.phone }}</a></p>
+            <p style="margin-bottom: 8px;"><i class="fas fa-clock" style="color: var(--color-primary); width: 20px;"></i> {{ settings.hours_weekday }}</p>
+            <p><i class="fas fa-clock" style="color: var(--color-primary); width: 20px;"></i> {{ settings.hours_saturday }}</p>
+        </div>
+        <a href="{{ settings.facebook_url }}" class="btn btn-primary" target="_blank"><i class="fab fa-facebook-f"></i> Follow Us on Facebook</a>
+    </div>
+</div>

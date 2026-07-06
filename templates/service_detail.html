@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ service.title }} - {{ settings.business_name }}{% endblock %}
+{% block content %}
+<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #1E471C 100%);">
+    <div class="container">
+        <h1>{{ service.title }}</h1>
+        <p>{{ service.description }}</p>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div class="about-layout">
+            <div class="about-text">
+                <h2>{{ service.title }}</h2>
+                <p>{{ service.page_content or service.description }}</p>
+                <p>Contact us for more information or to schedule an appointment.</p>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary">Contact Us <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="about-stats">
+                <div class="stat-card"><i class="fas fa-check-circle" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Professional</span><span class="stat-label">Licensed Pharmacists</span></div>
+                <div class="stat-card"><i class="fas fa-clock" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Flexible</span><span class="stat-label">Appointments Available</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+</section>
+{% endblock %}

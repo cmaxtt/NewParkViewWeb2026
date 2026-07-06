@@ -1,0 +1,46 @@
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='prescription-refills') }}">Refill Prescription</a></li>
+                    <li><a href="{{ url_for('weekly_flyer') }}">Weekly Flyer</a></li>
+                    <li><a href="{{ url_for('products') }}">Products & Rewards</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4><a href="{{ url_for('services') }}">Services</a></h4>
+                <ul>
+                    <li><a href="{{ url_for('minor_ailment') }}">Minor Ailment Prescribing</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='vaccinations') }}">Vaccinations</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='delivery') }}">Home Delivery</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Disclaimers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-app">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }}" class="footer-app-logo" height="40">
+                <h4>{{ settings.business_name }}</h4>
+                <p>{{ settings.tagline }}</p>
+                <div class="footer-social">
+                    <a href="{{ settings.facebook_url }}" class="social-link" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo-bottom">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }}" height="36">
+            </div>
+            <p>&copy; {{ now().year if now is defined else '2026' }} {{ settings.business_name }}. All rights reserved. | {{ settings.address }}</p>
+        </div>
+    </div>
+</footer>

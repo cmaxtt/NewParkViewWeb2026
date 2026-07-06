@@ -1,0 +1,7 @@
+<div class="contact-bar">
+    <div class="container">
+        <span><i class="fas fa-phone-alt"></i> Call us: <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}">{{ settings.phone }}</a></span>
+        <span><i class="fas fa-map-marker-alt"></i> {{ settings.address }}</span>
+        <span><i class="fas fa-clock"></i> {{ settings.hours_weekday }} | {{ settings.hours_saturday }}</span>
+    </div>
+</div>

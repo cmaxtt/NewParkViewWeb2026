@@ -1,0 +1,34 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <h2>Dashboard</h2>
+        <p class="subtitle">Overview of your database</p>
+    </div>
+    <a href="{{ url_for('home') }}" target="_blank" class="btn btn-outline"><i class="fas fa-external-link-alt"></i> View Site</a>
+</div>
+
+<div class="stat-grid">
+    {% for t, meta in tables_meta.items() %}
+    <a href="{{ url_for('admin_table_list', table_name=t) }}" class="stat-card" style="text-decoration:none;color:inherit;">
+        <div class="stat-icon"><i class="{{ meta.icon }}"></i></div>
+        <div class="stat-info">
+            <h3>{{ stats.get(t, 0) }}</h3>
+            <p>{{ meta.label }}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+<div class="card">
+    <div class="card-header"><i class="fas fa-info-circle"></i> Quick Actions</div>
+    <div class="card-body" style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="{{ url_for('admin_table_add', table_name='services') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Service</a>
+        <a href="{{ url_for('admin_table_add', table_name='flyer_deals') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Flyer Deal</a>
+        <a href="{{ url_for('admin_table_add', table_name='products') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Product</a>
+        <a href="{{ url_for('admin_table_list', table_name='contact_messages') }}" class="btn btn-outline btn-sm"><i class="fas fa-envelope"></i> View Messages</a>
+        <a href="{{ url_for('admin_table_list', table_name='site_settings') }}" class="btn btn-outline btn-sm"><i class="fas fa-cog"></i> Site Settings</a>
+    </div>
+</div>
+{% endblock %}

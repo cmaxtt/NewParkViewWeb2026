@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}About Us - {{ settings.business_name }}{% endblock %}
+{% block content %}
+<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #1E471C 100%);">
+    <div class="container">
+        <h1>About {{ settings.business_name }}</h1>
+        <p>{{ settings.tagline }}</p>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div class="about-layout">
+            <div class="about-text">
+                <h2>Our Story</h2>
+                <p>{{ settings.business_name }} is a locally owned and operated pharmacy serving the community. We are committed to providing personalized, professional healthcare services with a focus on quality and compassion.</p>
+                <p>Our experienced team of pharmacists and staff take the time to know our patients by name and understand their unique health needs. Whether you need a prescription refill, health advice, or a vaccination, we're here to help.</p>
+                <p>As an independent pharmacy, we pride ourselves on offering the personalized care and attention that you simply won't find at larger chain pharmacies. Your health is our priority.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-card"><i class="fas fa-star" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Trusted</span><span class="stat-label">Local Pharmacy Care</span></div>
+                <div class="stat-card"><i class="fas fa-users" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Community</span><span class="stat-label">Proudly Serving Our Community</span></div>
+                <div class="stat-card"><i class="fas fa-heart" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Personalized</span><span class="stat-label">Care That Puts You First</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page-section page-section-alt">
+    <div class="container">
+        <h2 class="section-title">Our Values</h2>
+        <div class="values-grid">
+            <div class="value-card"><i class="fas fa-heart"></i><h3>Compassion</h3><p>We treat every patient with kindness, respect, and understanding.</p></div>
+            <div class="value-card"><i class="fas fa-flask"></i><h3>Excellence</h3><p>We maintain the highest standards of professional pharmacy practice.</p></div>
+            <div class="value-card"><i class="fas fa-users"></i><h3>Community</h3><p>We are proud to serve and support our community.</p></div>
+            <div class="value-card"><i class="fas fa-lightbulb"></i><h3>Dedication</h3><p>We are committed to your health and well-being every single day.</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+</section>
+{% endblock %}

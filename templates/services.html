@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Services - {{ settings.business_name }}{% endblock %}
+{% block content %}
+<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #1E471C 100%);">
+    <div class="container">
+        <h1>Our Services</h1>
+        <p>Professional pharmacy care tailored to you and your family.</p>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div class="content-grid">
+            {% for service in services %}
+            <div class="content-card">
+                <div class="content-icon"><i class="{{ service.icon }}"></i></div>
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.description }}</p>
+                <a href="{{ url_for('service_detail', slug=service.slug) }}" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            {% else %}
+            <div class="content-card">
+                <div class="content-icon"><i class="fas fa-prescription"></i></div>
+                <h3>Prescription Refills</h3>
+                <p>Quick and easy prescription refills. Call ahead or visit us.</p>
+                <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+</section>
+{% endblock %}
