@@ -2,8 +2,8 @@
 
 A full-stack pharmacy website built with **Flask**, **SQLite**, and **Vanilla JS/CSS**, serving the Esperance, San Fernando community in Trinidad & Tobago.
 
-**Live (Tailscale):** http://100.104.147.60:5000/  
-**Admin Panel:** http://100.104.147.60:5000/admin/login  
+**Live (Tailscale):** http://100.89.199.87:5000/  
+**Admin Panel:** http://100.89.199.87:5000/admin/login  
 **Facebook:** https://www.facebook.com/pvdrugs/
 
 ---
@@ -37,20 +37,25 @@ git clone https://github.com/cmaxtt/NewParkViewWeb2026.git
 cd NewParkViewWeb2026
 
 # Install dependencies
-pip install -r requirements.txt
+py -3.11 -m venv .venv
+.venv\Scripts\python.exe -m pip install --upgrade pip
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+
+# Configure secrets before starting the app. See .env.example.
+# The scheduled task runs as SYSTEM, so use machine-level environment variables.
 
 # Run (development)
-python app.py
+.venv\Scripts\python.exe app.py
 
 # Run (production)
-python run_prod.py
+.venv\Scripts\python.exe run_prod.py
 ```
 
 The app initializes the SQLite database automatically on first run with seed data (services, flyer deals, site settings).
 
 ### Access
 - **Main site:** http://127.0.0.1:5000/
-- **Admin panel:** http://127.0.0.1:5000/admin/login — password: `admin123`
+- **Admin panel:** http://127.0.0.1:5000/admin/login — password is configured through `PARKVIEW_ADMIN_PASSWORD_HASH`
 
 ---
 
@@ -141,7 +146,7 @@ site_settings (key, value)
 
 ## Admin Panel
 
-Access at `/admin/login` with password `admin123`.
+Access at `/admin/login` with the password configured through `PARKVIEW_ADMIN_PASSWORD_HASH` (or the temporary `PARKVIEW_ADMIN_PASSWORD` compatibility setting).
 
 ### Features
 - **Dashboard** — Record counts for all tables with quick-action buttons
@@ -203,14 +208,16 @@ Access at `/admin/login` with password `admin123`.
 The app is published on a Tailscale mesh network for secure remote access:
 
 ```
-http://100.104.147.60:5000/   — Tailscale IP
-http://parkview:5000/         — Tailscale hostname
+http://100.89.199.87:5000/   — Tailscale IP (hpwin11)
+http://hpwin11:5000/         — Tailscale MagicDNS hostname
 ```
+
+The production server binds to 127.0.0.1 and the Tailscale IP only — it is NOT exposed on the LAN.
 
 To connect from another device:
 1. Install [Tailscale](https://tailscale.com/download) on your device
-2. Sign in to the same Tailscale account (`parkviewtt@`)
-3. Open `http://parkview:5000/` in your browser
+2. Sign in to the same Tailscale account (`wecaregd2026@`)
+3. Open `http://hpwin11:5000/` in your browser
 
 ### Persistence
 
@@ -252,8 +259,9 @@ All site-wide text (business name, phone, hours, tagline) is stored in `site_set
 - [ ] Newsletter signup form on public pages
 - [ ] 404 error page template
 - [ ] Port user auth/cart from legacy Node.js app
-- [ ] Production deployment config (Gunicorn on Linux)
-- [ ] SEO meta tags, sitemap, robots.txt
+- [x] Production deployment entry point and database initialization
+- [x] CSRF protection, secure session defaults, validation, error pages, sitemap, and robots.txt
+- [ ] HTTPS/reverse proxy, monitoring, backup/restore automation, and browser-based release QA
 
 ---
 

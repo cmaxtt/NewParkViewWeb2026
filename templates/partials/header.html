@@ -75,16 +75,16 @@
                     </div>
                 </li>
                 <li class="nav-item has-dropdown">
-                    <a href="#">Health Advice <i class="fas fa-chevron-down"></i></a>
+                    <a href="{{ url_for('minor_ailment') }}">Health Advice <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown">
                         <div class="dropdown-grid">
                             <div class="dropdown-col">
                                 <ul>
-                                    <li><a href="#">Medication Search</a></li>
-                                    <li><a href="#">Medical Conditions</a></li>
-                                    <li><a href="#">Natural Health Products</a></li>
-                                    <li><a href="#">Health Blog</a></li>
-                                    <li><a href="#">Community Support</a></li>
+                                    <li><a href="{{ url_for('products') }}">Medication & Product Search</a></li>
+                                    <li><a href="{{ url_for('minor_ailment') }}">Minor Ailments</a></li>
+                                    <li><a href="{{ url_for('products') }}?category=Natural">Natural Health Products</a></li>
+                                    <li><a href="{{ url_for('services') }}">Pharmacy Advice</a></li>
+                                    <li><a href="{{ url_for('contact') }}">Community Support</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -200,31 +200,31 @@
                 <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-search"></i></div></div>
                 <h4>Medication Search</h4>
                 <p>Explore our database to learn about medications and their uses.</p>
-                <a href="#" class="resource-link">Search <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ url_for('products') }}" class="resource-link">Search <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="resource-card">
                 <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-notes-medical"></i></div></div>
                 <h4>Medical Conditions</h4>
                 <p>Learn about conditions, their causes, symptoms and treatments.</p>
-                <a href="#" class="resource-link">Search <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ url_for('minor_ailment') }}" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="resource-card">
                 <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-seedling"></i></div></div>
                 <h4>Natural Health</h4>
                 <p>Discover natural products to support your wellness journey.</p>
-                <a href="#" class="resource-link">Find Products <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ url_for('products') }}?category=Natural" class="resource-link">Find Products <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="resource-card">
                 <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-blog"></i></div></div>
                 <h4>Health Blog</h4>
                 <p>Read expert health advice and tips from our pharmacists.</p>
-                <a href="#" class="resource-link">Read More <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ url_for('services') }}" class="resource-link">Read More <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="resource-card">
                 <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-hands-helping"></i></div></div>
                 <h4>Community Support</h4>
                 <p>Find community programs and health resources near you.</p>
-                <a href="#" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ url_for('contact') }}" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </div>

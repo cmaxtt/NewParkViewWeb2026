@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ legal_title }} - {{ settings.business_name }}{% endblock %}
+{% block content %}
+<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #1E471C 100%);"><div class="container"><h1>{{ legal_title }}</h1><p>{{ settings.business_name }} information</p></div></section>
+<section class="page-section"><div class="container" style="max-width:800px;">
+  {% if legal_title == 'Privacy Policy' %}
+  <h2>Information we collect</h2><p>When you contact us, we collect the information you submit so our pharmacy team can respond. We do not sell contact information.</p>
+  <h2>How we use information</h2><p>We use messages to respond to enquiries and maintain our customer-service records. Please do not submit sensitive medical information through this website.</p>
+  {% elif legal_title == 'Health Disclaimer' %}
+  <h2>General information only</h2><p>Content on this website is for general information and does not replace advice from a qualified healthcare professional. Contact the pharmacy or an appropriate clinician for personal medical guidance.</p>
+  {% else %}
+  <h2>Website use</h2><p>This website provides information about {{ settings.business_name }}, its services, and promotions. Product availability and promotional terms may change without notice.</p>
+  {% endif %}
+  <p style="margin-top:24px;color:var(--color-text-body);">Last updated: {{ now().strftime('%B %Y') }}</p>
+</div></section>
+{% endblock %}

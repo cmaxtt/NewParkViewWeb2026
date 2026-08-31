@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found - {{ settings.business_name }}{% endblock %}
+{% block content %}
+<section class="page-section" style="text-align:center;min-height:50vh;display:flex;align-items:center;">
+  <div class="container"><h1>Page not found</h1><p>That page is unavailable or may have moved.</p><a class="btn btn-primary" href="{{ url_for('home') }}">Return Home</a></div>
+</section>
+{% endblock %}

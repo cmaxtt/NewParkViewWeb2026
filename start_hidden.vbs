@@ -1,10 +1,12 @@
-' Park View Drugs — Hidden Launcher (auto-restart)
+' Park View Drugs - Hidden Launcher (auto-restart)
 ' Runs the Flask app silently at startup, restarts if it crashes
+' Location-agnostic: resolves the app dir from this script's own path.
 
-Dim shell, pythonPath, scriptPath, workDir, cmd
-pythonPath = "C:\Users\cmaxt\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe"
-scriptPath = "C:\aa-NewWeb\run_prod.py"
-workDir    = "C:\aa-NewWeb"
+Dim shell, pythonPath, scriptPath, workDir, cmd, fso
+Set fso = CreateObject("Scripting.FileSystemObject")
+workDir = fso.GetParentFolderName(WScript.ScriptFullName)
+pythonPath = workDir & "\.venv\Scripts\python.exe"
+scriptPath = workDir & "\run_prod.py"
 
 Set shell = CreateObject("WScript.Shell")
 shell.CurrentDirectory = workDir

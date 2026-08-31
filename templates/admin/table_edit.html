@@ -12,6 +12,7 @@
 <div class="card">
     <div class="card-body">
         <form method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             {% set pk = meta.get('pk', 'id') %}
             {% for field_name, field_meta in meta.fields.items() %}
             {% if field_name == pk or field_meta.type == 'readonly' %}

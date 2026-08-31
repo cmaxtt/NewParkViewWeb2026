@@ -61,11 +61,13 @@
                         {% if not meta.readonly %}
                         <a href="{{ url_for('admin_table_edit', table_name=table_name, record_id=row[pk]) }}" class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></a>
                         <form method="post" action="{{ url_for('admin_table_delete', table_name=table_name, record_id=row[pk]) }}" onsubmit="return confirm('Delete this record?')">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                             <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                         </form>
                         {% endif %}
                         {% if table_name == 'contact_messages' %}
                         <form method="post" action="{{ url_for('admin_toggle_read', msg_id=row[pk]) }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                             <button type="submit" class="btn btn-outline btn-sm" title="Toggle read/unread"><i class="fas {{ 'fa-envelope-open' if row['is_read'] else 'fa-envelope' }}"></i></button>
                         </form>
                         {% endif %}

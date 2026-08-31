@@ -33,13 +33,14 @@
                 <h2>Send Us a Message</h2>
                 <p>Have a question or need assistance? Fill out the form and we'll get back to you.</p>
                 <form id="contactForm" method="post" action="{{ url_for('contact') }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                     <div style="display: grid; gap: 16px;">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                            <input type="text" name="name" placeholder="Your Name" required style="padding:12px 16px;border:1px solid var(--color-border);border-radius:12px;font-family:var(--font-primary);font-size:14px;outline:none;">
-                            <input type="email" name="email" placeholder="Your Email" required style="padding:12px 16px;border:1px solid var(--color-border);border-radius:12px;font-family:var(--font-primary);font-size:14px;outline:none;">
+                            <label class="sr-only" for="contact-name">Your Name</label><input id="contact-name" type="text" name="name" placeholder="Your Name" required maxlength="120" autocomplete="name" style="padding:12px 16px;border:1px solid var(--color-border);border-radius:12px;font-family:var(--font-primary);font-size:14px;outline:none;">
+                            <label class="sr-only" for="contact-email">Your Email</label><input id="contact-email" type="email" name="email" placeholder="Your Email" required maxlength="254" autocomplete="email" style="padding:12px 16px;border:1px solid var(--color-border);border-radius:12px;font-family:var(--font-primary);font-size:14px;outline:none;">
                         </div>
-                        <input type="text" name="subject" placeholder="Subject" style="padding:12px 16px;border:1px solid var(--color-border);border-radius:12px;font-family:var(--font-primary);font-size:14px;outline:none;">
-                        <textarea name="message" placeholder="Your Message" rows="5" required style="padding:12px 16px;border:1px solid var(--color-border);border-radius:12px;font-family:var(--font-primary);font-size:14px;outline:none;resize:vertical;"></textarea>
+                        <label class="sr-only" for="contact-subject">Subject</label><input id="contact-subject" type="text" name="subject" placeholder="Subject" maxlength="200" style="padding:12px 16px;border:1px solid var(--color-border);border-radius:12px;font-family:var(--font-primary);font-size:14px;outline:none;">
+                        <label class="sr-only" for="contact-message">Your Message</label><textarea id="contact-message" name="message" placeholder="Your Message" rows="5" required maxlength="5000" style="padding:12px 16px;border:1px solid var(--color-border);border-radius:12px;font-family:var(--font-primary);font-size:14px;outline:none;resize:vertical;"></textarea>
                         <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
                     </div>
                     <div id="formResponse" style="margin-top:12px;"></div>
@@ -49,7 +50,7 @@
                 <i class="fas fa-store"></i>
                 <h3>{{ settings.business_name }}</h3>
                 <p style="margin-bottom:20px;">{{ settings.full_address }}<br>{{ settings.hours_weekday }}<br>{{ settings.hours_saturday }}</p>
-                <a href="{{ settings.facebook_url }}" class="btn btn-primary" target="_blank"><i class="fab fa-facebook-f"></i> Follow Us on Facebook</a>
+                <a href="{{ settings.facebook_url }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i> Follow Us on Facebook</a>
             </div>
         </div>
     </div>

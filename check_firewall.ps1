@@ -15,7 +15,7 @@ else { Write-Host "No rules found for port 5000." -ForegroundColor Yellow }
 Write-Host "`n=== All Inbound Rules on TCP 5000 ==="
 Get-NetFirewallPortFilter -Protocol TCP | Where-Object { $_.LocalPort -eq 5000 } | ForEach-Object {
     $rule = $_ | Get-NetFirewallRule
-    Write-Host "  $($rule.DisplayName) — Enabled=$($rule.Enabled) Action=$($rule.Action)"
+    Write-Host "  $($rule.DisplayName) - Enabled=$($rule.Enabled) Action=$($rule.Action)"
 }
 
 Write-Host "`n=== Test Listeners ==="

@@ -154,27 +154,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ==========================================
-    // CONTACT FORM
-    // ==========================================
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            btn.disabled = true;
-            setTimeout(function() {
-                btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-                setTimeout(function() {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }, 2000);
-            }, 1500);
-        });
-    }
-
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {

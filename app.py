@@ -3,14 +3,33 @@ Park View Drugs — Flask Application
 """
 import os
 import sqlite3
+import re
+import secrets
+import hmac
+import time
 from functools import wraps
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify, g, session, redirect, url_for, abort
+from urllib.parse import urlparse
+from flask import Flask, render_template, request, jsonify, g, session, redirect, url_for, abort, make_response
+from werkzeug.security import check_password_hash
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'park-view-drugs-secret-key-2026'
+_secret_key = os.environ.get('PARKVIEW_SECRET_KEY')
+app.config['SECRET_KEY'] = _secret_key or secrets.token_hex(32)
+if not _secret_key:
+    app.logger.warning('PARKVIEW_SECRET_KEY is not set - using a RANDOM session key. '
+                       'Admin sessions will be invalidated on every restart. '
+                       'Run setup_env.ps1 (Windows) or set PARKVIEW_SECRET_KEY (Linux).')
 app.config['DATABASE'] = os.path.join(app.instance_path, 'parkview.db')
-app.config['ADMIN_PASSWORD'] = 'admin123'  # change this in production
+app.config['ADMIN_PASSWORD'] = os.environ.get('PARKVIEW_ADMIN_PASSWORD', '')
+app.config['ADMIN_PASSWORD_HASH'] = os.environ.get('PARKVIEW_ADMIN_PASSWORD_HASH', '')
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = os.environ.get('PARKVIEW_COOKIE_SECURE', '').lower() in ('1', 'true', 'yes')
+
+EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+_rate_limit_buckets = {}
 
 # ── Table Metadata ─────────────────────────────────────────
 # Defines columns, labels, field types for the admin CRUD
@@ -103,14 +122,53 @@ TABLES = {
 
 def get_db():
     if 'db' not in g:
-        g.db = sqlite3.connect(app.config['DATABASE'])
-        g.db.row_factory = sqlite3.Row
+        conn = sqlite3.connect(app.config['DATABASE'], timeout=30)
+        conn.row_factory = sqlite3.Row
+        # WAL: safe concurrent reads under Waitress's threads; busy_timeout avoids lock errors
+        conn.execute('PRAGMA journal_mode=WAL')
+        conn.execute('PRAGMA busy_timeout=5000')
+        conn.execute('PRAGMA foreign_keys=ON')
+        g.db = conn
     return g.db
 
 def close_db(exception=None):
     db = g.pop('db', None)
     if db is not None:
         db.close()
+
+def csrf_token():
+    if '_csrf_token' not in session:
+        session['_csrf_token'] = secrets.token_urlsafe(32)
+    return session['_csrf_token']
+
+@app.before_request
+def protect_post_requests():
+    if request.method == 'POST' and request.endpoint in {'admin_login', 'contact', 'newsletter'}:
+        key = (request.remote_addr or 'unknown', request.endpoint)
+        now = time.monotonic()
+        # prune stale buckets so the in-memory limiter cannot grow unbounded
+        if len(_rate_limit_buckets) > 1024:
+            stale = {k: [t for t in v if now - t < 60] for k, v in _rate_limit_buckets.items()}
+            _rate_limit_buckets.clear()
+            _rate_limit_buckets.update({k: v for k, v in stale.items() if v})
+        recent = [stamp for stamp in _rate_limit_buckets.get(key, []) if now - stamp < 60]
+        if len(recent) >= (10 if request.endpoint == 'admin_login' else 5):
+            abort(429, description='Too many requests. Please try again shortly.')
+        recent.append(now)
+        _rate_limit_buckets[key] = recent
+    if request.method == 'POST':
+        expected = session.get('_csrf_token', '')
+        supplied = request.form.get('_csrf_token', '') or request.headers.get('X-CSRF-Token', '')
+        if not expected or not supplied or not hmac.compare_digest(expected, supplied):
+            abort(400, description='Invalid or missing security token.')
+
+@app.after_request
+def add_security_headers(response):
+    response.headers.setdefault('X-Content-Type-Options', 'nosniff')
+    response.headers.setdefault('X-Frame-Options', 'SAMEORIGIN')
+    response.headers.setdefault('Referrer-Policy', 'strict-origin-when-cross-origin')
+    response.headers.setdefault('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+    return response
 
 def init_db():
     os.makedirs(app.instance_path, exist_ok=True)
@@ -144,11 +202,6 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-def get_table_columns(table_name):
-    db = get_db()
-    cursor = db.execute(f'PRAGMA table_info({table_name})')
-    return [row['name'] for row in cursor.fetchall()]
-
 # ── Context Processors ────────────────────────────────────
 
 @app.context_processor
@@ -169,7 +222,7 @@ def inject_settings():
     settings.setdefault('tagline', 'Your trusted local pharmacy serving the San Fernando community.')
     settings.setdefault('hero_title_1', 'Your Health, Our Priority')
     settings.setdefault('hero_desc_1', 'At Park View Drugs, we care.')
-    return {'settings': settings, 'now': datetime.now, 'tables_meta': TABLES}
+    return {'settings': settings, 'now': datetime.now, 'tables_meta': TABLES, 'csrf_token': csrf_token}
 
 # ── Public Routes ─────────────────────────────────────────
 
@@ -215,7 +268,8 @@ def contact():
         email = request.form.get('email', '').strip()
         subject = request.form.get('subject', '').strip()
         message = request.form.get('message', '').strip()
-        if name and email and message:
+        if (1 <= len(name) <= 120 and EMAIL_RE.fullmatch(email) and len(email) <= 254
+                and 1 <= len(message) <= 5000 and len(subject) <= 200):
             db = get_db()
             db.execute(
                 'INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)',
@@ -223,7 +277,7 @@ def contact():
             )
             db.commit()
             return jsonify({'success': True, 'message': 'Thank you! We will get back to you shortly.'})
-        return jsonify({'success': False, 'message': 'Please fill in all required fields.'}), 400
+        return jsonify({'success': False, 'message': 'Please provide a valid name, email, and message.'}), 400
     return render_template('contact.html')
 
 @app.route('/weekly-flyer')
@@ -240,8 +294,15 @@ def products():
     db = get_db()
     try:
         category = request.args.get('category', '')
-        if category:
+        keywords = request.args.get('keywords', '').strip()[:100]
+        if category and keywords:
+            like = f'%{keywords}%'
+            products_list = db.execute('SELECT * FROM products WHERE category = ? AND (name LIKE ? OR description LIKE ?)', (category, like, like)).fetchall()
+        elif category:
             products_list = db.execute('SELECT * FROM products WHERE category = ?', (category,)).fetchall()
+        elif keywords:
+            like = f'%{keywords}%'
+            products_list = db.execute('SELECT * FROM products WHERE name LIKE ? OR description LIKE ? OR category LIKE ?', (like, like, like)).fetchall()
         else:
             products_list = db.execute('SELECT * FROM products').fetchall()
     except Exception:
@@ -255,15 +316,16 @@ def minor_ailment():
 @app.route('/newsletter', methods=['POST'])
 def newsletter():
     email = request.form.get('email', '').strip()
-    if email:
+    if EMAIL_RE.fullmatch(email) and len(email) <= 254:
         try:
             db = get_db()
             db.execute('INSERT OR IGNORE INTO newsletter_subscribers (email) VALUES (?)', (email,))
             db.commit()
             return jsonify({'success': True, 'message': 'Subscribed successfully!'})
         except Exception as e:
-            return jsonify({'success': False, 'message': str(e)}), 500
-    return jsonify({'success': False, 'message': 'Email is required.'}), 400
+            app.logger.exception('Newsletter subscription failed')
+            return jsonify({'success': False, 'message': 'Unable to subscribe right now.'}), 500
+    return jsonify({'success': False, 'message': 'Please enter a valid email address.'}), 400
 
 # ── Admin Routes ──────────────────────────────────────────
 
@@ -273,9 +335,17 @@ ADMIN_TABLES = ['services', 'products', 'flyer_deals', 'contact_messages', 'news
 def admin_login():
     if request.method == 'POST':
         password = request.form.get('password', '')
-        if password == app.config['ADMIN_PASSWORD']:
+        configured_hash = app.config['ADMIN_PASSWORD_HASH']
+        valid_password = bool(configured_hash and check_password_hash(configured_hash, password))
+        if not configured_hash and app.config['ADMIN_PASSWORD']:
+            valid_password = hmac.compare_digest(password, app.config['ADMIN_PASSWORD'])
+        if valid_password:
             session['admin_logged_in'] = True
-            next_page = request.args.get('next', url_for('admin_dashboard'))
+            session.pop('_csrf_token', None)
+            next_page = request.args.get('next', '')
+            parsed_next = urlparse(next_page)
+            if not next_page or parsed_next.scheme or parsed_next.netloc or not next_page.startswith('/'):
+                next_page = url_for('admin_dashboard')
             return redirect(next_page)
         return render_template('admin/login.html', error='Invalid password.')
     return render_template('admin/login.html')
@@ -346,7 +416,7 @@ def admin_table_add(table_name):
                                    record=None, error=str(e))
     return render_template('admin/table_edit.html', table_name=table_name, meta=meta, record=None)
 
-@app.route('/admin/<table_name>/<int:record_id>/edit', methods=['GET', 'POST'])
+@app.route('/admin/<table_name>/<record_id>/edit', methods=['GET', 'POST'])
 @login_required
 def admin_table_edit(table_name, record_id):
     if table_name not in ADMIN_TABLES:
@@ -386,7 +456,7 @@ def admin_table_edit(table_name, record_id):
                                    record=dict_from_row(row), error=str(e))
     return render_template('admin/table_edit.html', table_name=table_name, meta=meta, record=dict_from_row(row))
 
-@app.route('/admin/<table_name>/<int:record_id>/delete', methods=['POST'])
+@app.route('/admin/<table_name>/<record_id>/delete', methods=['POST'])
 @login_required
 def admin_table_delete(table_name, record_id):
     if table_name not in ADMIN_TABLES:
@@ -400,7 +470,7 @@ def admin_table_delete(table_name, record_id):
         db.execute(f'DELETE FROM {table_name} WHERE {pk} = ?', (record_id,))
         db.commit()
     except Exception as e:
-        pass
+        app.logger.exception('Delete failed on %s (id %s)', table_name, record_id)
     return redirect(url_for('admin_table_list', table_name=table_name))
 
 @app.route('/admin/messages/<int:msg_id>/toggle-read', methods=['POST'])
@@ -414,12 +484,63 @@ def admin_toggle_read(msg_id):
             db.execute('UPDATE contact_messages SET is_read = ? WHERE id = ?', (new_val, msg_id))
             db.commit()
     except Exception:
-        pass
+        app.logger.exception('Toggle-read failed for message %s', msg_id)
     return redirect(url_for('admin_table_list', table_name='contact_messages'))
+
+@app.route('/healthz')
+def healthz():
+    """Lightweight health probe for the installer, task scheduler and uptime checks."""
+    try:
+        get_db().execute('SELECT 1').fetchone()
+        return jsonify({'status': 'ok', 'database': 'ok'})
+    except Exception:
+        app.logger.exception('Health check failed')
+        return jsonify({'status': 'error', 'database': 'error'}), 500
+
+@app.route('/robots.txt')
+def robots():
+    response = make_response(f"User-agent: *\nDisallow: /admin/\nSitemap: {url_for('sitemap', _external=True)}\n")
+    response.mimetype = 'text/plain'
+    return response
+
+@app.route('/sitemap.xml')
+def sitemap():
+    static_endpoints = ['home', 'services', 'about', 'contact', 'weekly_flyer', 'products', 'minor_ailment']
+    urls = [url_for(endpoint, _external=True) for endpoint in static_endpoints]
+    try:
+        rows = get_db().execute('SELECT slug FROM services').fetchall()
+        urls.extend(url_for('service_detail', slug=row['slug'], _external=True) for row in rows)
+    except Exception:
+        app.logger.exception('Unable to load service URLs for sitemap')
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+    xml += ''.join(f'<url><loc>{url}</loc></url>' for url in urls)
+    xml += '</urlset>'
+    response = make_response(xml)
+    response.mimetype = 'application/xml'
+    return response
+
+@app.route('/legal/<page>')
+def legal(page):
+    titles = {'privacy': 'Privacy Policy', 'terms': 'Terms & Conditions', 'disclaimer': 'Health Disclaimer'}
+    if page not in titles:
+        abort(404)
+    return render_template('legal.html', legal_title=titles[page])
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def server_error(error):
+    app.logger.exception('Unhandled application error')
+    return render_template('500.html'), 500
 
 # ── Main ──────────────────────────────────────────────────
 
 if __name__ == '__main__':
     with app.app_context():
         init_db()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Development entry only: loopback-bound, debugger OFF unless FLASK_DEBUG=1.
+    # Production must use run_prod.py (Waitress, loopback + Tailscale only).
+    debug = os.environ.get('FLASK_DEBUG', '').lower() in ('1', 'true', 'yes')
+    app.run(host='127.0.0.1', port=5000, debug=debug)

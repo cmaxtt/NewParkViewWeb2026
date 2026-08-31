@@ -1,10 +1,17 @@
 $TaskName = 'ParkViewDrugsServer'
-$PythonPath = 'C:\Users\cmaxt\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe'
-$ScriptPath = 'C:\aa-NewWeb\run_prod.py'
-$WorkDir = 'C:\aa-NewWeb'
+# Resolve the app directory from this script's own location (distributable).
+$AppDir = $PSScriptRoot
+if ([string]::IsNullOrEmpty($AppDir)) { $AppDir = 'C:\aa-NewWeb' }
+$PythonPath = Join-Path $AppDir '.venv\Scripts\python.exe'
+$ScriptPath = Join-Path $AppDir 'run_prod.py'
+$WorkDir = $AppDir
 
 # Remove old task
 Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false -ErrorAction SilentlyContinue
+
+if (-not (Test-Path $PythonPath)) {
+    throw "Missing $PythonPath. Create the virtual environment and install requirements first."
+}
 
 # Create task
 $Action = New-ScheduledTaskAction -Execute $PythonPath -Argument $ScriptPath -WorkingDirectory $WorkDir
@@ -31,6 +38,8 @@ try {
 
 Write-Host ""
 Write-Host "=== Access ===" -ForegroundColor Green
+$tsIP = (& tailscale ip -4 2>$null | Select-Object -First 1)
+if (-not $tsIP) { $tsIP = "100.x.y.z" }
 Write-Host "  Local:      http://127.0.0.1:5000/"
-Write-Host "  Tailscale:  http://100.104.147.60:5000/"
-Write-Host "  Admin:      http://100.104.147.60:5000/admin/login"
+Write-Host "  Tailscale:  http://$tsIP:5000/"
+Write-Host "  Admin:      http://$tsIP:5000/admin/login"

@@ -21,10 +21,9 @@
             <div class="footer-col">
                 <h4>Legal</h4>
                 <ul>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Cookie Policy</a></li>
-                    <li><a href="#">Disclaimers</a></li>
+                    <li><a href="{{ url_for('legal', page='terms') }}">Terms & Conditions</a></li>
+                    <li><a href="{{ url_for('legal', page='privacy') }}">Privacy Policy</a></li>
+                    <li><a href="{{ url_for('legal', page='disclaimer') }}">Health Disclaimer</a></li>
                 </ul>
             </div>
             <div class="footer-col footer-app">
@@ -32,7 +31,7 @@
                 <h4>{{ settings.business_name }}</h4>
                 <p>{{ settings.tagline }}</p>
                 <div class="footer-social">
-                    <a href="{{ settings.facebook_url }}" class="social-link" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="{{ settings.facebook_url }}" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
         </div>
