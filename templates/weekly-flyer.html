@@ -16,20 +16,77 @@
         </div>
         <div class="flyer-grid">
             {% for deal in deals %}
-            <div class="flyer-card">
-                <div class="flyer-img" style="background:linear-gradient(135deg, {{ deal.color_start }}, {{ deal.color_end }});"><i class="{{ deal.icon }}" style="color:{{ deal.icon_color }};"></i></div>
-                <div class="flyer-body">
-                    <h3>{{ deal.title }}</h3>
-                    <p>{{ deal.description }}</p>
-                    {% if deal.valid_until %}<span class="flyer-date">Offer ends {{ deal.valid_until }}</span>{% endif %}
+            <article class="product-offer-card flyer-deal-card">
+                <div class="product-offer-media flyer-deal-media" style="background:linear-gradient(135deg, {{ deal.color_start }}, {{ deal.color_end }});">
+                    {% if deal['image'] %}
+                    <img src="{{ url_for('static', filename=deal['image']) }}" alt="{{ deal['title'] }}">
+                    {% else %}
+                    <i class="{{ deal.icon }}" style="color:{{ deal.icon_color }};" aria-hidden="true"></i>
+                    {% endif %}
+                    <span class="product-offer-badge">Weekly deal</span>
                 </div>
-            </div>
+                <div class="product-offer-body">
+                    <div class="product-offer-category">Weekly Savings</div>
+                    <h3 class="product-offer-title">{{ deal.title }}</h3>
+                    <p class="product-offer-description">{{ deal.description }}</p>
+                    {% if deal['price'] is not none %}
+                    <div class="product-price-line">
+                        <span class="product-current-price">${{ '%.2f'|format(deal['price']) }}</span>
+                        {% if deal['list_price'] is not none and deal['list_price'] > deal['price'] %}
+                        <span class="product-list-price">List: ${{ '%.2f'|format(deal['list_price']) }}</span>
+                        {% endif %}
+                    </div>
+                    {% if deal['savings'] is not none or deal['savings_percent'] is not none %}
+                    <div class="product-savings">
+                        {% if deal['savings'] is not none %}Save ${{ '%.2f'|format(deal['savings']) }}{% endif %}
+                        {% if deal['savings_percent'] is not none %}{% if deal['savings'] is not none %} · {% endif %}{{ '%.0f'|format(deal['savings_percent']) }}% off{% endif %}
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    <div class="product-offer-footer">
+                        {% if deal.valid_until %}<span><i class="fas fa-calendar-alt" aria-hidden="true"></i> Offer ends {{ deal.valid_until }}</span>{% else %}<span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>{% endif %}
+                        <a href="{{ url_for('contact') }}" class="product-order-button">Contact to order</a>
+                    </div>
+                </div>
+            </article>
             {% else %}
             <p>Check back soon for new deals!</p>
             {% endfor %}
         </div>
     </div>
 </section>
+
+{% if products %}
+<section class="page-section page-section-alt">
+    <div class="container">
+        <div class="weekly-products-heading">
+            <div>
+                <h2 class="section-title">Weekly Product Picks</h2>
+                <p>Shop this week's featured products and savings.</p>
+            </div>
+            <div class="weekly-view-switcher" data-weekly-view-switcher role="group" aria-label="Product display view">
+                <button type="button" class="weekly-view-button is-active" data-weekly-view="four" aria-pressed="true" title="Four products per row">
+                    <i class="fas fa-th-large" aria-hidden="true"></i><span>4-up</span>
+                </button>
+                <button type="button" class="weekly-view-button" data-weekly-view="three" aria-pressed="false" title="Three products per row">
+                    <i class="fas fa-th" aria-hidden="true"></i><span>3-up</span>
+                </button>
+                <button type="button" class="weekly-view-button" data-weekly-view="list" aria-pressed="false" title="List view">
+                    <i class="fas fa-list" aria-hidden="true"></i><span>List</span>
+                </button>
+            </div>
+        </div>
+        <div class="product-catalog-grid weekly-product-grid" data-weekly-view-grid data-view="four">
+            {% for product in products %}
+            {% include 'partials/product_card.html' %}
+            {% endfor %}
+        </div>
+        <div style="text-align:center;margin-top:28px;">
+            <a href="{{ url_for('products') }}" class="btn btn-primary">View All Products <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% endif %}
 
 <section class="page-section page-section-alt">
     <div class="container" style="text-align:center;">

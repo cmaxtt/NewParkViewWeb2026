@@ -9,6 +9,7 @@
     Run as Administrator once per server, BEFORE install_service.ps1.
     The app reads these at startup:
       PARKVIEW_SECRET_KEY        - session signing key (random 64 hex)
+      PARKVIEW_ADMIN_USERNAME    - admin login username (defaults to Admin)
       PARKVIEW_ADMIN_PASSWORD_HASH - werkzeug scrypt hash of your admin password
 #>
 $ErrorActionPreference = 'Stop'
@@ -22,12 +23,16 @@ if (-not $isAdmin) {
 
 Write-Host "=== Park View Drugs - Credential Setup ===" -ForegroundColor Green
 
-# 1. Secret key (random)
+# 1. Admin username
+[Environment]::SetEnvironmentVariable('PARKVIEW_ADMIN_USERNAME', 'Admin', 'Machine')
+Write-Host "[OK] PARKVIEW_ADMIN_USERNAME set to Admin (Machine)." -ForegroundColor Green
+
+# 2. Secret key (random)
 $secret = [System.Convert]::ToHexString([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(32)).ToLower()
 [Environment]::SetEnvironmentVariable('PARKVIEW_SECRET_KEY', $secret, 'Machine')
 Write-Host "[OK] PARKVIEW_SECRET_KEY generated and stored (Machine)." -ForegroundColor Green
 
-# 2. Admin password hash
+# 3. Admin password hash
 $python = Join-Path $PSScriptRoot '.venv\Scripts\python.exe'
 if (-not (Test-Path $python)) {
     Write-Host "ERROR: $python not found. Create the virtual environment and install requirements first." -ForegroundColor Red

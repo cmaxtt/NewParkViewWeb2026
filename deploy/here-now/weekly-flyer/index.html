@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Flyer - Park View Drugs</title>
+    <meta name="description" content="Park View Drugs - Your trusted local pharmacy in Esperance, San Fernando. Prescription refills, minor ailment treatment, vaccinations, and personalized care.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Raleway:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/pages.css">
+    <link rel="icon" type="image/png" href="/static/images/logo.png">
+    
+</head>
+<body class="">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <div class="contact-bar">
+    <div class="container">
+        <span><i class="fas fa-phone-alt"></i> Call us: <a href="tel:868223-7508">(868) 223-7508</a></span>
+        <span><i class="fas fa-map-marker-alt"></i> Esperance, San Fernando, Trinidad &amp; Tobago</span>
+        <span><i class="fas fa-clock"></i> Mon-Fri: 8AM-6PM | Sat: 8AM-3PM</span>
+    </div>
+</div>
+    <header class="site-header">
+    <div class="header-top">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <img src="/static/images/logo.png" alt="Park View Drugs Logo" height="50">
+            </a>
+
+            <div class="header-search">
+                <form role="search" class="search-form" action="/products/" method="get">
+                    <label for="header-search" class="sr-only">Search</label>
+                    <input type="search" id="header-search" name="keywords" class="search-input" placeholder="Search products..." autocomplete="off">
+                    <button type="submit" class="search-btn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <button class="btn btn-pharmacy" onclick="openPharmacyFinder()">
+                <i class="fas fa-map-marker-alt"></i> Visit Our Store
+            </button>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+
+    <nav class="main-nav" id="mainNav" role="navigation" aria-label="Menu">
+        <div class="container">
+            <ul class="nav-list">
+                <li class="nav-item has-dropdown">
+                    <a href="/services/">Services <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <h4><a href="/services/">Clinical Services</a></h4>
+                                <ul>
+                                    <li><a href="/services/minor-ailment">Minor Ailment Assessment</a></li>
+                                    <li><a href="/services/vaccinations/">Vaccinations</a></li>
+                                    <li><a href="/services/prescription-refills/">Prescription Refills</a></li>
+                                    <li><a href="/services/compounding/">Compounding</a></li>
+                                    <li><a href="/services/medication-review/">Medication Review</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-col">
+                                <h4><a href="/services/">Pharmacy Services</a></h4>
+                                <ul>
+                                    <li><a href="/services/delivery/">Home Delivery</a></li>
+                                    <li><a href="/minor-ailment/">Minor Ailment Treatment</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="/products/">Products & Rewards <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <h4><a href="/products/">Products</a></h4>
+                                <ul>
+                                    <li><a href="/products/?category=OTC">Over-the-Counter</a></li>
+                                    <li><a href="/products/?category=Vitamins">Vitamins & Supplements</a></li>
+                                    <li><a href="/products/?category=Natural">Natural Health</a></li>
+                                    <li><a href="/products/?category=Personal+Care">Personal Care</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-col">
+                                <h4>Rewards</h4>
+                                <ul>
+                                    <li><a href="/weekly-flyer/">Weekly Flyer</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="/minor-ailment/">Health Advice <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <ul>
+                                    <li><a href="/products/">Medication & Product Search</a></li>
+                                    <li><a href="/minor-ailment/">Minor Ailments</a></li>
+                                    <li><a href="/products/?category=Natural">Natural Health Products</a></li>
+                                    <li><a href="/services/">Pharmacy Advice</a></li>
+                                    <li><a href="/contact/">Community Support</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="/about/">About Us <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <ul>
+                                    <li><a href="/about/">Our Story</a></li>
+                                    <li><a href="/contact/">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="/weekly-flyer/">Weekly Flyer</a></li>
+                <li class="nav-item"><a href="/contact/" class="nav-find"><i class="fas fa-search-location"></i> Find Us</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <main id="main-content">
+        
+<section class="page-hero" style="background: linear-gradient(135deg, #4FB151 0%, #2D8A30 100%);">
+    <div class="container">
+        <h1>Weekly Flyer & Savings</h1>
+        <p>Great deals on your favourite health and wellness products.</p>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div style="text-align:center;margin-bottom:40px;">
+            <h2 class="section-title">This Week's Deals</h2>
+            <p style="color:var(--color-text-body);">While supplies last.</p>
+        </div>
+        <div class="flyer-grid">
+            
+            <article class="product-offer-card flyer-deal-card">
+                <div class="product-offer-media flyer-deal-media" style="background:linear-gradient(135deg, #E8F5E9, #A5D6A7);">
+                    
+                    <i class="fas fa-tablets" style="color:#1E7D29;" aria-hidden="true"></i>
+                    
+                    <span class="product-offer-badge">Weekly deal</span>
+                </div>
+                <div class="product-offer-body">
+                    <div class="product-offer-category">Weekly Savings</div>
+                    <h3 class="product-offer-title">Vitamins &amp; Supplements</h3>
+                    <p class="product-offer-description">Save up to 25% on select vitamin and supplement brands.</p>
+                    
+                    <div class="product-offer-footer">
+                        <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> Offer ends 2026-07-12</span>
+                        <a href="/contact/" class="product-order-button">Contact to order</a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="product-offer-card flyer-deal-card">
+                <div class="product-offer-media flyer-deal-media" style="background:linear-gradient(135deg, #FFF3E0, #FFCC80);">
+                    
+                    <i class="fas fa-hand-holding-heart" style="color:#E65100;" aria-hidden="true"></i>
+                    
+                    <span class="product-offer-badge">Weekly deal</span>
+                </div>
+                <div class="product-offer-body">
+                    <div class="product-offer-category">Weekly Savings</div>
+                    <h3 class="product-offer-title">First Aid Essentials</h3>
+                    <p class="product-offer-description">Buy one, get one 50% off on all first aid supplies.</p>
+                    
+                    <div class="product-offer-footer">
+                        <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> Offer ends 2026-07-12</span>
+                        <a href="/contact/" class="product-order-button">Contact to order</a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="product-offer-card flyer-deal-card">
+                <div class="product-offer-media flyer-deal-media" style="background:linear-gradient(135deg, #E8F5E9, #81C784);">
+                    
+                    <i class="fas fa-apple-alt" style="color:#2E7D32;" aria-hidden="true"></i>
+                    
+                    <span class="product-offer-badge">Weekly deal</span>
+                </div>
+                <div class="product-offer-body">
+                    <div class="product-offer-category">Weekly Savings</div>
+                    <h3 class="product-offer-title">Natural Health Products</h3>
+                    <p class="product-offer-description">20% off all natural health products from top brands.</p>
+                    
+                    <div class="product-offer-footer">
+                        <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> Offer ends 2026-07-12</span>
+                        <a href="/contact/" class="product-order-button">Contact to order</a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="product-offer-card flyer-deal-card">
+                <div class="product-offer-media flyer-deal-media" style="background:linear-gradient(135deg, #F3E5F5, #CE93D8);">
+                    
+                    <i class="fas fa-baby" style="color:#6A1B9A;" aria-hidden="true"></i>
+                    
+                    <span class="product-offer-badge">Weekly deal</span>
+                </div>
+                <div class="product-offer-body">
+                    <div class="product-offer-category">Weekly Savings</div>
+                    <h3 class="product-offer-title">Baby &amp; Kids Care</h3>
+                    <p class="product-offer-description">Save $5 on all baby care purchases over $25.</p>
+                    
+                    <div class="product-offer-footer">
+                        <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> Offer ends 2026-07-12</span>
+                        <a href="/contact/" class="product-order-button">Contact to order</a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="product-offer-card flyer-deal-card">
+                <div class="product-offer-media flyer-deal-media" style="background:linear-gradient(135deg, #FFF8E1, #FFD54F);">
+                    
+                    <i class="fas fa-sun" style="color:#F57F17;" aria-hidden="true"></i>
+                    
+                    <span class="product-offer-badge">Weekly deal</span>
+                </div>
+                <div class="product-offer-body">
+                    <div class="product-offer-category">Weekly Savings</div>
+                    <h3 class="product-offer-title">Summer Essentials</h3>
+                    <p class="product-offer-description">25% off sunscreen, insect repellent, and travel sizes.</p>
+                    
+                    <div class="product-offer-footer">
+                        <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> Offer ends 2026-07-12</span>
+                        <a href="/contact/" class="product-order-button">Contact to order</a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="product-offer-card flyer-deal-card">
+                <div class="product-offer-media flyer-deal-media" style="background:linear-gradient(135deg, #fce4ec, #f48fb1);">
+                    
+                    <img src="/static/None" alt="Heart Health">
+                    
+                    <span class="product-offer-badge">Weekly deal</span>
+                </div>
+                <div class="product-offer-body">
+                    <div class="product-offer-category">Weekly Savings</div>
+                    <h3 class="product-offer-title">Heart Health</h3>
+                    <p class="product-offer-description">Buy 2, get 1 free on all heart health supplements.</p>
+                    
+                    <div class="product-price-line">
+                        <span class="product-current-price">$125.10</span>
+                        
+                        <span class="product-list-price">List: $165.00</span>
+                        
+                    </div>
+                    
+                    <div class="product-savings">
+                        Save $29.88
+                         · 43% off
+                    </div>
+                    
+                    
+                    <div class="product-offer-footer">
+                        <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> Offer ends 2026-07-12</span>
+                        <a href="/contact/" class="product-order-button">Contact to order</a>
+                    </div>
+                </div>
+            </article>
+            
+        </div>
+    </div>
+</section>
+
+
+<section class="page-section page-section-alt">
+    <div class="container">
+        <div class="weekly-products-heading">
+            <div>
+                <h2 class="section-title">Weekly Product Picks</h2>
+                <p>Shop this week's featured products and savings.</p>
+            </div>
+            <div class="weekly-view-switcher" data-weekly-view-switcher role="group" aria-label="Product display view">
+                <button type="button" class="weekly-view-button is-active" data-weekly-view="four" aria-pressed="true" title="Four products per row">
+                    <i class="fas fa-th-large" aria-hidden="true"></i><span>4-up</span>
+                </button>
+                <button type="button" class="weekly-view-button" data-weekly-view="three" aria-pressed="false" title="Three products per row">
+                    <i class="fas fa-th" aria-hidden="true"></i><span>3-up</span>
+                </button>
+                <button type="button" class="weekly-view-button" data-weekly-view="list" aria-pressed="false" title="List view">
+                    <i class="fas fa-list" aria-hidden="true"></i><span>List</span>
+                </button>
+            </div>
+        </div>
+        <div class="product-catalog-grid weekly-product-grid" data-weekly-view-grid data-view="four">
+            
+            <article class="product-offer-card">
+    <div class="product-offer-media">
+        
+        
+        <img src="/static/images/one-a-day-vitacraves-70ct.jpg" alt="One A Day Men&#39;s VitaCraves Gummies, 70 ct" loading="lazy">
+        
+        
+        <span class="product-offer-badge">Weekly pick</span>
+    </div>
+    <div class="product-offer-body">
+        <div class="product-offer-category">Vitamins</div>
+        <h3 class="product-offer-title">One A Day Men&#39;s VitaCraves Gummies, 70 ct</h3>
+        <p class="product-offer-description">Daily multivitamin gummies for men, assorted fruit flavors.</p>
+        
+        <div class="product-price-line">
+            <span class="product-current-price">TT$ 24.56</span>
+            
+            <span class="product-list-price">List: TT$ 61.40</span>
+            
+        </div>
+        
+        <div class="product-savings">
+            Save TT$ 36.84
+             · 60% off
+        </div>
+        
+        
+        <div class="product-offer-footer">
+            <span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>
+            <a href="/contact/" class="product-order-button">Contact to order</a>
+        </div>
+    </div>
+</article>
+            
+            <article class="product-offer-card">
+    <div class="product-offer-media">
+        
+        
+        <img src="/static/images/natures-nutrition-magnesium-glycinate-60ct.jpg" alt="Nature&#39;s Nutrition Magnesium Glycinate 250 mg, 60 ct" loading="lazy">
+        
+        
+        <span class="product-offer-badge">Weekly pick</span>
+    </div>
+    <div class="product-offer-body">
+        <div class="product-offer-category">Vitamins</div>
+        <h3 class="product-offer-title">Nature&#39;s Nutrition Magnesium Glycinate 250 mg, 60 ct</h3>
+        <p class="product-offer-description">Chelated magnesium glycinate tablets, 250 mg per serving.</p>
+        
+        <div class="product-price-line">
+            <span class="product-current-price">TT$ 26.72</span>
+            
+            <span class="product-list-price">List: TT$ 59.38</span>
+            
+        </div>
+        
+        <div class="product-savings">
+            Save TT$ 32.66
+             · 55% off
+        </div>
+        
+        
+        <div class="product-offer-footer">
+            <span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>
+            <a href="/contact/" class="product-order-button">Contact to order</a>
+        </div>
+    </div>
+</article>
+            
+            <article class="product-offer-card">
+    <div class="product-offer-media">
+        
+        
+        <img src="/static/images/natures-truth-vitamin-b12-100ct.jpg" alt="Nature&#39;s Truth Vitamin B-12 1000 mcg, 100 ct" loading="lazy">
+        
+        
+        <span class="product-offer-badge">Weekly pick</span>
+    </div>
+    <div class="product-offer-body">
+        <div class="product-offer-category">Vitamins</div>
+        <h3 class="product-offer-title">Nature&#39;s Truth Vitamin B-12 1000 mcg, 100 ct</h3>
+        <p class="product-offer-description">Vitamin B-12 tablets, 1000 mcg, 100 count.</p>
+        
+        <div class="product-price-line">
+            <span class="product-current-price">TT$ 20.00</span>
+            
+            <span class="product-list-price">List: TT$ 57.15</span>
+            
+        </div>
+        
+        <div class="product-savings">
+            Save TT$ 37.15
+             · 65% off
+        </div>
+        
+        
+        <div class="product-offer-footer">
+            <span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>
+            <a href="/contact/" class="product-order-button">Contact to order</a>
+        </div>
+    </div>
+</article>
+            
+            <article class="product-offer-card">
+    <div class="product-offer-media">
+        
+        
+        <img src="/static/images/vitafusion-multivites-70ct.jpg" alt="Vitafusion MultiVites Adult Gummies, 70 ct" loading="lazy">
+        
+        
+        <span class="product-offer-badge">Weekly pick</span>
+    </div>
+    <div class="product-offer-body">
+        <div class="product-offer-category">Vitamins</div>
+        <h3 class="product-offer-title">Vitafusion MultiVites Adult Gummies, 70 ct</h3>
+        <p class="product-offer-description">Berry, peach and orange-flavored complete multivitamin gummies.</p>
+        
+        <div class="product-price-line">
+            <span class="product-current-price">TT$ 20.13</span>
+            
+            <span class="product-list-price">List: TT$ 40.26</span>
+            
+        </div>
+        
+        <div class="product-savings">
+            Save TT$ 20.13
+             · 50% off
+        </div>
+        
+        
+        <div class="product-offer-footer">
+            <span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>
+            <a href="/contact/" class="product-order-button">Contact to order</a>
+        </div>
+    </div>
+</article>
+            
+            <article class="product-offer-card">
+    <div class="product-offer-media">
+        
+        
+        <img src="/static/images/centrum-silver-80ct.jpg" alt="Centrum Silver Adult Multivitamin, 80 ct" loading="lazy">
+        
+        
+        <span class="product-offer-badge">Weekly pick</span>
+    </div>
+    <div class="product-offer-body">
+        <div class="product-offer-category">Vitamins</div>
+        <h3 class="product-offer-title">Centrum Silver Adult Multivitamin, 80 ct</h3>
+        <p class="product-offer-description">Complete adult multivitamin tablets for daily wellness.</p>
+        
+        <div class="product-price-line">
+            <span class="product-current-price">TT$ 21.52</span>
+            
+            <span class="product-list-price">List: TT$ 53.79</span>
+            
+        </div>
+        
+        <div class="product-savings">
+            Save TT$ 32.27
+             · 60% off
+        </div>
+        
+        
+        <div class="product-offer-footer">
+            <span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>
+            <a href="/contact/" class="product-order-button">Contact to order</a>
+        </div>
+    </div>
+</article>
+            
+            <article class="product-offer-card">
+    <div class="product-offer-media">
+        
+        
+        <img src="/static/images/nature-made-vitamin-d3-100ct.jpg" alt="Nature Made Vitamin D3 2000 IU, 100 ct" loading="lazy">
+        
+        
+        <span class="product-offer-badge">Weekly pick</span>
+    </div>
+    <div class="product-offer-body">
+        <div class="product-offer-category">Vitamins</div>
+        <h3 class="product-offer-title">Nature Made Vitamin D3 2000 IU, 100 ct</h3>
+        <p class="product-offer-description">Daily vitamin D3 supplement, 100 tablets.</p>
+        
+        <div class="product-price-line">
+            <span class="product-current-price">TT$ 24.60</span>
+            
+            <span class="product-list-price">List: TT$ 54.66</span>
+            
+        </div>
+        
+        <div class="product-savings">
+            Save TT$ 30.06
+             · 55% off
+        </div>
+        
+        
+        <div class="product-offer-footer">
+            <span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>
+            <a href="/contact/" class="product-order-button">Contact to order</a>
+        </div>
+    </div>
+</article>
+            
+        </div>
+        <div style="text-align:center;margin-top:28px;">
+            <a href="/products/" class="btn btn-primary">View All Products <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+
+<section class="page-section page-section-alt">
+    <div class="container" style="text-align:center;">
+        <h2 class="section-title">Visit Us Today</h2>
+        <p style="max-width:600px;margin:0 auto 32px;color:var(--color-text-body);">Come by our location to see all the deals in person. Our friendly staff is ready to assist you!</p>
+        <a href="/contact/" class="btn btn-primary">Get Directions <i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="/contact/" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+</section>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/contact/">Contact Us</a></li>
+                    <li><a href="/services/prescription-refills/">Refill Prescription</a></li>
+                    <li><a href="/weekly-flyer/">Weekly Flyer</a></li>
+                    <li><a href="/products/">Products & Rewards</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4><a href="/services/">Services</a></h4>
+                <ul>
+                    <li><a href="/minor-ailment/">Minor Ailment Prescribing</a></li>
+                    <li><a href="/services/vaccinations/">Vaccinations</a></li>
+                    <li><a href="/services/delivery/">Home Delivery</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/legal/terms/">Terms & Conditions</a></li>
+                    <li><a href="/legal/privacy/">Privacy Policy</a></li>
+                    <li><a href="/legal/disclaimer/">Health Disclaimer</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-app">
+                <img src="/static/images/logo.png" alt="Park View Drugs" class="footer-app-logo" height="40">
+                <h4>Park View Drugs</h4>
+                <p>Your trusted local pharmacy serving the San Fernando community.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/pvdrugs/" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo-bottom">
+                <img src="/static/images/logo.png" alt="Park View Drugs" height="36">
+            </div>
+            <p>&copy; 2026 Park View Drugs. All rights reserved. | Esperance, San Fernando, Trinidad &amp; Tobago</p>
+        </div>
+    </div>
+</footer>
+    <div class="modal-overlay" id="pharmacyModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closePharmacyFinder()">&times;</button>
+        <h3>Visit Park View Drugs</h3>
+        <p>We're located near San Fernando. Give us a call or stop by during business hours.</p>
+        <div style="margin-bottom: 20px;">
+            <p style="margin-bottom: 8px;"><i class="fas fa-map-marker-alt" style="color: var(--color-primary); width: 20px;"></i> S.S. Erin Road, Esperance, Trinidad &amp; Tobago</p>
+            <p style="margin-bottom: 8px;"><i class="fas fa-phone-alt" style="color: var(--color-primary); width: 20px;"></i> <a href="tel:868223-7508">(868) 223-7508</a></p>
+            <p style="margin-bottom: 8px;"><i class="fas fa-clock" style="color: var(--color-primary); width: 20px;"></i> Mon-Fri: 8AM-6PM</p>
+            <p><i class="fas fa-clock" style="color: var(--color-primary); width: 20px;"></i> Sat: 8AM-3PM</p>
+        </div>
+        <a href="https://www.facebook.com/pvdrugs/" class="btn btn-primary" target="_blank"><i class="fab fa-facebook-f"></i> Follow Us on Facebook</a>
+    </div>
+</div>
+
+    <script src="/static/js/scripts.js"></script>
+    
+</body>
+</html>

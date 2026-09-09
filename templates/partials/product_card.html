@@ -1,0 +1,37 @@
+<article class="product-offer-card">
+    <div class="product-offer-media">
+        {% if product['image'] %}
+        {% if product['image'].startswith('http://') or product['image'].startswith('https://') %}
+        <img src="{{ product['image'] }}" alt="{{ product['name'] }}" loading="lazy">
+        {% else %}
+        <img src="{{ url_for('static', filename=product['image']) }}" alt="{{ product['name'] }}" loading="lazy">
+        {% endif %}
+        {% else %}
+        <div class="product-image-placeholder" aria-hidden="true"><i class="fas fa-prescription-bottle-alt"></i></div>
+        {% endif %}
+        {% if product['featured'] %}<span class="product-offer-badge">Weekly pick</span>{% endif %}
+    </div>
+    <div class="product-offer-body">
+        <div class="product-offer-category">{{ product['category'] }}</div>
+        <h3 class="product-offer-title">{{ product['name'] }}</h3>
+        {% if product['description'] %}<p class="product-offer-description">{{ product['description'] }}</p>{% endif %}
+        {% if product['price'] is not none %}
+        <div class="product-price-line">
+            <span class="product-current-price">TT$ {{ '%.2f'|format(product['price']) }}</span>
+            {% if product['list_price'] is not none and product['list_price'] > product['price'] %}
+            <span class="product-list-price">List: TT$ {{ '%.2f'|format(product['list_price']) }}</span>
+            {% endif %}
+        </div>
+        {% if product['savings'] is not none or product['savings_percent'] is not none %}
+        <div class="product-savings">
+            {% if product['savings'] is not none %}Save TT$ {{ '%.2f'|format(product['savings']) }}{% endif %}
+            {% if product['savings_percent'] is not none %}{% if product['savings'] is not none %} · {% endif %}{{ '%.0f'|format(product['savings_percent']) }}% off{% endif %}
+        </div>
+        {% endif %}
+        {% endif %}
+        <div class="product-offer-footer">
+            <span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>
+            <a href="{{ url_for('contact') }}" class="product-order-button">Contact to order</a>
+        </div>
+    </div>
+</article>

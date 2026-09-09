@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms &amp; Conditions - Park View Drugs</title>
+    <meta name="description" content="Park View Drugs - Your trusted local pharmacy in Esperance, San Fernando. Prescription refills, minor ailment treatment, vaccinations, and personalized care.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Raleway:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/pages.css">
+    <link rel="icon" type="image/png" href="/static/images/logo.png">
+    
+</head>
+<body class="">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <div class="contact-bar">
+    <div class="container">
+        <span><i class="fas fa-phone-alt"></i> Call us: <a href="tel:868223-7508">(868) 223-7508</a></span>
+        <span><i class="fas fa-map-marker-alt"></i> Esperance, San Fernando, Trinidad &amp; Tobago</span>
+        <span><i class="fas fa-clock"></i> Mon-Fri: 8AM-6PM | Sat: 8AM-3PM</span>
+    </div>
+</div>
+    <header class="site-header">
+    <div class="header-top">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <img src="/static/images/logo.png" alt="Park View Drugs Logo" height="50">
+            </a>
+
+            <div class="header-search">
+                <form role="search" class="search-form" action="/products/" method="get">
+                    <label for="header-search" class="sr-only">Search</label>
+                    <input type="search" id="header-search" name="keywords" class="search-input" placeholder="Search products..." autocomplete="off">
+                    <button type="submit" class="search-btn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <button class="btn btn-pharmacy" onclick="openPharmacyFinder()">
+                <i class="fas fa-map-marker-alt"></i> Visit Our Store
+            </button>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+
+    <nav class="main-nav" id="mainNav" role="navigation" aria-label="Menu">
+        <div class="container">
+            <ul class="nav-list">
+                <li class="nav-item has-dropdown">
+                    <a href="/services/">Services <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <h4><a href="/services/">Clinical Services</a></h4>
+                                <ul>
+                                    <li><a href="/services/minor-ailment">Minor Ailment Assessment</a></li>
+                                    <li><a href="/services/vaccinations/">Vaccinations</a></li>
+                                    <li><a href="/services/prescription-refills/">Prescription Refills</a></li>
+                                    <li><a href="/services/compounding/">Compounding</a></li>
+                                    <li><a href="/services/medication-review/">Medication Review</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-col">
+                                <h4><a href="/services/">Pharmacy Services</a></h4>
+                                <ul>
+                                    <li><a href="/services/delivery/">Home Delivery</a></li>
+                                    <li><a href="/minor-ailment/">Minor Ailment Treatment</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="/products/">Products & Rewards <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <h4><a href="/products/">Products</a></h4>
+                                <ul>
+                                    <li><a href="/products/?category=OTC">Over-the-Counter</a></li>
+                                    <li><a href="/products/?category=Vitamins">Vitamins & Supplements</a></li>
+                                    <li><a href="/products/?category=Natural">Natural Health</a></li>
+                                    <li><a href="/products/?category=Personal+Care">Personal Care</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-col">
+                                <h4>Rewards</h4>
+                                <ul>
+                                    <li><a href="/weekly-flyer/">Weekly Flyer</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="/minor-ailment/">Health Advice <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <ul>
+                                    <li><a href="/products/">Medication & Product Search</a></li>
+                                    <li><a href="/minor-ailment/">Minor Ailments</a></li>
+                                    <li><a href="/products/?category=Natural">Natural Health Products</a></li>
+                                    <li><a href="/services/">Pharmacy Advice</a></li>
+                                    <li><a href="/contact/">Community Support</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="/about/">About Us <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <div class="dropdown-grid">
+                            <div class="dropdown-col">
+                                <ul>
+                                    <li><a href="/about/">Our Story</a></li>
+                                    <li><a href="/contact/">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="/weekly-flyer/">Weekly Flyer</a></li>
+                <li class="nav-item"><a href="/contact/" class="nav-find"><i class="fas fa-search-location"></i> Find Us</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <main id="main-content">
+        
+<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #1E471C 100%);"><div class="container"><h1>Terms &amp; Conditions</h1><p>Park View Drugs information</p></div></section>
+<section class="page-section"><div class="container" style="max-width:800px;">
+  
+  <h2>Website use</h2><p>This website provides information about Park View Drugs, its services, and promotions. Product availability and promotional terms may change without notice.</p>
+  
+  <p style="margin-top:24px;color:var(--color-text-body);">Last updated: September 2026</p>
+</div></section>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/contact/">Contact Us</a></li>
+                    <li><a href="/services/prescription-refills/">Refill Prescription</a></li>
+                    <li><a href="/weekly-flyer/">Weekly Flyer</a></li>
+                    <li><a href="/products/">Products & Rewards</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4><a href="/services/">Services</a></h4>
+                <ul>
+                    <li><a href="/minor-ailment/">Minor Ailment Prescribing</a></li>
+                    <li><a href="/services/vaccinations/">Vaccinations</a></li>
+                    <li><a href="/services/delivery/">Home Delivery</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/legal/terms/">Terms & Conditions</a></li>
+                    <li><a href="/legal/privacy/">Privacy Policy</a></li>
+                    <li><a href="/legal/disclaimer/">Health Disclaimer</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-app">
+                <img src="/static/images/logo.png" alt="Park View Drugs" class="footer-app-logo" height="40">
+                <h4>Park View Drugs</h4>
+                <p>Your trusted local pharmacy serving the San Fernando community.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/pvdrugs/" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo-bottom">
+                <img src="/static/images/logo.png" alt="Park View Drugs" height="36">
+            </div>
+            <p>&copy; 2026 Park View Drugs. All rights reserved. | Esperance, San Fernando, Trinidad &amp; Tobago</p>
+        </div>
+    </div>
+</footer>
+    <div class="modal-overlay" id="pharmacyModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closePharmacyFinder()">&times;</button>
+        <h3>Visit Park View Drugs</h3>
+        <p>We're located near San Fernando. Give us a call or stop by during business hours.</p>
+        <div style="margin-bottom: 20px;">
+            <p style="margin-bottom: 8px;"><i class="fas fa-map-marker-alt" style="color: var(--color-primary); width: 20px;"></i> S.S. Erin Road, Esperance, Trinidad &amp; Tobago</p>
+            <p style="margin-bottom: 8px;"><i class="fas fa-phone-alt" style="color: var(--color-primary); width: 20px;"></i> <a href="tel:868223-7508">(868) 223-7508</a></p>
+            <p style="margin-bottom: 8px;"><i class="fas fa-clock" style="color: var(--color-primary); width: 20px;"></i> Mon-Fri: 8AM-6PM</p>
+            <p><i class="fas fa-clock" style="color: var(--color-primary); width: 20px;"></i> Sat: 8AM-3PM</p>
+        </div>
+        <a href="https://www.facebook.com/pvdrugs/" class="btn btn-primary" target="_blank"><i class="fab fa-facebook-f"></i> Follow Us on Facebook</a>
+    </div>
+</div>
+
+    <script src="/static/js/scripts.js"></script>
+    
+</body>
+</html>

@@ -2,8 +2,8 @@
 
 A full-stack pharmacy website built with **Flask**, **SQLite**, and **Vanilla JS/CSS**, serving the Esperance, San Fernando community in Trinidad & Tobago.
 
-**Live (Tailscale):** http://100.89.199.87:5000/  
-**Admin Panel:** http://100.89.199.87:5000/admin/login  
+**Live (Tailscale):** http://100.89.199.87:5050/
+**Admin Panel:** http://100.89.199.87:5050/admin/login
 **Facebook:** https://www.facebook.com/pvdrugs/
 
 ---
@@ -54,8 +54,8 @@ py -3.11 -m venv .venv
 The app initializes the SQLite database automatically on first run with seed data (services, flyer deals, site settings).
 
 ### Access
-- **Main site:** http://127.0.0.1:5000/
-- **Admin panel:** http://127.0.0.1:5000/admin/login — password is configured through `PARKVIEW_ADMIN_PASSWORD_HASH`
+- **Main site:** http://127.0.0.1:5050/
+- **Admin panel:** http://127.0.0.1:5050/admin/login — username is configured through `PARKVIEW_ADMIN_USERNAME`, password through `PARKVIEW_ADMIN_PASSWORD_HASH`
 
 ---
 
@@ -146,7 +146,7 @@ site_settings (key, value)
 
 ## Admin Panel
 
-Access at `/admin/login` with the password configured through `PARKVIEW_ADMIN_PASSWORD_HASH` (or the temporary `PARKVIEW_ADMIN_PASSWORD` compatibility setting).
+Access at `/admin/login` with the username configured through `PARKVIEW_ADMIN_USERNAME` and the password configured through `PARKVIEW_ADMIN_PASSWORD_HASH` (or the temporary `PARKVIEW_ADMIN_PASSWORD` compatibility setting).
 
 ### Features
 - **Dashboard** — Record counts for all tables with quick-action buttons
@@ -208,8 +208,8 @@ Access at `/admin/login` with the password configured through `PARKVIEW_ADMIN_PA
 The app is published on a Tailscale mesh network for secure remote access:
 
 ```
-http://100.89.199.87:5000/   — Tailscale IP (hpwin11)
-http://hpwin11:5000/         — Tailscale MagicDNS hostname
+http://100.89.199.87:5050/   — Tailscale IP (hpwin11)
+http://hpwin11:5050/         — Tailscale MagicDNS hostname
 ```
 
 The production server binds to 127.0.0.1 and the Tailscale IP only — it is NOT exposed on the LAN.
@@ -217,7 +217,7 @@ The production server binds to 127.0.0.1 and the Tailscale IP only — it is NOT
 To connect from another device:
 1. Install [Tailscale](https://tailscale.com/download) on your device
 2. Sign in to the same Tailscale account (`wecaregd2026@`)
-3. Open `http://hpwin11:5000/` in your browser
+3. Open `http://hpwin11:5050/` in your browser
 
 ### Persistence
 

@@ -4,7 +4,7 @@
     The task auto-starts at system boot and runs whether any user is logged in.
 .DESCRIPTION
     Run this once as Administrator to register the task.
-    The app will be available at http://100.89.199.87:5000/ on Tailscale
+    The app will be available at http://100.89.199.87:5050/ on Tailscale
     even when Hermes/terminal is closed.
 #>
 
@@ -105,7 +105,7 @@ $healthy = $false
 for ($i = 0; $i -lt 30; $i++) {
     Start-Sleep -Seconds 1
     try {
-        $h = Invoke-RestMethod -Uri 'http://127.0.0.1:5000/healthz' -TimeoutSec 3
+        $h = Invoke-RestMethod -Uri 'http://127.0.0.1:5050/healthz' -TimeoutSec 3
         if ($h.status -eq 'ok') { $healthy = $true; break }
     } catch { }
 }
@@ -115,11 +115,11 @@ if ($healthy) {
     Write-Host "WARNING: app did not report healthy within 30 s. Check $AppDir\server.log" -ForegroundColor Yellow
 }
 
-# Tailscale-only firewall rule for port 5000 (idempotent)
+# Tailscale-only firewall rule for port 5050 (idempotent)
 $fwRule = Get-NetFirewallRule -DisplayName 'ParkViewDrugs-Tailscale' -ErrorAction SilentlyContinue
 if (-not $fwRule) {
     try {
-        New-NetFirewallRule -DisplayName 'ParkViewDrugs-Tailscale' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5000 -InterfaceAlias 'Tailscale' | Out-Null
+        New-NetFirewallRule -DisplayName 'ParkViewDrugs-Tailscale' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5050 -InterfaceAlias 'Tailscale' | Out-Null
         Write-Host "[OK] Firewall rule 'ParkViewDrugs-Tailscale' created (Tailscale interface only)." -ForegroundColor Green
     } catch {
         Write-Host "WARNING: could not create firewall rule: $_" -ForegroundColor Yellow
@@ -149,9 +149,9 @@ if (-not $tsIP) { $tsIP = "100.x.y.z" }
 
 Write-Host ""
 Write-Host "=== Access URLs ===" -ForegroundColor Green
-Write-Host "  Local:      http://127.0.0.1:5000/"
-Write-Host "  Tailscale:  http://$tsIP:5000/"
-Write-Host "  Admin:      http://$tsIP:5000/admin/login"
+Write-Host "  Local:      http://127.0.0.1:5050/"
+Write-Host "  Tailscale:  http://$tsIP:5050/"
+Write-Host "  Admin:      http://$tsIP:5050/admin/login"
 Write-Host ""
 Write-Host "Log file: $AppDir\server.log" -ForegroundColor Cyan
 Write-Host ""

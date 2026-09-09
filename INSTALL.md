@@ -1,6 +1,6 @@
 # Park View Drugs — Server Installation Guide
 
-Flask + SQLite pharmacy website, served by Waitress on port 5000 over Tailscale.
+Flask + SQLite pharmacy website, served by Waitress on port 5050 over Tailscale.
 This guide is for installing on a NEW server (Windows or Linux).
 
 ---
@@ -70,16 +70,16 @@ README.md               Full project documentation
 
 6. **Open the firewall for Tailscale only** (admin PowerShell):
    ```powershell
-   New-NetFirewallRule -DisplayName 'ParkViewDrugs-Tailscale' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5000 -InterfaceAlias 'Tailscale'
+   New-NetFirewallRule -DisplayName 'ParkViewDrugs-Tailscale' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5050 -InterfaceAlias 'Tailscale'
    ```
 
 7. **Verify**:
    ```bat
-   curl http://127.0.0.1:5000/healthz      :: expect {"status":"ok",...}
-   curl http://127.0.0.1:5000/             :: expect 200
-   curl http://<tailscale-ip>:5000/        :: expect 200
+   curl http://127.0.0.1:5050/healthz      :: expect {"status":"ok",...}
+   curl http://127.0.0.1:5050/             :: expect 200
+   curl http://<tailscale-ip>:5050/        :: expect 200
    ```
-   Open `http://<tailscale-ip>:5000/admin/login` in a browser and log in with the
+   Open `http://<tailscale-ip>:5050/admin/login` in a browser and log in with the
    password you set in step 4.
 
 > **Dependencies are verified automatically**: `install_service.ps1` runs
@@ -158,8 +158,8 @@ permitted by the tailnet policy.
   package or in git.** Always generate fresh ones per server (`setup_env.ps1` /
   Linux env file).
 - The production server binds loopback + Tailscale only — it is NOT exposed on
-  the LAN. Verify with `netstat -ano | findstr :5000` (Windows) — you should see
-  only `127.0.0.1:5000` and your `100.x.y.z:5000`.
+  the LAN. Verify with `netstat -ano | findstr :5050` (Windows) — you should see
+  only `127.0.0.1:5050` and your `100.x.y.z:5050`.
 - Admin session cookie is HttpOnly + SameSite=Lax. Set `PARKVIEW_COOKIE_SECURE=true`
   only behind HTTPS (e.g. Cloudflare Tunnel or Tailscale Serve with HTTPS).
 

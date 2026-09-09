@@ -3,15 +3,15 @@
 ## Project Overview
 **Park View Drugs** — a locally owned pharmacy in **Esperance, San Fernando, Trinidad & Tobago**. Full-stack Flask + SQLite web application with admin panel.
 
-**Live at (Tailscale):** http://100.89.199.87:5000/ (hpwin11 — tailnet wecaregd2026@)
-**Local:** http://127.0.0.1:5000/
-**Admin:** http://127.0.0.1:5000/admin/login — password via machine env var `PARKVIEW_ADMIN_PASSWORD_HASH` (set 2026-08-22; see .env.example to regenerate)
+**Live at (Tailscale):** http://100.89.199.87:5050/ (hpwin11 — tailnet wecaregd2026@)
+**Local:** http://127.0.0.1:5050/
+**Admin:** http://127.0.0.1:5050/admin/login — username `Admin`, password configured via the private runtime settings
 **Facebook:** https://www.facebook.com/pvdrugs/
 
 ---
 
 ## Tech Stack
-- **Backend:** Python 3.11 + Flask (debug mode, port 5000)
+- **Backend:** Python 3.11 + Flask (debug mode, port 5050)
 - **Database:** SQLite at `instance/parkview.db`
 - **Frontend:** HTML5, Vanilla CSS3 (CSS variable tokens), Vanilla JavaScript
 - **Fonts:** Google Fonts — Open Sans, Poppins, Raleway, Inter, Outfit
@@ -160,7 +160,7 @@ C:\aa-NewWeb\
 ## Admin Panel
 
 ### Access
-- **URL:** http://127.0.0.1:5000/admin/login (or http://100.89.199.87:5000/admin/login over Tailscale)
+- **URL:** http://127.0.0.1:5050/admin/login (or http://100.89.199.87:5050/admin/login over Tailscale)
 - **Password:** set via machine-level env var `PARKVIEW_ADMIN_PASSWORD_HASH` (werkzeug scrypt hash, generated 2026-08-22). The SYSTEM scheduled task reads machine env vars, so user-level vars won't work.
 - **Secret key:** machine env var `PARKVIEW_SECRET_KEY` (also required for the SYSTEM task).
 

@@ -1,5 +1,5 @@
-Write-Host "=== Firewall Rules for Port 5000 ==="
-$rules = Get-NetFirewallRule -Direction Inbound | Where-Object { $_.LocalPort -eq 5000 -or $_.DisplayName -like "*Park*" -or $_.DisplayName -like "*Flask*" -or $_.DisplayName -like "*5000*" } | ForEach-Object {
+Write-Host "=== Firewall Rules for Port 5050 ==="
+$rules = Get-NetFirewallRule -Direction Inbound | Where-Object { $_.LocalPort -eq 5050 -or $_.DisplayName -like "*Park*" -or $_.DisplayName -like "*Flask*" -or $_.DisplayName -like "*5050*" } | ForEach-Object {
     $obj = $_ | Get-NetFirewallAddressFilter
     [PSCustomObject]@{
         Name = $_.DisplayName
@@ -10,13 +10,13 @@ $rules = Get-NetFirewallRule -Direction Inbound | Where-Object { $_.LocalPort -e
     }
 }
 if ($rules) { $rules | Format-Table -AutoSize }
-else { Write-Host "No rules found for port 5000." -ForegroundColor Yellow }
+else { Write-Host "No rules found for port 5050." -ForegroundColor Yellow }
 
-Write-Host "`n=== All Inbound Rules on TCP 5000 ==="
-Get-NetFirewallPortFilter -Protocol TCP | Where-Object { $_.LocalPort -eq 5000 } | ForEach-Object {
+Write-Host "`n=== All Inbound Rules on TCP 5050 ==="
+Get-NetFirewallPortFilter -Protocol TCP | Where-Object { $_.LocalPort -eq 5050 } | ForEach-Object {
     $rule = $_ | Get-NetFirewallRule
     Write-Host "  $($rule.DisplayName) - Enabled=$($rule.Enabled) Action=$($rule.Action)"
 }
 
 Write-Host "`n=== Test Listeners ==="
-netstat -ano | Select-String ":5000"
+netstat -ano | Select-String ":5050"

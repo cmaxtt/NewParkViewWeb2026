@@ -30,7 +30,7 @@ Write-Host "Task state: $state"
 
 # Test if responding
 try {
-    $r = Invoke-WebRequest -Uri 'http://127.0.0.1:5000/' -TimeoutSec 5 -UseBasicParsing
+    $r = Invoke-WebRequest -Uri 'http://127.0.0.1:5050/' -TimeoutSec 5 -UseBasicParsing
     Write-Host "App responding: HTTP $($r.StatusCode)" -ForegroundColor Green
 } catch {
     Write-Host "App not yet responding (may need a few seconds)..." -ForegroundColor Yellow
@@ -40,6 +40,6 @@ Write-Host ""
 Write-Host "=== Access ===" -ForegroundColor Green
 $tsIP = (& tailscale ip -4 2>$null | Select-Object -First 1)
 if (-not $tsIP) { $tsIP = "100.x.y.z" }
-Write-Host "  Local:      http://127.0.0.1:5000/"
-Write-Host "  Tailscale:  http://$tsIP:5000/"
-Write-Host "  Admin:      http://$tsIP:5000/admin/login"
+Write-Host "  Local:      http://127.0.0.1:5050/"
+Write-Host "  Tailscale:  http://$tsIP:5050/"
+Write-Host "  Admin:      http://$tsIP:5050/admin/login"

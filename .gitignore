@@ -40,3 +40,4 @@ Thumbs.db
 # Gitignore for old files — keep them local for reference
 *.txt
 🛠️*
+.parkview.env

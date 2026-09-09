@@ -18,7 +18,7 @@ https://shop.<your-domain>
 Private administrator access:
 
 ```text
-http://127.0.0.1:5000/admin/login
+http://127.0.0.1:5050/admin/login
 ```
 
 or through a private Tailscale hostname after Tailscale Serve is configured.
@@ -28,7 +28,7 @@ or through a private Tailscale hostname after Tailscale Serve is configured.
 - Flask application entry point: `app.py`
 - Production entry point: `run_prod.py`
 - Production server: Waitress
-- Current application port: `5000`
+- Current application port: `5050`
 - Current scheduled launcher: `start_server.bat`
 - Existing Windows scheduled-task installers:
   - `install_service.ps1`
@@ -47,7 +47,7 @@ Cloudflare DNS + Cloudflare Tunnel
     |
     | local tunnel connection
     v
-127.0.0.1:5000
+127.0.0.1:5050
     |
     v
 Waitress -> Flask application -> SQLite database
@@ -58,7 +58,7 @@ Administrator
 Tailscale private network / Tailscale Serve
     |
     v
-127.0.0.1:5000/admin/login
+127.0.0.1:5050/admin/login
 ```
 
 The application should listen only on `127.0.0.1` once the tunnel and private proxy are working. This prevents direct access from the local LAN and leaves Cloudflare/Tailscale as the controlled entry points.
@@ -95,7 +95,7 @@ The current development fallback password should not be used once the site is pu
 4. Configure the tunnel origin as:
 
    ```text
-   http://127.0.0.1:5000
+   http://127.0.0.1:5050
    ```
 
 5. Route `shop.<your-domain>` to the tunnel.
@@ -111,7 +111,7 @@ credentials-file: C:\\Users\\<windows-user>\\.cloudflared\\<tunnel-id>.json
 
 ingress:
   - hostname: shop.<your-domain>
-    service: http://127.0.0.1:5000
+    service: http://127.0.0.1:5050
   - service: http_status:404
 ```
 
@@ -123,7 +123,7 @@ Use Tailscale for private administration and maintenance.
 
 1. Keep Tailscale installed and signed in on the server computer.
 2. Confirm the administrator devices belong to the same tailnet.
-3. Use Tailscale Serve to proxy a private HTTPS endpoint to `127.0.0.1:5000`, or use an equivalent private Tailscale route.
+3. Use Tailscale Serve to proxy a private HTTPS endpoint to `127.0.0.1:5050`, or use an equivalent private Tailscale route.
 4. Restrict access through the Tailscale ACL policy to administrator devices or users.
 5. Use the private Tailscale address for `/admin/login` and maintenance work.
 
@@ -147,7 +147,7 @@ Create or update two persistent services/tasks:
 - Restarts after failure.
 - Writes a separate tunnel log.
 
-Start the Flask service before the tunnel, or configure the tunnel service to retry until port `5000` is available.
+Start the Flask service before the tunnel, or configure the tunnel service to retry until port `5050` is available.
 
 ## Security Checklist
 
@@ -156,7 +156,7 @@ Start the Flask service before the tunnel, or configure the tunnel service to re
 - [ ] Disable Flask debug mode.
 - [ ] Enable secure session cookies.
 - [ ] Bind the origin to `127.0.0.1`.
-- [ ] Do not open router port `5000`.
+- [ ] Do not open router port `5050`.
 - [ ] Restrict Tailscale access with ACLs.
 - [ ] Protect admin access with Tailscale and/or Cloudflare Access.
 - [ ] Keep tunnel credentials outside the repository.
@@ -168,7 +168,7 @@ Start the Flask service before the tunnel, or configure the tunnel service to re
 
 ### Local origin
 
-- `http://127.0.0.1:5000/` returns HTTP 200.
+- `http://127.0.0.1:5050/` returns HTTP 200.
 - `/products?category=Vitamins` returns the product listing.
 - Product images return HTTP 200.
 - Admin login accepts the configured password hash.

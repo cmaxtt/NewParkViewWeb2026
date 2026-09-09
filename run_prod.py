@@ -15,10 +15,10 @@ Usage:
     python run_prod.py
 
 Access:
-    Local:      http://127.0.0.1:5000
-    Tailscale:  http://<this-machine's-tailscale-ip>:5000
-    Admin:      http://127.0.0.1:5000/admin/login
-    Health:     http://127.0.0.1:5000/healthz
+    Local:      http://127.0.0.1:5050
+    Tailscale:  http://<this-machine's-tailscale-ip>:5050
+    Admin:      http://127.0.0.1:5050/admin/login
+    Health:     http://127.0.0.1:5050/healthz
 """
 import logging
 import os
@@ -63,17 +63,18 @@ if __name__ == "__main__":
         init_db()
 
     tailscale_ip = detect_tailscale_ip() or os.environ.get("PARKVIEW_TAILSCALE_IP") or None
-    binds = ["127.0.0.1:5000"]
+    port = int(os.environ.get('PARKVIEW_PORT', '5050'))
+    binds = [f"127.0.0.1:{port}"]
     if tailscale_ip:
-        binds.append(f"{tailscale_ip}:5000")
+        binds.append(f"{tailscale_ip}:{port}")
 
     print("=" * 52)
     print("  Park View Drugs - Production Server")
     print("=" * 52)
-    print(f"  Local:      http://127.0.0.1:5000")
-    print(f"  Tailscale:  http://{tailscale_ip or '(not detected - loopback only)'}:5000")
-    print(f"  Admin:      http://127.0.0.1:5000/admin/login")
-    print(f"  Health:     http://127.0.0.1:5000/healthz")
+    print(f"  Local:      http://127.0.0.1:{port}")
+    print(f"  Tailscale:  http://{tailscale_ip or '(not detected - loopback only)'}:{port}")
+    print(f"  Admin:      http://127.0.0.1:{port}/admin/login")
+    print(f"  Health:     http://127.0.0.1:{port}/healthz")
     print("=" * 52)
     print("  Server: Waitress (threads=4)")
     print(f"  Bind:   {', '.join(binds)} (no LAN exposure)")

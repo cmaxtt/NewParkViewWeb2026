@@ -13,6 +13,27 @@ from urllib.parse import urlparse
 from flask import Flask, render_template, request, jsonify, g, session, redirect, url_for, abort, make_response
 from werkzeug.security import check_password_hash
 
+
+def _load_local_runtime_settings():
+    """Load ignored per-machine overrides when service environment variables are unavailable."""
+    settings_path = os.path.join(os.path.dirname(__file__), '.parkview.env')
+    if not os.path.exists(settings_path):
+        return
+    try:
+        with open(settings_path, encoding='utf-8') as settings_file:
+            for raw_line in settings_file:
+                line = raw_line.strip()
+                if not line or line.startswith('#') or '=' not in line:
+                    continue
+                key, value = line.split('=', 1)
+                if key in {'PARKVIEW_PORT', 'PARKVIEW_ADMIN_USERNAME', 'PARKVIEW_ADMIN_PASSWORD_HASH'}:
+                    os.environ[key.strip()] = value.strip()
+    except OSError:
+        pass
+
+
+_load_local_runtime_settings()
+
 app = Flask(__name__)
 _secret_key = os.environ.get('PARKVIEW_SECRET_KEY')
 app.config['SECRET_KEY'] = _secret_key or secrets.token_hex(32)
@@ -21,6 +42,8 @@ if not _secret_key:
                        'Admin sessions will be invalidated on every restart. '
                        'Run setup_env.ps1 (Windows) or set PARKVIEW_SECRET_KEY (Linux).')
 app.config['DATABASE'] = os.path.join(app.instance_path, 'parkview.db')
+app.config['PORT'] = int(os.environ.get('PARKVIEW_PORT', '5050'))
+app.config['ADMIN_USERNAME'] = os.environ.get('PARKVIEW_ADMIN_USERNAME', 'Admin')
 app.config['ADMIN_PASSWORD'] = os.environ.get('PARKVIEW_ADMIN_PASSWORD', '')
 app.config['ADMIN_PASSWORD_HASH'] = os.environ.get('PARKVIEW_ADMIN_PASSWORD_HASH', '')
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
@@ -59,6 +82,9 @@ TABLES = {
             'description': {'label': 'Description', 'type': 'textarea',  'required': False},
             'category':    {'label': 'Category',    'type': 'select',    'required': True, 'options': ['OTC','Vitamins','Natural','Personal Care','General']},
             'price':       {'label': 'Price',       'type': 'number',    'required': False, 'step': '0.01'},
+            'list_price':  {'label': 'List Price',  'type': 'number',    'required': False, 'step': '0.01'},
+            'savings':     {'label': 'Savings',     'type': 'number',    'required': False, 'step': '0.01'},
+            'savings_percent': {'label': 'Savings %', 'type': 'number',  'required': False, 'step': '0.01'},
             'image':       {'label': 'Image URL',   'type': 'text',      'required': False},
             'featured':    {'label': 'Featured',    'type': 'checkbox',  'required': False},
             'created_at':  {'label': 'Created',     'type': 'readonly'},
@@ -72,6 +98,11 @@ TABLES = {
             'id':          {'label': 'ID',          'type': 'id'},
             'title':       {'label': 'Title',       'type': 'text',      'required': True},
             'description': {'label': 'Description', 'type': 'textarea',  'required': True},
+            'image':       {'label': 'Product Image', 'type': 'text',    'required': False, 'placeholder': 'images/tylenol.png'},
+            'price':       {'label': 'Price',       'type': 'number',    'required': False, 'step': '0.01'},
+            'list_price':  {'label': 'List Price',  'type': 'number',    'required': False, 'step': '0.01'},
+            'savings':     {'label': 'Savings',     'type': 'number',    'required': False, 'step': '0.01'},
+            'savings_percent': {'label': 'Savings %', 'type': 'number',  'required': False, 'step': '0.01'},
             'icon':        {'label': 'Icon Class',  'type': 'text',      'required': True, 'placeholder': 'fas fa-tag'},
             'color_start': {'label': 'Start Color', 'type': 'color',     'required': False, 'placeholder': '#E8F5E9'},
             'color_end':   {'label': 'End Color',   'type': 'color',     'required': False, 'placeholder': '#A5D6A7'},
@@ -175,6 +206,42 @@ def init_db():
     db = get_db()
     with app.open_resource('database/schema.sql', mode='r') as f:
         db.executescript(f.read())
+    # Keep existing installations in sync with the schema used for new databases.
+    # SQLite does not apply new CREATE TABLE columns to an already-created table.
+    product_columns = {row['name'] for row in db.execute('PRAGMA table_info(products)').fetchall()}
+    product_columns_to_add = {
+        'list_price': 'DECIMAL(10,2)',
+        'savings': 'DECIMAL(10,2)',
+        'savings_percent': 'DECIMAL(5,2)',
+    }
+    for column_name, column_type in product_columns_to_add.items():
+        if column_name not in product_columns:
+            db.execute(f'ALTER TABLE products ADD COLUMN {column_name} {column_type}')
+    flyer_columns = {row['name'] for row in db.execute('PRAGMA table_info(flyer_deals)').fetchall()}
+    flyer_columns_to_add = {
+        'image': 'TEXT',
+        'price': 'DECIMAL(10,2)',
+        'list_price': 'DECIMAL(10,2)',
+        'savings': 'DECIMAL(10,2)',
+        'savings_percent': 'DECIMAL(5,2)',
+    }
+    for column_name, column_type in flyer_columns_to_add.items():
+        if column_name not in flyer_columns:
+            db.execute(f'ALTER TABLE flyer_deals ADD COLUMN {column_name} {column_type}')
+    # Remove repeated seed copies while preserving the earliest row for each
+    # distinct deal, then prevent the same duplicate set from returning.
+    db.execute('''
+        DELETE FROM flyer_deals
+        WHERE id NOT IN (
+            SELECT MIN(id)
+            FROM flyer_deals
+            GROUP BY title, description, valid_until
+        )
+    ''')
+    db.execute('''
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_flyer_deals_unique
+        ON flyer_deals (title, description, valid_until)
+    ''')
     db.commit()
 
 def dict_from_row(row):
@@ -201,6 +268,23 @@ def login_required(f):
             return redirect(url_for('admin_login', next=request.path))
         return f(*args, **kwargs)
     return decorated_function
+
+
+def _populate_product_pricing(values):
+    """Fill optional savings fields when an admin enters price and list price."""
+    def number(value):
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return None
+
+    price = number(values.get('price'))
+    list_price = number(values.get('list_price'))
+    if values.get('savings') is None and price is not None and list_price is not None:
+        values['savings'] = round(max(list_price - price, 0), 2)
+    if values.get('savings_percent') is None and price is not None and list_price:
+        values['savings_percent'] = round(max(list_price - price, 0) / list_price * 100, 2)
+    return values
 
 # ── Context Processors ────────────────────────────────────
 
@@ -284,10 +368,27 @@ def contact():
 def weekly_flyer():
     db = get_db()
     try:
-        deals = db.execute('SELECT * FROM flyer_deals').fetchall()
+        deals = db.execute('''
+            SELECT d.*
+            FROM flyer_deals d
+            WHERE d.id = (
+                SELECT MIN(older.id)
+                FROM flyer_deals older
+                WHERE older.title = d.title
+                  AND older.description = d.description
+                  AND older.valid_until = d.valid_until
+            )
+            ORDER BY d.id ASC
+        ''').fetchall()
     except Exception:
         deals = []
-    return render_template('weekly-flyer.html', deals=deals)
+    try:
+        products_list = db.execute(
+            'SELECT * FROM products WHERE featured = 1 ORDER BY id DESC LIMIT 24'
+        ).fetchall()
+    except Exception:
+        products_list = []
+    return render_template('weekly-flyer.html', deals=deals, products=products_list)
 
 @app.route('/products')
 def products():
@@ -334,12 +435,14 @@ ADMIN_TABLES = ['services', 'products', 'flyer_deals', 'contact_messages', 'news
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
+        username = request.form.get('username', '').strip()
         password = request.form.get('password', '')
+        valid_username = hmac.compare_digest(username, app.config['ADMIN_USERNAME'])
         configured_hash = app.config['ADMIN_PASSWORD_HASH']
         valid_password = bool(configured_hash and check_password_hash(configured_hash, password))
         if not configured_hash and app.config['ADMIN_PASSWORD']:
             valid_password = hmac.compare_digest(password, app.config['ADMIN_PASSWORD'])
-        if valid_password:
+        if valid_username and valid_password:
             session['admin_logged_in'] = True
             session.pop('_csrf_token', None)
             next_page = request.args.get('next', '')
@@ -347,7 +450,7 @@ def admin_login():
             if not next_page or parsed_next.scheme or parsed_next.netloc or not next_page.startswith('/'):
                 next_page = url_for('admin_dashboard')
             return redirect(next_page)
-        return render_template('admin/login.html', error='Invalid password.')
+        return render_template('admin/login.html', error='Invalid username or password.')
     return render_template('admin/login.html')
 
 @app.route('/admin/logout')
@@ -362,7 +465,17 @@ def admin_dashboard():
     stats = {}
     for tbl in ADMIN_TABLES:
         try:
-            count = db.execute(f'SELECT COUNT(*) as c FROM {tbl}').fetchone()['c']
+            if tbl == 'flyer_deals':
+                count = db.execute('''
+                    SELECT COUNT(*) AS c
+                    FROM (
+                        SELECT title, description, valid_until
+                        FROM flyer_deals
+                        GROUP BY title, description, valid_until
+                    )
+                ''').fetchone()['c']
+            else:
+                count = db.execute(f'SELECT COUNT(*) as c FROM {tbl}').fetchone()['c']
         except Exception:
             count = 0
         stats[tbl] = count
@@ -377,7 +490,21 @@ def admin_table_list(table_name):
     db = get_db()
     try:
         order = meta.get('order', 'id DESC')
-        rows = db.execute(f'SELECT * FROM {table_name} ORDER BY {order}').fetchall()
+        if table_name == 'flyer_deals':
+            rows = db.execute('''
+                SELECT d.*
+                FROM flyer_deals d
+                WHERE d.id = (
+                    SELECT MIN(older.id)
+                    FROM flyer_deals older
+                    WHERE older.title = d.title
+                      AND older.description = d.description
+                      AND older.valid_until = d.valid_until
+                )
+                ORDER BY d.id DESC
+            ''').fetchall()
+        else:
+            rows = db.execute(f'SELECT * FROM {table_name} ORDER BY {order}').fetchall()
     except Exception:
         rows = []
     return render_template('admin/table_list.html', table_name=table_name, meta=meta, rows=rows)
@@ -406,6 +533,9 @@ def admin_table_add(table_name):
             cols.append(field_name)
             vals.append(val if val else None)
             placeholders.append('?')
+        if table_name in {'products', 'flyer_deals'}:
+            pricing = _populate_product_pricing(dict(zip(cols, vals)))
+            vals = [pricing[column] for column in cols]
         sql = f'INSERT INTO {table_name} ({", ".join(cols)}) VALUES ({", ".join(placeholders)})'
         try:
             db.execute(sql, vals)
@@ -445,6 +575,11 @@ def admin_table_edit(table_name, record_id):
                 val = 1 if request.form.get(field_name) == 'on' else 0
             set_clauses.append(f'{field_name} = ?')
             vals.append(val if val else None)
+        if table_name in {'products', 'flyer_deals'}:
+            product_fields = [field_name for field_name, field_meta in meta['fields'].items()
+                              if field_name != pk and field_meta['type'] != 'readonly']
+            pricing = _populate_product_pricing(dict(zip(product_fields, vals)))
+            vals = [pricing[field_name] for field_name in product_fields]
         vals.append(record_id)
         sql = f'UPDATE {table_name} SET {", ".join(set_clauses)} WHERE {pk} = ?'
         try:
@@ -543,4 +678,4 @@ if __name__ == '__main__':
     # Development entry only: loopback-bound, debugger OFF unless FLASK_DEBUG=1.
     # Production must use run_prod.py (Waitress, loopback + Tailscale only).
     debug = os.environ.get('FLASK_DEBUG', '').lower() in ('1', 'true', 'yes')
-    app.run(host='127.0.0.1', port=5000, debug=debug)
+    app.run(host='127.0.0.1', port=app.config['PORT'], debug=debug)
