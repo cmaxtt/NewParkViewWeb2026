@@ -42,6 +42,7 @@ A full-stack pharmacy and community healthcare web platform built with **Python 
 
 | Environment | URL | Description |
 |---|---|---|
+| **Public Web (here.now)** | [`https://oaken-realm-e5x3.here.now/`](https://oaken-realm-e5x3.here.now/) | Live global cloud-hosted site |
 | **Localhost** | `http://127.0.0.1:5050/` | Local workstation access |
 | **Remote (Machine IP)** | `http://192.168.100.131:5050/` | Remote network access via machine's primary IPv4 |
 | **Tailscale Mesh** | `http://100.93.42.64:5050/` | Encrypted WireGuard mesh access |
@@ -89,6 +90,9 @@ python run_prod.py
 
 # Or Start Development Server
 python app.py
+
+# Publish to here.now (Static Cloud Hosting)
+python publish_here_now.py
 ```
 
 The database initializes automatically on first run with seeded clinical services, weekly flyer deals, and site settings.

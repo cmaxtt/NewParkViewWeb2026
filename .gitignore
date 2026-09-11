@@ -44,3 +44,6 @@ Thumbs.db
 *.bak
 *.png.bak
 temp*.html
+publish_dist/
+publish_session.json
+publish_result.json
