@@ -1,68 +1,144 @@
-{% extends "base.html" %}
-{% block title %}Weekly Flyer - {{ settings.business_name }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}Weekly Flyer & Savings Deals — {{ settings.business_name }}{% endblock %}
+{% block meta_desc %}Save on vitamins, cold and flu remedies, skincare, and everyday health essentials with the Park View Drugs weekly flyer. Special TTD pricing in Esperance, San Fernando.{% endblock %}
+
 {% block content %}
-<section class="page-hero" style="background: linear-gradient(135deg, #4FB151 0%, #2D8A30 100%);">
+<!-- Weekly Flyer Hero -->
+<section class="page-hero-modern">
     <div class="container">
-        <h1>Weekly Flyer & Savings</h1>
-        <p>Great deals on your favourite health and wellness products.</p>
+        <span class="page-hero-tag">✦ Community Value & Discounts</span>
+        <h1 class="page-hero-title">Weekly Flyer & Promotional Specials</h1>
+        <p class="page-hero-subtitle">Discover handpicked deals on your favourite vitamins, daily medications, and family health essentials. Updated weekly for our community.</p>
     </div>
 </section>
 
-<section class="page-section">
+<!-- Promotional Deals Section -->
+<section class="page-section flyer-section">
     <div class="container">
-        <div style="text-align:center;margin-bottom:40px;">
-            <h2 class="section-title">This Week's Deals</h2>
-            <p style="color:var(--color-text-body);">While supplies last.</p>
+        <div class="section-header-centered">
+            <span class="section-pill-tag">✦ Featured In-Store Offers</span>
+            <h2 class="section-heading-primary">Current Promotional Deals</h2>
+            <p class="section-subtext">Valid while supplies last at our Esperance location. Prices listed in Trinidad & Tobago Dollars (TTD).</p>
         </div>
+
         <div class="flyer-grid">
             {% for deal in deals %}
             <article class="product-offer-card flyer-deal-card">
-                <div class="product-offer-media flyer-deal-media" style="background:linear-gradient(135deg, {{ deal.color_start }}, {{ deal.color_end }});">
+                <div class="product-offer-media flyer-deal-media" style="background:linear-gradient(135deg, {{ deal.color_start if deal.color_start else '#0A2540' }}, {{ deal.color_end if deal.color_end else '#0284C7' }});">
                     {% if deal['image'] %}
                     <img src="{{ url_for('static', filename=deal['image']) }}" alt="{{ deal['title'] }}">
                     {% else %}
-                    <i class="{{ deal.icon }}" style="color:{{ deal.icon_color }};" aria-hidden="true"></i>
+                    <i class="{{ deal.icon }}" style="color:{{ deal.icon_color if deal.icon_color else '#FBBF24' }};" aria-hidden="true"></i>
                     {% endif %}
-                    <span class="product-offer-badge">Weekly deal</span>
+                    
+                    {% if deal.valid_until %}
+                    <span class="product-offer-badge badge-expiration">
+                        <i class="fas fa-clock" aria-hidden="true"></i> Ends {{ deal.valid_until }}
+                    </span>
+                    {% else %}
+                    <span class="product-offer-badge">Weekly Special</span>
+                    {% endif %}
                 </div>
+
                 <div class="product-offer-body">
-                    <div class="product-offer-category">Weekly Savings</div>
+                    <div class="product-offer-category">Promotional Deal</div>
                     <h3 class="product-offer-title">{{ deal.title }}</h3>
                     <p class="product-offer-description">{{ deal.description }}</p>
+
                     {% if deal['price'] is not none %}
                     <div class="product-price-line">
-                        <span class="product-current-price">${{ '%.2f'|format(deal['price']) }}</span>
+                        <span class="product-current-price">TT$ {{ '%.2f'|format(deal['price']) }}</span>
                         {% if deal['list_price'] is not none and deal['list_price'] > deal['price'] %}
-                        <span class="product-list-price">List: ${{ '%.2f'|format(deal['list_price']) }}</span>
+                        <span class="product-list-price">List: TT$ {{ '%.2f'|format(deal['list_price']) }}</span>
                         {% endif %}
                     </div>
                     {% if deal['savings'] is not none or deal['savings_percent'] is not none %}
                     <div class="product-savings">
-                        {% if deal['savings'] is not none %}Save ${{ '%.2f'|format(deal['savings']) }}{% endif %}
+                        {% if deal['savings'] is not none %}Save TT$ {{ '%.2f'|format(deal['savings']) }}{% endif %}
                         {% if deal['savings_percent'] is not none %}{% if deal['savings'] is not none %} · {% endif %}{{ '%.0f'|format(deal['savings_percent']) }}% off{% endif %}
                     </div>
                     {% endif %}
                     {% endif %}
+
                     <div class="product-offer-footer">
-                        {% if deal.valid_until %}<span><i class="fas fa-calendar-alt" aria-hidden="true"></i> Offer ends {{ deal.valid_until }}</span>{% else %}<span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>{% endif %}
-                        <a href="{{ url_for('contact') }}" class="product-order-button">Contact to order</a>
+                        {% if deal.valid_until %}
+                        <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> Limited Stock</span>
+                        {% else %}
+                        <span><i class="fas fa-truck" aria-hidden="true"></i> Ask about delivery</span>
+                        {% endif %}
+                        <a href="{{ url_for('contact') }}" class="product-order-button">Contact to Order</a>
                     </div>
                 </div>
             </article>
             {% else %}
-            <p>Check back soon for new deals!</p>
+            <div class="catalog-empty-state" style="grid-column: 1/-1;">
+                <div class="empty-icon"><i class="fas fa-tags" aria-hidden="true"></i></div>
+                <h3>New Weekly Deals In Preparation</h3>
+                <p>Our upcoming flyer specials are being finalized. Stop by our store or call our pharmacy desk to hear today's counter promotions!</p>
+            </div>
             {% endfor %}
         </div>
     </div>
 </section>
 
+<!-- Store Invitation Banner -->
+<section class="store-invitation-section">
+    <div class="container">
+        <div class="store-invitation-card">
+            <div class="invitation-text-content">
+                <span class="section-pill-tag tag-amber">✦ In-Store Experience</span>
+                <h2 class="invitation-heading">Visit Our Esperance Store to Claim Exclusive Counter Discounts</h2>
+                <p class="invitation-desc">Many of our seasonal clearances and manufacturer rebates are available exclusively at our counter. Pick up a printed flyer copy or ask our pharmacist for recommended generic alternatives that save you even more.</p>
+                <div class="invitation-perks-list">
+                    <div class="invitation-perk">
+                        <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        <span>Printed Flyers Available at Counter</span>
+                    </div>
+                    <div class="invitation-perk">
+                        <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        <span>Generics Available for Maximum Savings</span>
+                    </div>
+                    <div class="invitation-perk">
+                        <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        <span>Free Blood Pressure Checks with Any Purchase</span>
+                    </div>
+                </div>
+                <div class="invitation-actions">
+                    <a href="{{ url_for('contact') }}" class="btn btn-accent btn-lg">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Get Store Directions</span>
+                    </a>
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn btn-frosted btn-lg">
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                        <span>Call Pharmacist</span>
+                    </a>
+                </div>
+            </div>
+            <div class="invitation-graphic-side">
+                <div class="invitation-floating-badge">
+                    <div class="floating-badge-percent">40%</div>
+                    <div class="floating-badge-label">Up to 40% Off Select Vitamins</div>
+                </div>
+                <div class="invitation-hours-box">
+                    <h4><i class="fas fa-clock" aria-hidden="true"></i> Open This Week</h4>
+                    <p>{{ settings.hours_weekday }}</p>
+                    <p>{{ settings.hours_saturday }}</p>
+                    <span class="status-live-chip"><span class="pulse-dot"></span> Ready For You</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Weekly Product Picks Grid with View Switcher -->
 {% if products %}
-<section class="page-section page-section-alt">
+<section class="page-section flyer-picks-section">
     <div class="container">
         <div class="weekly-products-heading">
             <div>
-                <h2 class="section-title">Weekly Product Picks</h2>
-                <p>Shop this week's featured products and savings.</p>
+                <span class="section-pill-tag">✦ Weekly Highlights</span>
+                <h2 class="section-heading-primary">Featured Product Highlights</h2>
+                <p class="section-subtext">Popular essentials featured in this cycle's flyer.</p>
             </div>
             <div class="weekly-view-switcher" data-weekly-view-switcher role="group" aria-label="Product display view">
                 <button type="button" class="weekly-view-button is-active" data-weekly-view="four" aria-pressed="true" title="Four products per row">
@@ -76,27 +152,43 @@
                 </button>
             </div>
         </div>
+
         <div class="product-catalog-grid weekly-product-grid" data-weekly-view-grid data-view="four">
             {% for product in products %}
             {% include 'partials/product_card.html' %}
             {% endfor %}
         </div>
-        <div style="text-align:center;margin-top:28px;">
-            <a href="{{ url_for('products') }}" class="btn btn-primary">View All Products <i class="fas fa-arrow-right"></i></a>
+
+        <div style="text-align:center;margin-top:40px;">
+            <a href="{{ url_for('products') }}" class="btn btn-primary btn-lg">
+                <span>View Full Product Catalog</span>
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
         </div>
     </div>
 </section>
 {% endif %}
 
-<section class="page-section page-section-alt">
-    <div class="container" style="text-align:center;">
-        <h2 class="section-title">Visit Us Today</h2>
-        <p style="max-width:600px;margin:0 auto 32px;color:var(--color-text-body);">Come by our location to see all the deals in person. Our friendly staff is ready to assist you!</p>
-        <a href="{{ url_for('contact') }}" class="btn btn-primary">Get Directions <i class="fas fa-arrow-right"></i></a>
+<!-- Executive CTA Section -->
+<section class="executive-cta-section">
+    <div class="container">
+        <div class="executive-cta-box">
+            <div class="executive-cta-content">
+                <span class="cta-pill-chip">✦ Always Accessible</span>
+                <h2 class="executive-cta-title">Looking for Refills Along with Your Flyer Deals?</h2>
+                <p class="executive-cta-desc">Save time by submitting your prescription refills ahead of your visit so your package is ready the moment you walk through our doors.</p>
+                <div class="executive-cta-actions">
+                    <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="btn btn-accent btn-lg">
+                        <i class="fas fa-prescription-bottle-alt" aria-hidden="true"></i>
+                        <span>Order Refill Now</span>
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="btn btn-frosted btn-lg">
+                        <i class="fas fa-store" aria-hidden="true"></i>
+                        <span>Visit Store</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
-
-<section class="cta-section">
-    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
 </section>
 {% endblock %}

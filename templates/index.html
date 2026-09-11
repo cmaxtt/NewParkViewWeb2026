@@ -1,243 +1,493 @@
-{% extends "base.html" %}
-{% block title %}Park View Drugs | Your Local Pharmacy - San Fernando{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}Park View Drugs | Professional Community Pharmacy — San Fernando{% endblock %}
 {% block content %}
-<!-- Hero Carousel -->
-<section class="hero-carousel" aria-label="Featured promotions">
+
+<!-- Hero Carousel with Cinematic Sapphire Overlays -->
+<section class="hero-carousel" aria-label="Featured Pharmacy Services and Highlights">
     <div class="carousel-container">
-        <div class="carousel-overlay"></div>
         <div class="carousel-track" id="carouselTrack">
-            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #1E7D29 0%, #14521E 50%, #0C3A13 100%);">
+            <!-- Slide 1 -->
+            <div class="carousel-slide slide-1">
+                <div class="slide-overlay-cinematic"></div>
                 <div class="container">
                     <div class="slide-content">
-                        <span class="slide-badge">Welcome</span>
-                        <h2 class="slide-title">Your Health,<br>Our Priority</h2>
-                        <p class="slide-desc">At {{ settings.business_name }}, we're committed to providing personalized pharmacy care for you and your family.</p>
-                        <a href="{{ url_for('about') }}" class="btn btn-white">Learn More About Us</a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #1E471C 0%, #0F2B0E 50%, #081A07 100%);">
-                <div class="container">
-                    <div class="slide-content">
-                        <span class="slide-badge">Pharmacy Services</span>
-                        <h2 class="slide-title">Fast & Easy<br>Prescription Refills</h2>
-                        <p class="slide-desc">Need a refill? We make it quick and simple. Call ahead or visit us to have your prescriptions ready when you arrive.</p>
-                        <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="btn btn-white">Request a Refill</a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #4FB151 0%, #2D8A30 50%, #1E6B21 100%);">
-                <div class="container">
-                    <div class="slide-content">
-                        <span class="slide-badge">Savings</span>
-                        <h2 class="slide-title">Great Deals<br>Waiting For You</h2>
-                        <p class="slide-desc">Check out our weekly flyer for amazing savings on vitamins, health products, and everyday essentials.</p>
-                        <a href="{{ url_for('weekly_flyer') }}" class="btn btn-white">View Weekly Flyer</a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #1E7D29 0%, #166B22 50%, #0C4A13 100%);">
-                <div class="container">
-                    <div class="slide-content">
-                        <span class="slide-badge">Healthcare</span>
-                        <h2 class="slide-title">Minor Ailment<br>Treatment</h2>
-                        <p class="slide-desc">Skip the wait. Our pharmacists can assess and prescribe for common minor ailments — right here, right now.</p>
-                        <a href="{{ url_for('minor_ailment') }}" class="btn btn-white">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #0F5C1A 0%, #083810 50%, #05240A 100%);">
-                <div class="container">
-                    <div class="slide-content">
-                        <span class="slide-badge">Community</span>
-                        <h2 class="slide-title">Trusted Care,<br>Close to Home</h2>
-                        <p class="slide-desc">Your family's health is in good hands. From vaccinations to medication reviews, we're here for every step.</p>
-                        <a href="{{ url_for('services') }}" class="btn btn-white">Our Services</a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-slide" style="background-image: linear-gradient(135deg, #2D8A30 0%, #1E6B21 50%, #1E471C 100%);">
-                <div class="container">
-                    <div class="slide-content">
-                        <span class="slide-badge">Rewards</span>
-                        <h2 class="slide-title">Get Rewarded<br>For Your Health</h2>
-                        <p class="slide-desc">Join our rewards program and earn on every purchase. Ask us about it on your next visit!</p>
-                        <a href="{{ url_for('products') }}" class="btn btn-white">Explore Rewards</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
-        <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
-        <div class="carousel-dots" id="carouselDots"></div>
-    </div>
-</section>
-
-<!-- Quick Service Cards -->
-<section class="quick-services fade-in">
-    <div class="container">
-        <div class="service-cards">
-            <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="service-card">
-                <div class="service-icon"><i class="fas fa-prescription-bottle-alt"></i></div>
-                <h3>Refill a Prescription</h3>
-            </a>
-            <a href="{{ url_for('minor_ailment') }}" class="service-card">
-                <div class="service-icon"><i class="fas fa-stethoscope"></i></div>
-                <h3>Minor Ailment Treatment</h3>
-            </a>
-            <a href="{{ url_for('weekly_flyer') }}" class="service-card">
-                <div class="service-icon"><i class="fas fa-tags"></i></div>
-                <h3>Weekly Flyer & Savings</h3>
-            </a>
-            <a href="{{ url_for('contact') }}" class="service-card">
-                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                <h3>Contact Us</h3>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Featured Products Section -->
-<section class="fye-section fade-in">
-    <div class="container">
-        <div class="fye-header">
-            <h2>Quality Products For Everyday Living</h2>
-            <p>Discover a wide range of high-quality health products, vitamins, and essentials at great value.</p>
-            <a href="{{ url_for('products') }}" class="btn btn-primary">Shop Our Products</a>
-        </div>
-        <div class="fye-grid">
-            <a href="{{ url_for('products') }}?category=Vitamins" class="fye-card">
-                <div class="fye-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.1);display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--color-primary);"><i class="fas fa-leaf"></i></div>
-                <span>Vitamins</span>
-            </a>
-            <a href="{{ url_for('products') }}?category=OTC" class="fye-card">
-                <div class="fye-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.1);display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--color-primary);"><i class="fas fa-tablets"></i></div>
-                <span>Medications</span>
-            </a>
-            <a href="{{ url_for('products') }}?category=Personal+Care" class="fye-card">
-                <div class="fye-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.1);display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--color-primary);"><i class="fas fa-hand-sparkles"></i></div>
-                <span>Personal Care</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Services / Rewards Section -->
-<section class="app-section fade-in">
-    <div class="container">
-        <div class="app-content">
-            <div class="app-text">
-                <h2>Personalized Pharmacy Care You Can Trust</h2>
-                <p>At {{ settings.business_name }}, we go beyond just dispensing medication. We're here to support your health every step of the way.</p>
-                <div class="app-features">
-                    <div class="app-feature">
-                        <i class="fas fa-prescription"></i>
-                        <div>
-                            <h4>Expert Medication Management</h4>
-                            <p>Our pharmacists review your medications to ensure safety and effectiveness. Refills made simple.</p>
-                        </div>
-                    </div>
-                    <div class="app-feature">
-                        <i class="fas fa-gift"></i>
-                        <div>
-                            <h4>Savings & Rewards</h4>
-                            <p>Earn rewards on qualifying purchases and take advantage of our weekly specials and promotions.</p>
-                        </div>
-                    </div>
-                    <div class="app-feature">
-                        <i class="fas fa-heartbeat"></i>
-                        <div>
-                            <h4>Health & Wellness Support</h4>
-                            <p>Get expert health advice, medication information, and personalized consultations in a private setting.</p>
-                        </div>
-                    </div>
-                    <div class="app-feature">
-                        <i class="fas fa-calendar-check"></i>
-                        <div>
-                            <h4>Convenient Appointments</h4>
-                            <p>Schedule health consultations, medication reviews, and vaccinations at your convenience.</p>
+                        <span class="slide-badge-pill">
+                            <i class="fas fa-sparkles" aria-hidden="true"></i> ✦ Fast & Reliable Dispensing
+                        </span>
+                        <h1 class="slide-title">Your Health & Wellness,<br><span class="text-gold">Our Highest Calling</span></h1>
+                        <p class="slide-desc">Serving Esperance and San Fernando with personalized prescription care, modern clinical consultations, and the genuine compassion your family deserves.</p>
+                        <div class="slide-cta-group">
+                            <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-prescription-bottle-alt" aria-hidden="true"></i>
+                                <span>Refill Prescription</span>
+                            </a>
+                            <a href="{{ url_for('services') }}" class="btn btn-frosted btn-lg">
+                                <span>Explore Services</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <a href="{{ url_for('services') }}" class="btn btn-primary">View All Services <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="app-image">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }}" style="max-height:350px;object-fit:contain;">
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- About Section -->
-<section class="pharmacist-section fade-in">
-    <div class="container">
-        <div class="pharmacist-content">
-            <div class="pharmacist-text">
-                <h3>Your Trusted Local Pharmacist</h3>
-                <p>At {{ settings.business_name }}, our experienced team is dedicated to providing friendly, professional healthcare services to the community.</p>
-                <ul class="pharmacist-services">
-                    <li><i class="fas fa-comments"></i><span>Private Health Consultations</span></li>
-                    <li><i class="fas fa-pills"></i><span>Prescription Compounding</span></li>
-                    <li><i class="fas fa-truck"></i><span>Home Delivery Available</span></li>
-                </ul>
-                <div class="pharmacist-actions">
-                    <a href="{{ url_for('about') }}" class="btn btn-primary">About Us</a>
-                    <a href="{{ url_for('services') }}" class="btn btn-outline">View Services</a>
+            <!-- Slide 2 -->
+            <div class="carousel-slide slide-2">
+                <div class="slide-overlay-cinematic"></div>
+                <div class="container">
+                    <div class="slide-content">
+                        <span class="slide-badge-pill">
+                            <i class="fas fa-user-md" aria-hidden="true"></i> ✦ Clinical Assessment Clinic
+                        </span>
+                        <h2 class="slide-title">Same-Day Care For<br><span class="text-cyan">Common Minor Ailments</span></h2>
+                        <p class="slide-desc">Skip overcrowded waiting rooms. Our licensed pharmacists evaluate symptoms and prescribe targeted medications for 8 common health conditions right in store.</p>
+                        <div class="slide-cta-group">
+                            <a href="{{ url_for('minor_ailment') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-stethoscope" aria-hidden="true"></i>
+                                <span>Minor Ailment Clinic</span>
+                            </a>
+                            <a href="{{ url_for('contact') }}" class="btn btn-frosted btn-lg">
+                                <span>Walk-In Info</span>
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="pharmacist-image">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }}" class="pharmacist-img" style="max-height:300px;object-fit:contain;">
+
+            <!-- Slide 3 -->
+            <div class="carousel-slide slide-3">
+                <div class="slide-overlay-cinematic"></div>
+                <div class="container">
+                    <div class="slide-content">
+                        <span class="slide-badge-pill">
+                            <i class="fas fa-tags" aria-hidden="true"></i> ✦ Weekly Health Deals & Savings
+                        </span>
+                        <h2 class="slide-title">Great Weekly Savings<br><span class="text-gold">On Trusted Brands</span></h2>
+                        <p class="slide-desc">Enjoy competitive TTD pricing on top-tier vitamins, pain relief, skincare, baby essentials, and specialized dietary supplements every single week.</p>
+                        <div class="slide-cta-group">
+                            <a href="{{ url_for('weekly_flyer') }}" class="btn btn-accent btn-lg">
+                                <i class="fas fa-badge-percent" aria-hidden="true"></i>
+                                <span>View Weekly Flyer</span>
+                            </a>
+                            <a href="{{ url_for('products') }}" class="btn btn-frosted btn-lg">
+                                <span>Browse Catalog</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="carousel-slide slide-4">
+                <div class="slide-overlay-cinematic"></div>
+                <div class="container">
+                    <div class="slide-content">
+                        <span class="slide-badge-pill">
+                            <i class="fas fa-truck" aria-hidden="true"></i> ✦ Dedicated Local Community Care
+                        </span>
+                        <h2 class="slide-title">Personalized Pharmacy,<br><span class="text-cyan">Right to Your Door</span></h2>
+                        <p class="slide-desc">Can't make it to Esperance today? Ask our pharmacy team about fast, convenient community delivery for repeat prescriptions and essential wellness supplies.</p>
+                        <div class="slide-cta-group">
+                            <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                                <span>Call {{ settings.phone }}</span>
+                            </a>
+                            <a href="{{ url_for('about') }}" class="btn btn-frosted btn-lg">
+                                <span>Our Story</span>
+                                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous slide">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next slide">
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </button>
+        <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Slide controls"></div>
+    </div>
+</section>
+
+<!-- Trust Pillars Strip (4-Column Credibility Banner) -->
+<section class="trust-pillars-section" aria-label="Pharmacy Credibility Pillars">
+    <div class="container">
+        <div class="trust-pillars-grid">
+            <div class="trust-pillar-item">
+                <div class="trust-pillar-icon-box">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                </div>
+                <div class="trust-pillar-content">
+                    <h3 class="trust-pillar-title">Open 7 Days a Week</h3>
+                    <p class="trust-pillar-text">Mon–Fri 8AM–6PM, Sat 8AM–3PM, with extended on-call medication triage.</p>
+                </div>
+            </div>
+
+            <div class="trust-pillar-item">
+                <div class="trust-pillar-icon-box">
+                    <i class="fas fa-user-check" aria-hidden="true"></i>
+                </div>
+                <div class="trust-pillar-content">
+                    <h3 class="trust-pillar-title">Licensed Pharmacists On Duty</h3>
+                    <p class="trust-pillar-text">Registered healthcare professionals ready for confidential consultations.</p>
+                </div>
+            </div>
+
+            <div class="trust-pillar-item">
+                <div class="trust-pillar-icon-box">
+                    <i class="fas fa-truck-fast" aria-hidden="true"></i>
+                </div>
+                <div class="trust-pillar-content">
+                    <h3 class="trust-pillar-title">Fast Refills & Delivery</h3>
+                    <p class="trust-pillar-text">Synchronized repeat prescriptions and doorstep community drop-off.</p>
+                </div>
+            </div>
+
+            <div class="trust-pillar-item">
+                <div class="trust-pillar-icon-box">
+                    <i class="fas fa-certificate" aria-hidden="true"></i>
+                </div>
+                <div class="trust-pillar-content">
+                    <h3 class="trust-pillar-title">Certified Quality Medications</h3>
+                    <p class="trust-pillar-text">100% authorized pharmaceuticals backed by verified cold-chain storage.</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Resource Cards -->
-<section class="resources-section fade-in">
+<!-- Quick Service Action Cards -->
+<section class="quick-action-section fade-in" aria-labelledby="quick-services-heading">
     <div class="container">
-        <div class="resource-cards">
-            <div class="resource-card">
-                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-search"></i></div></div>
-                <h4>Medication Search</h4>
-                <p>Explore our database to learn about medications and their uses.</p>
-                <a href="{{ url_for('products') }}" class="resource-link">Search <i class="fas fa-arrow-right"></i></a>
+        <div class="section-header-centered">
+            <span class="section-pill-tag">✦ Patient Essentials</span>
+            <h2 id="quick-services-heading" class="section-heading-primary">Immediate Pharmacy Services</h2>
+            <p class="section-subtext">Access rapid prescription dispensing, certified consultations, and weekly value specials with one click.</p>
+        </div>
+
+        <div class="quick-action-grid">
+            <!-- Card 1: Refill Rx -->
+            <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="action-card action-card-rx">
+                <div class="action-card-accent-bar bar-blue"></div>
+                <div class="action-card-icon-wrap icon-blue">
+                    <i class="fas fa-prescription-bottle-alt" aria-hidden="true"></i>
+                </div>
+                <h3 class="action-card-title">Refill a Prescription</h3>
+                <p class="action-card-desc">Call ahead or request repeat dispensing with guaranteed accuracy and quick pickup.</p>
+                <div class="action-card-cta">
+                    <span>Refill Now</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </div>
+            </a>
+
+            <!-- Card 2: Minor Ailments -->
+            <a href="{{ url_for('minor_ailment') }}" class="action-card action-card-clinic">
+                <div class="action-card-accent-bar bar-gold"></div>
+                <div class="action-card-icon-wrap icon-gold">
+                    <i class="fas fa-stethoscope" aria-hidden="true"></i>
+                </div>
+                <h3 class="action-card-title">Minor Ailment Clinic</h3>
+                <p class="action-card-desc">Pharmacist clinical assessment & prescriptions for 8 common conditions without doctor delays.</p>
+                <div class="action-card-cta">
+                    <span>View Conditions</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </div>
+            </a>
+
+            <!-- Card 3: Weekly Flyer -->
+            <a href="{{ url_for('weekly_flyer') }}" class="action-card action-card-deals">
+                <div class="action-card-accent-bar bar-amber"></div>
+                <div class="action-card-icon-wrap icon-amber">
+                    <i class="fas fa-tags" aria-hidden="true"></i>
+                </div>
+                <h3 class="action-card-title">Weekly Flyer & Savings</h3>
+                <p class="action-card-desc">Exclusive savings on daily vitamins, first aid, baby essentials, and personal wellness.</p>
+                <div class="action-card-cta">
+                    <span>Browse Deals</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </div>
+            </a>
+
+            <!-- Card 4: Contact & Care -->
+            <a href="{{ url_for('contact') }}" class="action-card action-card-contact">
+                <div class="action-card-accent-bar bar-emerald"></div>
+                <div class="action-card-icon-wrap icon-emerald">
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                </div>
+                <h3 class="action-card-title">Consult & Visit Us</h3>
+                <p class="action-card-desc">Reach our pharmacist directly on S.S. Erin Road or contact us for prompt support.</p>
+                <div class="action-card-cta">
+                    <span>Get In Touch</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Aisle / Category Showcase -->
+<section class="aisle-showcase-section fade-in" aria-labelledby="aisle-showcase-heading">
+    <div class="container">
+        <div class="section-header-split">
+            <div>
+                <span class="section-pill-tag">✦ Pharmacy Aisle Guide</span>
+                <h2 id="aisle-showcase-heading" class="section-heading-primary">Shop by Department</h2>
+                <p class="section-subtext">Explore top-rated wellness, clinical-grade supplements, and daily essentials.</p>
             </div>
-            <div class="resource-card">
-                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-notes-medical"></i></div></div>
-                <h4>Medical Conditions</h4>
-                <p>Learn about conditions, their causes, symptoms and treatments.</p>
-                <a href="{{ url_for('minor_ailment') }}" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            <a href="{{ url_for('products') }}" class="btn btn-outline btn-department-all">
+                <span>View Full Catalog</span>
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div class="aisle-grid">
+            <!-- Dept 1: OTC -->
+            <a href="{{ url_for('products') }}?category=OTC" class="aisle-card">
+                <div class="aisle-card-header">
+                    <span class="aisle-badge">Fast Relief</span>
+                    <div class="aisle-icon-bubble">
+                        <i class="fas fa-tablets" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <h3 class="aisle-title">Over-the-Counter</h3>
+                <p class="aisle-desc">Targeted pain relief, allergy relief, cold & flu therapeutics, antacids, and first-aid supplies.</p>
+                <div class="aisle-footer">
+                    <span class="aisle-link-text">Browse Medications</span>
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </div>
+            </a>
+
+            <!-- Dept 2: Vitamins -->
+            <a href="{{ url_for('products') }}?category=Vitamins" class="aisle-card">
+                <div class="aisle-card-header">
+                    <span class="aisle-badge">Immunity & Vitality</span>
+                    <div class="aisle-icon-bubble">
+                        <i class="fas fa-leaf" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <h3 class="aisle-title">Vitamins & Supplements</h3>
+                <p class="aisle-desc">High-potency Vitamin C, D3, zinc, omega fatty acids, multivitamin complexes, and bone health.</p>
+                <div class="aisle-footer">
+                    <span class="aisle-link-text">Browse Vitamins</span>
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </div>
+            </a>
+
+            <!-- Dept 3: Natural Health -->
+            <a href="{{ url_for('products') }}?category=Natural" class="aisle-card">
+                <div class="aisle-card-header">
+                    <span class="aisle-badge">Holistic Wellness</span>
+                    <div class="aisle-icon-bubble">
+                        <i class="fas fa-seedling" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <h3 class="aisle-title">Natural Health</h3>
+                <p class="aisle-desc">Herbal extracts, natural tonics, soothing essential oils, organic remedies, and adaptogens.</p>
+                <div class="aisle-footer">
+                    <span class="aisle-link-text">Browse Natural Health</span>
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </div>
+            </a>
+
+            <!-- Dept 4: Personal Care -->
+            <a href="{{ url_for('products') }}?category=Personal+Care" class="aisle-card">
+                <div class="aisle-card-header">
+                    <span class="aisle-badge">Daily Care</span>
+                    <div class="aisle-icon-bubble">
+                        <i class="fas fa-hand-sparkles" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <h3 class="aisle-title">Personal Care</h3>
+                <p class="aisle-desc">Clinical dermatological moisturizers, gentle skin cleansing, dental hygiene, and infant care.</p>
+                <div class="aisle-footer">
+                    <span class="aisle-link-text">Browse Personal Care</span>
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Clinical Excellence Section (Asymmetric Split Layout) -->
+<section class="clinical-excellence-section fade-in" aria-labelledby="clinical-heading">
+    <div class="container">
+        <div class="clinical-split-layout">
+            <!-- Left: Clinical Presentation -->
+            <div class="clinical-left">
+                <span class="section-pill-tag">✦ Professional Clinical Practice</span>
+                <h2 id="clinical-heading" class="section-heading-primary">Clinical Excellence & Compassionate Pharmacy Care</h2>
+                <p class="clinical-lead-text">
+                    At {{ settings.business_name }}, we go far beyond simply handing over a bottle. Our registered pharmacists serve as accessible frontline healthcare providers, ensuring your medications are safe, synchronized, and effective.
+                </p>
+
+                <div class="clinical-checklist">
+                    <div class="clinical-check-item">
+                        <div class="check-icon-wrap"><i class="fas fa-check" aria-hidden="true"></i></div>
+                        <div>
+                            <h4 class="check-title">Comprehensive Medication Reviews</h4>
+                            <p class="check-desc">We examine all prescription, OTC, and herbal products to prevent harmful drug interactions and optimize therapeutic outcomes.</p>
+                        </div>
+                    </div>
+
+                    <div class="clinical-check-item">
+                        <div class="check-icon-wrap"><i class="fas fa-check" aria-hidden="true"></i></div>
+                        <div>
+                            <h4 class="check-title">Minor Ailment Diagnosis & Prescribing</h4>
+                            <p class="check-desc">Immediate pharmacist assessments for allergies, dermatitis, cold sores, acid reflux, and urinary conditions with on-the-spot treatment.</p>
+                        </div>
+                    </div>
+
+                    <div class="clinical-check-item">
+                        <div class="check-icon-wrap"><i class="fas fa-check" aria-hidden="true"></i></div>
+                        <div>
+                            <h4 class="check-title">Preventative Health Screenings</h4>
+                            <p class="check-desc">Free blood pressure monitoring, blood glucose triage, and personalized cardiovascular wellness guidance.</p>
+                        </div>
+                    </div>
+
+                    <div class="clinical-check-item">
+                        <div class="check-icon-wrap"><i class="fas fa-check" aria-hidden="true"></i></div>
+                        <div>
+                            <h4 class="check-title">Temperature-Controlled Cold-Chain Storage</h4>
+                            <p class="check-desc">All temperature-sensitive pharmaceuticals and insulins are stored under continuous digital climate supervision.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clinical-actions">
+                    <a href="{{ url_for('services') }}" class="btn btn-primary btn-lg">
+                        <span>Explore All Services</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn btn-outline btn-lg">
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                        <span>Speak with a Pharmacist</span>
+                    </a>
+                </div>
             </div>
-            <div class="resource-card">
-                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-seedling"></i></div></div>
-                <h4>Natural Health</h4>
-                <p>Discover natural products to support your wellness journey.</p>
-                <a href="{{ url_for('products') }}?category=Natural" class="resource-link">Find Products <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="resource-card">
-                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-blog"></i></div></div>
-                <h4>Health Blog</h4>
-                <p>Read expert health advice and tips from our pharmacists.</p>
-                <a href="{{ url_for('services') }}" class="resource-link">Read More <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="resource-card">
-                <div class="resource-img"><div class="placeholder-icon" style="width:80px;height:80px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--color-primary);"><i class="fas fa-hands-helping"></i></div></div>
-                <h4>Community Support</h4>
-                <p>Find community programs and health resources near you.</p>
-                <a href="{{ url_for('contact') }}" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+
+            <!-- Right: Floating Community Trust Badge & Card -->
+            <div class="clinical-right">
+                <div class="trust-card-elevated">
+                    <div class="trust-card-top">
+                        <div class="trust-card-badge">
+                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                            <span>100% Licensed T&T Pharmacy</span>
+                        </div>
+                        <div class="trust-stars" aria-label="5 star service">
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <div class="trust-quote-block">
+                        <i class="fas fa-quote-left quote-icon" aria-hidden="true"></i>
+                        <p class="trust-quote-text">
+                            "We know our patients by name. In a world of impersonal big-box stores, Park View Drugs remains your dedicated neighborhood pharmacy where clinical care meets genuine warmth."
+                        </p>
+                        <div class="trust-quote-author">
+                            <strong>Pharmacy Dispensing Team</strong>
+                            <span>Park View Drugs · Esperance</span>
+                        </div>
+                    </div>
+
+                    <div class="trust-stats-grid">
+                        <div class="trust-stat">
+                            <span class="trust-stat-num">100%</span>
+                            <span class="trust-stat-label">Licensed Care</span>
+                        </div>
+                        <div class="trust-stat">
+                            <span class="trust-stat-num">7 Days</span>
+                            <span class="trust-stat-label">Accessible Triage</span>
+                        </div>
+                        <div class="trust-stat">
+                            <span class="trust-stat-num">Fast</span>
+                            <span class="trust-stat-label">Refill Turnaround</span>
+                        </div>
+                    </div>
+
+                    <div class="trust-floating-pill">
+                        <div class="floating-pill-icon"><i class="fas fa-heartbeat" aria-hidden="true"></i></div>
+                        <div class="floating-pill-text">
+                            <strong>Always Caring</strong>
+                            <span>Community Healthcare Hub</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="cta-section">
+<!-- Patient Resources & Guidance Strip -->
+<section class="patient-resources-section fade-in" aria-labelledby="resources-heading">
     <div class="container">
-        <div class="cta-content">
-            <h2>Ready To Visit? Come See Us Today</h2>
-            <p>We're conveniently located in Esperance and ready to help with all your health needs.</p>
-            <a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Get Directions <i class="fas fa-arrow-right"></i></a>
+        <div class="section-header-centered">
+            <span class="section-pill-tag">✦ Patient Guidance Hub</span>
+            <h2 id="resources-heading" class="section-heading-primary">Healthcare Advice & Knowledge</h2>
+            <p class="section-subtext">Clear, reliable information to help you and your family make educated wellness decisions.</p>
+        </div>
+
+        <div class="resources-modern-grid">
+            <div class="resource-modern-card">
+                <div class="resource-modern-icon"><i class="fas fa-search-plus" aria-hidden="true"></i></div>
+                <h3 class="resource-modern-title">Medication Search</h3>
+                <p class="resource-modern-desc">Search through our catalog of prescription and OTC medications with transparent pricing.</p>
+                <a href="{{ url_for('products') }}" class="resource-modern-link">Search Catalog <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+
+            <div class="resource-modern-card">
+                <div class="resource-modern-icon"><i class="fas fa-notes-medical" aria-hidden="true"></i></div>
+                <h3 class="resource-modern-title">Minor Ailments Guide</h3>
+                <p class="resource-modern-desc">Learn about 8 common treatable conditions and how our pharmacists prescribe for you.</p>
+                <a href="{{ url_for('minor_ailment') }}" class="resource-modern-link">View Symptoms <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+
+            <div class="resource-modern-card">
+                <div class="resource-modern-icon"><i class="fas fa-seedling" aria-hidden="true"></i></div>
+                <h3 class="resource-modern-title">Natural Health & Organics</h3>
+                <p class="resource-modern-desc">Discover pharmacist-approved holistic tonics, herbal vitamins, and botanical remedies.</p>
+                <a href="{{ url_for('products') }}?category=Natural" class="resource-modern-link">Explore Natural <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+
+            <div class="resource-modern-card">
+                <div class="resource-modern-icon"><i class="fas fa-map-marked-alt" aria-hidden="true"></i></div>
+                <h3 class="resource-modern-title">Store Visit & Hours</h3>
+                <p class="resource-modern-desc">Conveniently located on S.S. Erin Road in Esperance. Get interactive map directions.</p>
+                <a href="{{ url_for('contact') }}" class="resource-modern-link">Directions & Hours <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
         </div>
     </div>
 </section>
+
+<!-- Executive CTA Section -->
+<section class="executive-cta-section" aria-label="Visit Park View Drugs">
+    <div class="container">
+        <div class="executive-cta-box">
+            <div class="executive-cta-content">
+                <span class="cta-pill-chip">✦ Ready To Assist You</span>
+                <h2 class="executive-cta-title">Visit Park View Drugs Today or Call Our Pharmacy Team</h2>
+                <p class="executive-cta-desc">Conveniently located on S.S. Erin Road, Esperance, San Fernando. Open today with certified pharmacists ready to help.</p>
+                <div class="executive-cta-actions">
+                    <a href="{{ url_for('contact') }}" class="btn btn-accent btn-lg">
+                        <i class="fas fa-directions" aria-hidden="true"></i>
+                        <span>Get Store Directions</span>
+                    </a>
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn btn-frosted btn-lg">
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                        <span>Call {{ settings.phone }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

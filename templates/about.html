@@ -1,10 +1,13 @@
-{% extends "base.html" %}
-{% block title %}About Us - {{ settings.business_name }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}About Us — {{ settings.business_name }}{% endblock %}
+{% block meta_desc %}Learn about Park View Drugs, our heritage, our clinical team, and our commitment to the Esperance and San Fernando communities.{% endblock %}
+
 {% block content %}
-<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #1E471C 100%);">
+<section class="page-hero-modern">
     <div class="container">
-        <h1>About {{ settings.business_name }}</h1>
-        <p>{{ settings.tagline }}</p>
+        <span class="page-hero-tag">✦ Community Healthcare Heritage</span>
+        <h1 class="page-hero-title">About {{ settings.business_name }}</h1>
+        <p class="page-hero-subtitle">{{ settings.tagline }}</p>
     </div>
 </section>
 
@@ -12,15 +15,32 @@
     <div class="container">
         <div class="about-layout">
             <div class="about-text">
-                <h2>Our Story</h2>
-                <p>{{ settings.business_name }} is a locally owned and operated pharmacy serving the community. We are committed to providing personalized, professional healthcare services with a focus on quality and compassion.</p>
-                <p>Our experienced team of pharmacists and staff take the time to know our patients by name and understand their unique health needs. Whether you need a prescription refill, health advice, or a vaccination, we're here to help.</p>
-                <p>As an independent pharmacy, we pride ourselves on offering the personalized care and attention that you simply won't find at larger chain pharmacies. Your health is our priority.</p>
+                <span class="section-pill-tag">✦ Our Heritage</span>
+                <h2 class="section-heading-primary" style="text-align:left; margin-bottom:20px;">Compassionate Healthcare Rooted in Esperance</h2>
+                <p>{{ settings.business_name }} is an independently owned community pharmacy proudly serving Esperance, San Fernando, and neighboring communities in Trinidad & Tobago. We believe that true healthcare begins with listening, empathy, and professional excellence.</p>
+                <p>Unlike massive impersonal chains, our registered pharmacists and dispensary staff know our patients by name. We take the time to understand your individual health background, review drug interactions across your full regimen, and answer questions without rushing.</p>
+                <p>From prompt repeat prescription dispensing and certified minor ailment prescribing to temperature-monitored cold-chain pharmaceuticals, every service we offer is backed by rigorous clinical standards and warm Caribbean hospitality.</p>
+                
+                <div style="margin-top: 30px;">
+                    <a href="{{ url_for('services') }}" class="btn btn-primary btn-lg">Explore Our Services <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
             <div class="about-stats">
-                <div class="stat-card"><i class="fas fa-star" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Trusted</span><span class="stat-label">Local Pharmacy Care</span></div>
-                <div class="stat-card"><i class="fas fa-users" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Community</span><span class="stat-label">Proudly Serving Our Community</span></div>
-                <div class="stat-card"><i class="fas fa-heart" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Personalized</span><span class="stat-label">Care That Puts You First</span></div>
+                <div class="stat-card">
+                    <i class="fas fa-star" aria-hidden="true"></i>
+                    <span class="stat-num">Trusted</span>
+                    <span class="stat-label">Independent Community Pharmacy</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users" aria-hidden="true"></i>
+                    <span class="stat-num">Community</span>
+                    <span class="stat-label">Proudly Serving Esperance & San Fernando</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-heartbeat" aria-hidden="true"></i>
+                    <span class="stat-num">Personalized</span>
+                    <span class="stat-label">Care That Prioritizes Your Family</span>
+                </div>
             </div>
         </div>
     </div>
@@ -28,17 +48,56 @@
 
 <section class="page-section page-section-alt">
     <div class="container">
-        <h2 class="section-title">Our Values</h2>
+        <div class="section-header-centered">
+            <span class="section-pill-tag">✦ What Drives Us</span>
+            <h2 class="section-heading-primary">Our Core Healthcare Values</h2>
+            <p class="section-subtext">The principles guiding every prescription dispensed and every patient interaction.</p>
+        </div>
         <div class="values-grid">
-            <div class="value-card"><i class="fas fa-heart"></i><h3>Compassion</h3><p>We treat every patient with kindness, respect, and understanding.</p></div>
-            <div class="value-card"><i class="fas fa-flask"></i><h3>Excellence</h3><p>We maintain the highest standards of professional pharmacy practice.</p></div>
-            <div class="value-card"><i class="fas fa-users"></i><h3>Community</h3><p>We are proud to serve and support our community.</p></div>
-            <div class="value-card"><i class="fas fa-lightbulb"></i><h3>Dedication</h3><p>We are committed to your health and well-being every single day.</p></div>
+            <div class="value-card">
+                <div class="value-icon-box"><i class="fas fa-heart" aria-hidden="true"></i></div>
+                <h3>Patient Compassion</h3>
+                <p>We treat every person with empathy, dignity, and active listening. Your health is never just a transaction.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon-box"><i class="fas fa-microscope" aria-hidden="true"></i></div>
+                <h3>Clinical Rigor</h3>
+                <p>We uphold strict pharmaceutical protocols, rigorous dosage verification, and continuous cold-chain climate storage.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon-box"><i class="fas fa-hands-helping" aria-hidden="true"></i></div>
+                <h3>Community Connection</h3>
+                <p>We are dedicated to building a healthier Esperance and San Fernando through preventive education and accessible care.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon-box"><i class="fas fa-award" aria-hidden="true"></i></div>
+                <h3>Integrity & Trust</h3>
+                <p>We dispense 100% authorized medications with transparent, fair TTD pricing and honest clinical guidance.</p>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="cta-section">
-    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+<!-- Executive CTA Section -->
+<section class="executive-cta-section">
+    <div class="container">
+        <div class="executive-cta-box">
+            <div class="executive-cta-content">
+                <span class="cta-pill-chip">✦ Ready To Meet Us?</span>
+                <h2 class="executive-cta-title">Come Experience the Park View Drugs Difference</h2>
+                <p class="executive-cta-desc">Visit us on S.S. Erin Road in Esperance. Open 7 days a week with certified pharmacists ready to assist you.</p>
+                <div class="executive-cta-actions">
+                    <a href="{{ url_for('contact') }}" class="btn btn-accent btn-lg">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Get Store Directions</span>
+                    </a>
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn btn-frosted btn-lg">
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                        <span>Call {{ settings.phone }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}

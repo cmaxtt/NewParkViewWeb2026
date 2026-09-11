@@ -1,35 +1,100 @@
-{% extends "base.html" %}
-{% block title %}Products - {{ settings.business_name }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}Products & Rewards Catalog — {{ settings.business_name }}{% endblock %}
+{% block meta_desc %}Browse over-the-counter medications, high-potency vitamins, natural health remedies and personal care at Park View Drugs. Transparent TTD pricing and community rewards.{% endblock %}
+
 {% block content %}
-<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #0C4A13 100%);">
+<!-- Products Page Hero -->
+<section class="page-hero-modern">
     <div class="container">
-        <h1>Products & Rewards</h1>
-        <p>Quality products and great value for the whole family.</p>
+        <span class="page-hero-tag">✦ Pharmacy Catalog</span>
+        <h1 class="page-hero-title">Products & Community Rewards</h1>
+        <p class="page-hero-subtitle">High-quality authorized pharmaceuticals, vitamins, natural health, and personal care with transparent TTD pricing.</p>
     </div>
 </section>
 
-<section class="page-section">
+<!-- Category Filter Pills Bar -->
+<section class="catalog-filter-bar">
     <div class="container">
-        <h2 class="section-title">Shop by Category</h2>
-        <div class="product-category-grid">
-            <a href="{{ url_for('products') }}?category=OTC" class="product-category-card"><i class="fas fa-tablets"></i><h3>Over-the-Counter</h3><p>Pain relief, allergy, cold & flu, and digestive health products.</p></a>
-            <a href="{{ url_for('products') }}?category=Vitamins" class="product-category-card"><i class="fas fa-leaf"></i><h3>Vitamins & Supplements</h3><p>Daily vitamins, minerals, and specialty supplements for every need.</p></a>
-            <a href="{{ url_for('products') }}?category=Natural" class="product-category-card"><i class="fas fa-seedling"></i><h3>Natural Health</h3><p>Herbal remedies, natural products, and traditional medicines.</p></a>
-            <a href="{{ url_for('products') }}?category=Personal+Care" class="product-category-card"><i class="fas fa-hand-sparkles"></i><h3>Personal Care</h3><p>Skin care, oral care, bath & body, and hygiene essentials.</p></a>
+        <div class="catalog-filter-inner">
+            <div class="category-pills-wrap" role="navigation" aria-label="Category Filters">
+                <a href="{{ url_for('products') }}" class="category-filter-pill {% if not request.args.get('category') %}is-active{% endif %}">
+                    <i class="fas fa-th" aria-hidden="true"></i>
+                    <span>All Products</span>
+                </a>
+                <a href="{{ url_for('products') }}?category=OTC" class="category-filter-pill {% if request.args.get('category') == 'OTC' %}is-active{% endif %}">
+                    <i class="fas fa-tablets" aria-hidden="true"></i>
+                    <span>Over-the-Counter</span>
+                </a>
+                <a href="{{ url_for('products') }}?category=Vitamins" class="category-filter-pill {% if request.args.get('category') == 'Vitamins' %}is-active{% endif %}">
+                    <i class="fas fa-leaf" aria-hidden="true"></i>
+                    <span>Vitamins & Supplements</span>
+                </a>
+                <a href="{{ url_for('products') }}?category=Natural" class="category-filter-pill {% if request.args.get('category') == 'Natural' %}is-active{% endif %}">
+                    <i class="fas fa-seedling" aria-hidden="true"></i>
+                    <span>Natural Health</span>
+                </a>
+                <a href="{{ url_for('products') }}?category=Personal+Care" class="category-filter-pill {% if request.args.get('category') == 'Personal Care' or request.args.get('category') == 'Personal+Care' %}is-active{% endif %}">
+                    <i class="fas fa-hand-sparkles" aria-hidden="true"></i>
+                    <span>Personal Care</span>
+                </a>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="page-section">
+<!-- Main Catalog Area -->
+<section class="page-section catalog-section">
     <div class="container">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px;">
-            <h2 class="section-title" style="margin-bottom:0;">{% if request.args.get('category') %}{{ request.args.get('category') }} Products{% elif request.args.get('keywords') %}Search Results{% else %}Weekly Products{% endif %}</h2>
-            <form action="{{ url_for('products') }}" method="get" style="display:flex;gap:8px;max-width:420px;width:100%;">
-                {% if request.args.get('category') %}<input type="hidden" name="category" value="{{ request.args.get('category') }}">{% endif %}
-                <input type="search" name="keywords" value="{{ request.args.get('keywords', '') }}" placeholder="Search products..." aria-label="Search products" style="flex:1;">
-                <button type="submit" class="btn btn-primary">Search</button>
+        <!-- Search Toolbar -->
+        <div class="catalog-toolbar">
+            <div class="toolbar-title-wrap">
+                <h2 class="catalog-results-title">
+                    {% if request.args.get('category') %}
+                        <span>{{ request.args.get('category') }}</span> Department
+                    {% elif request.args.get('keywords') %}
+                        Results for "<span class="text-highlight">{{ request.args.get('keywords') }}</span>"
+                    {% else %}
+                        Featured Pharmacy Products
+                    {% endif %}
+                </h2>
+                <span class="catalog-count-badge">{{ products|length }} Available</span>
+            </div>
+
+            <form action="{{ url_for('products') }}" method="get" class="catalog-search-form" role="search">
+                {% if request.args.get('category') %}
+                <input type="hidden" name="category" value="{{ request.args.get('category') }}">
+                {% endif %}
+                <div class="search-field-wrap">
+                    <i class="fas fa-search search-field-icon" aria-hidden="true"></i>
+                    <input type="search" name="keywords" value="{{ request.args.get('keywords', '') }}" placeholder="Search by name, brand, or symptom..." aria-label="Search catalog products" class="catalog-search-input">
+                </div>
+                <button type="submit" class="btn btn-primary btn-search-go">
+                    <span>Search</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </button>
             </form>
         </div>
+
+        {% if request.args.get('category') or request.args.get('keywords') %}
+        <div class="active-filter-chips">
+            <span class="active-filter-label">Active Filters:</span>
+            {% if request.args.get('category') %}
+            <span class="filter-chip">
+                Department: {{ request.args.get('category') }}
+                <a href="{{ url_for('products', keywords=request.args.get('keywords')) if request.args.get('keywords') else url_for('products') }}" aria-label="Remove category filter">&times;</a>
+            </span>
+            {% endif %}
+            {% if request.args.get('keywords') %}
+            <span class="filter-chip">
+                Keyword: {{ request.args.get('keywords') }}
+                <a href="{{ url_for('products', category=request.args.get('category')) if request.args.get('category') else url_for('products') }}" aria-label="Remove keyword filter">&times;</a>
+            </span>
+            {% endif %}
+            <a href="{{ url_for('products') }}" class="clear-all-link">Clear all filters</a>
+        </div>
+        {% endif %}
+
+        <!-- Products Grid -->
         {% if products %}
         <div class="product-catalog-grid">
             {% for product in products %}
@@ -37,23 +102,88 @@
             {% endfor %}
         </div>
         {% else %}
-        <p style="text-align:center;color:var(--color-text-body);">No products found. Please try another search or category.</p>
+        <div class="catalog-empty-state">
+            <div class="empty-icon"><i class="fas fa-box-open" aria-hidden="true"></i></div>
+            <h3>No matching products found</h3>
+            <p>We couldn't find items matching your search criteria. You can browse our departments or speak with our pharmacist directly for immediate stock availability.</p>
+            <div class="empty-actions">
+                <a href="{{ url_for('products') }}" class="btn btn-primary">View All Products</a>
+                <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn btn-outline">
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i> Call Pharmacist: {{ settings.phone }}
+                </a>
+            </div>
+        </div>
         {% endif %}
     </div>
 </section>
 
-<section class="page-section page-section-alt">
+<!-- 3-Step Rewards Banner -->
+<section class="rewards-program-section">
     <div class="container">
-        <h2 class="section-title">How It Works</h2>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:900px;margin:0 auto;">
-            <div style="text-align:center;"><div style="width:60px;height:60px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--color-primary);"><i class="fas fa-shopping-bag"></i></div><h3 style="font-size:18px;font-weight:600;color:var(--color-text);margin-bottom:6px;">1. Shop</h3><p style="font-size:14px;color:var(--color-text-body);">Purchase eligible products at {{ settings.business_name }}.</p></div>
-            <div style="text-align:center;"><div style="width:60px;height:60px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--color-primary);"><i class="fas fa-star"></i></div><h3 style="font-size:18px;font-weight:600;color:var(--color-text);margin-bottom:6px;">2. Earn</h3><p style="font-size:14px;color:var(--color-text-body);">Earn rewards points on every qualifying purchase.</p></div>
-            <div style="text-align:center;"><div style="width:60px;height:60px;border-radius:50%;background:rgba(30,125,41,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--color-primary);"><i class="fas fa-gift"></i></div><h3 style="font-size:18px;font-weight:600;color:var(--color-text);margin-bottom:6px;">3. Redeem</h3><p style="font-size:14px;color:var(--color-text-body);">Redeem your rewards for savings on future purchases.</p></div>
+        <div class="rewards-banner-card">
+            <div class="rewards-banner-header">
+                <span class="section-pill-tag">✦ Community Loyalty</span>
+                <h2 class="rewards-banner-title">Park View HealthRewards Program</h2>
+                <p class="rewards-banner-desc">Save more on daily wellness and prescription necessities with our simple 3-step community rewards.</p>
+            </div>
+
+            <div class="rewards-steps-grid">
+                <div class="reward-step-item">
+                    <div class="step-badge-number">1</div>
+                    <div class="step-icon-wrap">
+                        <i class="fas fa-shopping-basket" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="step-title">Shop & Select</h3>
+                    <p class="step-desc">Purchase your regular healthcare items, vitamins, and over-the-counter supplies at our Esperance store.</p>
+                </div>
+
+                <div class="reward-step-item">
+                    <div class="step-badge-number">2</div>
+                    <div class="step-icon-wrap">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="step-title">Earn HealthPoints</h3>
+                    <p class="step-desc">Accumulate points automatically on qualifying purchases with every visit. No complex paperwork.</p>
+                </div>
+
+                <div class="reward-step-item">
+                    <div class="step-badge-number">3</div>
+                    <div class="step-icon-wrap">
+                        <i class="fas fa-gift" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="step-title">Redeem & Save</h3>
+                    <p class="step-desc">Apply your accumulated points toward instant savings on future purchases and exclusive flyer deals.</p>
+                </div>
+            </div>
+
+            <div class="rewards-footer-callout">
+                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                <span>Ask our pharmacy cashier during your next visit to enroll instantly with just your phone number!</span>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="cta-section">
-    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+<!-- CTA Strip -->
+<section class="executive-cta-section">
+    <div class="container">
+        <div class="executive-cta-box">
+            <div class="executive-cta-content">
+                <span class="cta-pill-chip">✦ Need a Prescription Filled?</span>
+                <h2 class="executive-cta-title">Looking for a Specific Medication Not Listed Here?</h2>
+                <p class="executive-cta-desc">Our dispensary carries thousands of pharmaceutical formulations. Give us a call or visit in person and our team will verify stock immediately.</p>
+                <div class="executive-cta-actions">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn btn-accent btn-lg">
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                        <span>Call {{ settings.phone }}</span>
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="btn btn-frosted btn-lg">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Store Directions</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}

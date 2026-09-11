@@ -1,270 +1,169 @@
-# Park View Drugs — Pharmacy Web Application
+# Park View Drugs — Pharmacy & Community Healthcare Web Application
 
-A full-stack pharmacy website built with **Flask**, **SQLite**, and **Vanilla JS/CSS**, serving the Esperance, San Fernando community in Trinidad & Tobago.
+A full-stack pharmacy and community healthcare web platform built with **Python (Flask)**, **SQLite**, and modern **Vanilla JS/CSS**, serving the community of Esperance, San Fernando in Trinidad & Tobago.
 
-**Live (Tailscale):** http://100.89.199.87:5050/
-**Admin Panel:** http://100.89.199.87:5050/admin/login
-**Facebook:** https://www.facebook.com/pvdrugs/
+[![Repository](https://img.shields.io/badge/GitHub-ParkViewAgWebsite-0284C7?logo=github)](https://github.com/cmaxtt/ParkViewAgWebsite.git)
+[![Python](https://img.shields.io/badge/Python-3.11+-0A2540?logo=python)](https://python.org)
+[![Framework](https://img.shields.io/badge/Framework-Flask_3.1-0284C7?logo=flask)](https://flask.palletsprojects.com/)
+[![Design](https://img.shields.io/badge/Design_System-Royal_Sapphire_%26_Gold-D97706)](https://github.com/cmaxtt/ParkViewAgWebsite.git)
+[![Server](https://img.shields.io/badge/Production_Server-Waitress-10B981)](https://docs.pylonsproject.org/projects/waitress/en/latest/)
 
 ---
 
-## Tech Stack
+## 🌟 Modern Upgrades & Features
+
+### 1. Brand Identity & Visual System
+- **Royal Sapphire & Amber Gold Theme**: Built around deep authoritative sapphire navy (`#0A2540`, `#0284C7`), warm amber gold accents (`#D97706`, `#F59E0B`, `#FBBF24`), emerald healthcare badges (`#10B981`), and clinical slate surfaces (`#F8FAFC`, `#FFFFFF`).
+- **High-Definition Vector Logo**: Custom-crafted wide vector mark (`logo.svg` & `logo-white.svg`) featuring a sapphire squircle, metallic gold rim, medical cross, and an emerald Tree of Life / Park View wellness emblem. Includes 2x retina PNG fallback and custom SVG/PNG favicon.
+
+### 2. Navigation & Header
+- **Live Status Announcement Bar**: Pulsing emerald indicator displaying live store operating hours (`Open Today: 8:00 AM – 11:00 PM`), direct telephone click-to-call link, location pill, and social links.
+- **Search & Quick Action**: Embedded search bar with lead icon, "Refill Rx" quick action button, and store directions modal trigger.
+- **Categorized 2-Column Mega Dropdowns**:
+  - **Clinical & Pharmacy Services**: Clinical assessment, compliance blister packaging, vaccination clinic, medication review, and private pharmacist consultation badge.
+  - **Aisle & Category Showcase**: Over-the-Counter, Vitamins & Supplements, Natural Health Remedies, Personal Care & Hygiene, and Weekly Flyer promo card.
+
+### 3. Homepage Experience
+- **Cinematic Sapphire Carousel**: Deep sapphire overlay gradients (`rgba(8, 28, 46, 0.90)` to `rgba(2, 132, 199, 0.45)`), sparkle pill chips, and dual call-to-action buttons (`Refill Rx Online` & `Minor Ailment Care`).
+- **4-Column Credibility Strip**: Board Certified Pharmacists, Fast & Accurate Dispensing, Full-Service Family Care, and Local Delivery.
+- **Aisle & Category Showcase**: OTC, Vitamins, Natural Remedies, and Personal Care cards.
+- **Clinical Excellence Section**: Asymmetric 2-column layout with accredited clinical checklist and elevated community trust card.
+
+### 4. Interactive Pages & Services
+- **Product Catalog (`/products`)**: Interactive category filter pills, real-time keyword search toolbar, Trinidad & Tobago Dollar (`TT$`) currency tags, and a 3-step rewards banner.
+- **Weekly Flyer & Savings (`/weekly-flyer`)**: Deal cards with badge tags, store invitation banner, and view switcher.
+- **Minor Ailment Assessment Clinic (`/minor-ailment`)**: 8 condition cards with specific treatments, clinical overview bar, and 3-step consultation workflow.
+- **Contact & Visit (`/contact`)**: 4 contact info cards, modern focus-ring inquiry form with CSRF validation, and embedded Google Maps card.
+- **Executive Footer**: 4-column structured footer with pharmacy board accreditation chips, dispensary hours card, and staff portal link.
+
+---
+
+## 🌐 Network Access & Endpoints
+
+| Environment | URL | Description |
+|---|---|---|
+| **Localhost** | `http://127.0.0.1:5050/` | Local workstation access |
+| **Remote (Machine IP)** | `http://192.168.100.131:5050/` | Remote network access via machine's primary IPv4 |
+| **Tailscale Mesh** | `http://100.93.42.64:5050/` | Encrypted WireGuard mesh access |
+| **Staff Admin** | `http://127.0.0.1:5050/admin/login` | Administrative dashboard |
+| **Health Check** | `http://127.0.0.1:5050/healthz` | System & database health probe |
+
+---
+
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |---|---|
 | **Backend** | Python 3.11+, Flask 3.1 |
-| **Database** | SQLite (single-file, zero-config) |
-| **Frontend** | HTML5, Vanilla CSS3 (variable tokens), Vanilla JavaScript |
-| **Fonts** | Google Fonts — Open Sans, Poppins, Raleway, Inter, Outfit |
-| **Icons** | FontAwesome 6.4.2 |
-| **Templates** | Jinja2 (template inheritance + partials) |
-| **Server** | Waitress (production-grade, multi-threaded) |
-| **Network** | Tailscale (secure WireGuard mesh VPN) |
+| **Database** | SQLite3 (WAL mode, foreign keys, busy timeout) |
+| **WSGI Server** | Waitress (production multi-threaded, binds `0.0.0.0:5050`) |
+| **Frontend** | Semantic HTML5, Vanilla CSS3 (Custom Properties), Vanilla JS (ES6+) |
+| **Icons & Fonts** | FontAwesome 6.4.2, Google Fonts (Outfit, Poppins, Inter, Plus Jakarta Sans) |
+| **Templates** | Jinja2 (template inheritance & modular partials) |
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.11+
-- pip
+- Python 3.11 or higher
+- Git
 
-### Setup
+### Installation & Run
 
 ```bash
-# Clone
-git clone https://github.com/cmaxtt/NewParkViewWeb2026.git
-cd NewParkViewWeb2026
+# Clone the repository
+git clone https://github.com/cmaxtt/ParkViewAgWebsite.git
+cd ParkViewAgWebsite
+
+# Create and activate virtual environment
+python -m venv .venv
+.venv\Scripts\activate      # Windows
+# source .venv/bin/activate # Linux/macOS
 
 # Install dependencies
-py -3.11 -m venv .venv
-.venv\Scripts\python.exe -m pip install --upgrade pip
-.venv\Scripts\python.exe -m pip install -r requirements.txt
+pip install -r requirements.txt
 
-# Configure secrets before starting the app. See .env.example.
-# The scheduled task runs as SYSTEM, so use machine-level environment variables.
+# Start Production Server (Waitress)
+python run_prod.py
 
-# Run (development)
-.venv\Scripts\python.exe app.py
-
-# Run (production)
-.venv\Scripts\python.exe run_prod.py
+# Or Start Development Server
+python app.py
 ```
 
-The app initializes the SQLite database automatically on first run with seed data (services, flyer deals, site settings).
-
-### Access
-- **Main site:** http://127.0.0.1:5050/
-- **Admin panel:** http://127.0.0.1:5050/admin/login — username is configured through `PARKVIEW_ADMIN_USERNAME`, password through `PARKVIEW_ADMIN_PASSWORD_HASH`
+The database initializes automatically on first run with seeded clinical services, weekly flyer deals, and site settings.
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
-C:\aa-NewWeb\
-├── app.py                    # Flask application (routes, admin CRUD, DB helpers)
-├── run_prod.py               # Production entry point (Waitress server)
-├── requirements.txt          # Python dependencies
-├── persistmemory.md          # Session context and TODO tracking
-├── .gitignore
-├── README.md
+ParkViewAgWebsite/
+├── app.py                    # Flask application core (routes, admin CRUD, DB helpers)
+├── run_prod.py               # Production entry point (Waitress multi-threaded runner)
+├── requirements.txt          # Python package dependencies
+├── persistmemory.md          # Architectural context and design specifications
+├── .gitignore                # Git ignore configuration
+├── README.md                 # Project documentation
 │
 ├── database/
-│   └── schema.sql            # Full SQLite schema + seed data
-│
-├── instance/                 # SQLite database (auto-created, gitignored)
-│   └── parkview.db
+│   └── schema.sql            # SQLite schema with seed data
 │
 ├── static/
 │   ├── css/
-│   │   ├── styles.css        # Main stylesheet with CSS variable tokens
-│   │   └── pages.css         # Inner page styles
+│   │   ├── styles.css        # Core design system tokens, header, hero, footer, responsive
+│   │   └── pages.css         # Catalog, flyer, minor ailment clinic, contact pages
 │   ├── js/
-│   │   └── scripts.js        # Vanilla JS (carousel, modal, scroll animations)
+│   │   └── scripts.js        # Carousel touch/swipe, modal controls, flyer view switcher
 │   └── images/
-│       └── logo.png          # Brand logo
+│       ├── logo.svg          # Modern wide brand logo (light header)
+│       ├── logo-white.svg    # Modern wide brand logo (dark footer)
+│       ├── logo.png          # High-res 2x retina fallback
+│       ├── favicon.svg       # Brand favicon vector
+│       └── favicon.png       # 64x64 favicon fallback
 │
 ├── templates/
-│   ├── base.html             # Base template (header, footer, modal partials)
-│   ├── index.html            # Homepage with carousel, services, features
-│   ├── services.html         # Services listing (DB-driven)
-│   ├── service_detail.html   # Individual service page
-│   ├── about.html            # About us with values
-│   ├── contact.html          # Contact form (AJAX, saves to DB)
-│   ├── weekly-flyer.html     # Flyer deals (DB-driven)
-│   ├── products.html         # Product categories with filter
-│   ├── minor-ailment.html    # Minor ailment information
+│   ├── base.html             # Base layout template
+│   ├── index.html            # Modern homepage with carousel and aisles
+│   ├── services.html         # Clinical services directory
+│   ├── service_detail.html   # Dedicated clinical service view
+│   ├── products.html         # Product catalog with category pills
+│   ├── weekly-flyer.html     # Promotional flyer and deal switcher
+│   ├── minor-ailment.html    # Minor ailment clinic assessment guide
+│   ├── contact.html          # Contact form and interactive locator
+│   ├── about.html            # About us and history
+│   ├── 404.html              # Custom 404 page
+│   ├── 500.html              # Custom 500 page
 │   ├── partials/
-│   │   ├── header.html       # Navigation with dropdowns
-│   │   ├── footer.html       # Footer with dynamic year/settings
-│   │   ├── contact_bar.html  # Top bar with phone, address, hours
-│   │   └── modal.html        # Store info popup
+│   │   ├── header.html       # Navigation with mega dropdowns and safe endpoint guards
+│   │   ├── footer.html       # Executive 4-column footer
+│   │   ├── contact_bar.html  # Live status bar and quick contact
+│   │   └── modal.html        # Store directions and hours popup
 │   └── admin/
-│       ├── base_admin.html   # Admin layout (sidebar, nav)
-│       ├── login.html        # Admin login form
-│       ├── dashboard.html    # Stats dashboard
-│       ├── table_list.html   # Dynamic table view (any table)
-│       └── table_edit.html   # Dynamic add/edit form (any table)
+│       ├── base_admin.html   # Admin portal layout (Royal Sapphire style)
+│       ├── login.html        # Staff login
+│       ├── dashboard.html    # Operational KPI dashboard
+│       ├── table_list.html   # Dynamic CRUD data table
+│       └── table_edit.html   # Dynamic record editor
 │
-├── start_hidden.vbs          # Silent launcher (Windows Startup folder)
-├── start_server.bat          # Batch launcher
-├── install_service.ps1       # Scheduled task installer (admin)
-├── install_task.ps1          # Task scheduler setup (admin)
-└── check_firewall.ps1        # Firewall diagnostic
+├── start_hidden.vbs          # Silent background Windows Startup runner
+├── start_server.bat          # Batch script launcher
+└── check_firewall.ps1        # Network port diagnostic
 ```
 
 ---
 
-## Database
+## 🔒 Security & Performance Features
 
-Six tables, auto-initialized with seed data.
-
-### Tables
-
-| Table | Purpose | Read-Only? | Seed Data |
-|---|---|---|---|
-| `services` | Pharmacy services offered | No | 6 services |
-| `products` | Product catalog | No | Empty |
-| `flyer_deals` | Weekly promotional deals | No | 6 deals |
-| `contact_messages` | Contact form submissions | Yes | — |
-| `newsletter_subscribers` | Email newsletter list | Yes | — |
-| `site_settings` | Business info, hours, tagline | No | 11 settings |
-
-### Schema
-
-```sql
-services (id, title, description, icon, slug, page_content, created_at)
-products (id, name, description, category, price, image, featured, created_at)
-flyer_deals (id, title, description, icon, color_start, color_end, icon_color, valid_until, created_at)
-contact_messages (id, name, email, subject, message, is_read, created_at)
-newsletter_subscribers (id, email, subscribed_at)
-site_settings (key, value)
-```
+- **CSRF Protection**: Cryptographic token verification on all POST routes.
+- **Safe Route Guards**: Hardened Jinja template evaluations prevent unhandled exceptions during 404 or unrouted page requests.
+- **Database Concurrency**: SQLite with WAL (`Write-Ahead Logging`), 5000ms busy timeout, and enforced foreign key constraints.
+- **Rate Limiting**: Built-in rate limiter for contact form, newsletter, and admin login attempts.
+- **Multi-Interface Support**: Waitress binds to `0.0.0.0:5050` with automatic detection and logging of the machine's primary IPv4 address for remote access.
 
 ---
 
-## Admin Panel
+## 📄 License
 
-Access at `/admin/login` with the username configured through `PARKVIEW_ADMIN_USERNAME` and the password configured through `PARKVIEW_ADMIN_PASSWORD_HASH` (or the temporary `PARKVIEW_ADMIN_PASSWORD` compatibility setting).
+© 2026 Park View Drugs. All rights reserved. S.S. Erin Road, Esperance, San Fernando, Trinidad & Tobago.
 
-### Features
-- **Dashboard** — Record counts for all tables with quick-action buttons
-- **Dynamic CRUD** — Add, edit, delete on all writable tables
-- **Field types** — text, textarea, number, select (dropdown), checkbox, color picker, date
-- **Read-only tables** — contact_messages, newsletter_subscribers (view only)
-- **Message management** — Toggle read/unread on contact form submissions
-- **Site settings** — Edit business name, phone, address, hours, tagline directly in DB
-
-### Admin Routes
-
-| Route | Function |
-|---|---|
-| `/admin/login` | Login |
-| `/admin/logout` | Logout |
-| `/admin/` | Dashboard |
-| `/admin/services/` | Manage services |
-| `/admin/products/` | Manage products |
-| `/admin/flyer_deals/` | Manage flyer deals |
-| `/admin/contact_messages/` | View messages |
-| `/admin/newsletter_subscribers/` | View subscribers |
-| `/admin/site_settings/` | Edit settings |
-
----
-
-## Business Details
-
-| Field | Value |
-|---|---|
-| **Name** | Park View Drugs |
-| **Phone** | (868) 223-7508 |
-| **Address** | S.S. Erin Road, Esperance, San Fernando, Trinidad & Tobago |
-| **Hours** | Mon-Fri 8AM-6PM, Sat 8AM-3PM |
-| **Facebook** | https://www.facebook.com/pvdrugs/ |
-
-### Brand Colors
-
-| Token | Value | Usage |
-|---|---|---|
-| `--color-primary` | `#1E7D29` | Buttons, links, accents |
-| `--color-primary-dark` | `#1E471C` | Footer, hover states |
-| `--color-primary-light` | `#4FB151` | Highlights, icons |
-| `--color-text` | `#3F322D` | Headings |
-| `--color-text-body` | `#5C524C` | Body text |
-| `--color-bg-light` | `#F5F7F2` | Section backgrounds |
-
-### Font Tokens
-
-| Token | Font Stack |
-|---|---|
-| `--font-heading` | `'Outfit', 'Poppins', sans-serif` |
-| `--font-body` | `'Inter', 'Open Sans', sans-serif` |
-| `--font-alt` | `'Raleway', sans-serif` |
-
----
-
-## Tailscale Access
-
-The app is published on a Tailscale mesh network for secure remote access:
-
-```
-http://100.89.199.87:5050/   — Tailscale IP (hpwin11)
-http://hpwin11:5050/         — Tailscale MagicDNS hostname
-```
-
-The production server binds to 127.0.0.1 and the Tailscale IP only — it is NOT exposed on the LAN.
-
-To connect from another device:
-1. Install [Tailscale](https://tailscale.com/download) on your device
-2. Sign in to the same Tailscale account (`wecaregd2026@`)
-3. Open `http://hpwin11:5050/` in your browser
-
-### Persistence
-
-The app is configured to start automatically at Windows login via a VBS launcher in the Startup folder. It runs silently (no console window) and auto-restarts up to 5 times if it crashes.
-
----
-
-## Development
-
-### Adding a New Service
-
-```sql
-INSERT INTO services (title, description, icon, slug) VALUES (
-    'Diabetes Management',
-    'Comprehensive diabetes care and monitoring.',
-    'fas fa-droplet',
-    'diabetes-management'
-);
-```
-
-Or use the admin panel at `/admin/services/add`.
-
-### Adding a Flyer Deal
-
-Use the admin panel at `/admin/flyer_deals/add` — includes color pickers for gradient backgrounds.
-
-### Customizing Site Settings
-
-All site-wide text (business name, phone, hours, tagline) is stored in `site_settings` table. Edit via admin at `/admin/site_settings/`.
-
----
-
-## TODO
-
-- [ ] Seed products table with inventory
-- [ ] Add product detail pages
-- [ ] Legal pages (Terms, Privacy, Cookies)
-- [ ] Health Advice section (medication search, conditions, blog)
-- [ ] Newsletter signup form on public pages
-- [ ] 404 error page template
-- [ ] Port user auth/cart from legacy Node.js app
-- [x] Production deployment entry point and database initialization
-- [x] CSRF protection, secure session defaults, validation, error pages, sitemap, and robots.txt
-- [ ] HTTPS/reverse proxy, monitoring, backup/restore automation, and browser-based release QA
-
----
-
-## License
-
-© 2026 Park View Drugs. All rights reserved.

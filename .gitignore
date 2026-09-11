@@ -41,3 +41,6 @@ Thumbs.db
 *.txt
 🛠️*
 .parkview.env
+*.bak
+*.png.bak
+temp*.html

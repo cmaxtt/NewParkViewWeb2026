@@ -1,10 +1,13 @@
-{% extends "base.html" %}
-{% block title %}Services - {{ settings.business_name }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}Our Pharmacy & Clinical Services — {{ settings.business_name }}{% endblock %}
+{% block meta_desc %}Explore clinical pharmacy services at Park View Drugs. Prescription refills, minor ailment treatment, vaccinations, compounding, and community delivery.{% endblock %}
+
 {% block content %}
-<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #1E471C 100%);">
+<section class="page-hero-modern">
     <div class="container">
-        <h1>Our Services</h1>
-        <p>Professional pharmacy care tailored to you and your family.</p>
+        <span class="page-hero-tag">✦ Comprehensive Patient Care</span>
+        <h1 class="page-hero-title">Professional Pharmacy & Clinical Services</h1>
+        <p class="page-hero-subtitle">From routine repeat dispensing to specialized clinical consultations, our registered pharmacists provide trusted healthcare for you and your family.</p>
     </div>
 </section>
 
@@ -16,13 +19,16 @@
                 <div class="content-icon"><i class="{{ service.icon }}"></i></div>
                 <h3>{{ service.title }}</h3>
                 <p>{{ service.description }}</p>
-                <a href="{{ url_for('service_detail', slug=service.slug) }}" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ url_for('service_detail', slug=service.slug) }}" class="resource-link">
+                    <span>Learn More & Consult</span>
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
             </div>
             {% else %}
             <div class="content-card">
                 <div class="content-icon"><i class="fas fa-prescription"></i></div>
                 <h3>Prescription Refills</h3>
-                <p>Quick and easy prescription refills. Call ahead or visit us.</p>
+                <p>Quick and easy prescription refills. Call ahead or visit our Esperance counter.</p>
                 <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="resource-link">Learn More <i class="fas fa-arrow-right"></i></a>
             </div>
             {% endfor %}
@@ -30,7 +36,26 @@
     </div>
 </section>
 
-<section class="cta-section">
-    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+<!-- Executive CTA Section -->
+<section class="executive-cta-section">
+    <div class="container">
+        <div class="executive-cta-box">
+            <div class="executive-cta-content">
+                <span class="cta-pill-chip">✦ Dedicated Local Pharmacists</span>
+                <h2 class="executive-cta-title">Have Questions About Your Medication or Care?</h2>
+                <p class="executive-cta-desc">Speak with our pharmacy team directly. We are always happy to review your dosages, check drug interactions, or arrange community delivery.</p>
+                <div class="executive-cta-actions">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn btn-accent btn-lg">
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                        <span>Call {{ settings.phone }}</span>
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="btn btn-frosted btn-lg">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Store Directions</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}

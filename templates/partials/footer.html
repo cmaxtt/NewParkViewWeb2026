@@ -1,45 +1,111 @@
-<footer class="site-footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-                    <li><a href="{{ url_for('service_detail', slug='prescription-refills') }}">Refill Prescription</a></li>
-                    <li><a href="{{ url_for('weekly_flyer') }}">Weekly Flyer</a></li>
-                    <li><a href="{{ url_for('products') }}">Products & Rewards</a></li>
+<footer class="site-footer" role="contentinfo">
+    <div class="container footer-container">
+        <div class="footer-grid-executive">
+            <!-- Column 1: Pharmacy Brand & Certifications -->
+            <div class="footer-col col-brand">
+                <a href="{{ url_for('home') }}" class="footer-logo-link" aria-label="{{ settings.business_name }}">
+                    <img src="{{ url_for('static', filename='images/logo-white.svg') }}" alt="{{ settings.business_name }}" class="footer-logo-img" width="280" height="60">
+                </a>
+                <p class="footer-brand-tagline">{{ settings.tagline }}</p>
+
+                <!-- Certification Chips -->
+                <div class="footer-cert-chips" aria-label="Pharmacy Standards & Accreditation">
+                    <span class="cert-chip" title="Registered Pharmacy in Trinidad & Tobago">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i> Registered Pharmacy T&T
+                    </span>
+                    <span class="cert-chip" title="Temperature-controlled medication storage">
+                        <i class="fas fa-snowflake" aria-hidden="true"></i> Cold-Chain Certified
+                    </span>
+                    <span class="cert-chip" title="Licensed clinical pharmacists on duty">
+                        <i class="fas fa-user-md" aria-hidden="true"></i> Licensed Pharmacists
+                    </span>
+                </div>
+
+                <div class="footer-social-strip">
+                    <a href="{{ settings.facebook_url }}" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Visit Park View Drugs on Facebook" title="Facebook">
+                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://wa.me/18682237508" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Contact us on WhatsApp" title="WhatsApp">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Column 2: Clinical & Pharmacy Services -->
+            <div class="footer-col col-links">
+                <h4 class="footer-heading">Clinical Services</h4>
+                <ul class="footer-menu">
+                    <li><a href="{{ url_for('minor_ailment') }}"><i class="fas fa-chevron-right" aria-hidden="true"></i> Minor Ailment Prescribing</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='prescription-refills') }}"><i class="fas fa-chevron-right" aria-hidden="true"></i> Prescription Refills & Sync</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='vaccinations') }}"><i class="fas fa-chevron-right" aria-hidden="true"></i> Vaccinations & Boosters</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='compounding') }}"><i class="fas fa-chevron-right" aria-hidden="true"></i> Custom Compounding</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='medication-review') }}"><i class="fas fa-chevron-right" aria-hidden="true"></i> Medication Safety Reviews</a></li>
+                    <li><a href="{{ url_for('service_detail', slug='delivery') }}"><i class="fas fa-chevron-right" aria-hidden="true"></i> Community Home Delivery</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <h4><a href="{{ url_for('services') }}">Services</a></h4>
-                <ul>
-                    <li><a href="{{ url_for('minor_ailment') }}">Minor Ailment Prescribing</a></li>
-                    <li><a href="{{ url_for('service_detail', slug='vaccinations') }}">Vaccinations</a></li>
-                    <li><a href="{{ url_for('service_detail', slug='delivery') }}">Home Delivery</a></li>
+
+            <!-- Column 3: Products & Information -->
+            <div class="footer-col col-links">
+                <h4 class="footer-heading">Products & Community</h4>
+                <ul class="footer-menu">
+                    <li><a href="{{ url_for('weekly_flyer') }}"><i class="fas fa-chevron-right" aria-hidden="true"></i> Weekly Promotional Flyer</a></li>
+                    <li><a href="{{ url_for('products') }}?category=OTC"><i class="fas fa-chevron-right" aria-hidden="true"></i> Over-the-Counter Medications</a></li>
+                    <li><a href="{{ url_for('products') }}?category=Vitamins"><i class="fas fa-chevron-right" aria-hidden="true"></i> Vitamins & Nutritional Health</a></li>
+                    <li><a href="{{ url_for('products') }}?category=Natural"><i class="fas fa-chevron-right" aria-hidden="true"></i> Natural Holistic Remedies</a></li>
+                    <li><a href="{{ url_for('about') }}"><i class="fas fa-chevron-right" aria-hidden="true"></i> About Park View Drugs</a></li>
+                    <li><a href="{{ url_for('contact') }}"><i class="fas fa-chevron-right" aria-hidden="true"></i> Store Locator & Directions</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="{{ url_for('legal', page='terms') }}">Terms & Conditions</a></li>
-                    <li><a href="{{ url_for('legal', page='privacy') }}">Privacy Policy</a></li>
-                    <li><a href="{{ url_for('legal', page='disclaimer') }}">Health Disclaimer</a></li>
-                </ul>
-            </div>
-            <div class="footer-col footer-app">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }}" class="footer-app-logo" height="40">
-                <h4>{{ settings.business_name }}</h4>
-                <p>{{ settings.tagline }}</p>
-                <div class="footer-social">
-                    <a href="{{ settings.facebook_url }}" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+
+            <!-- Column 4: Dispensary Hours & Staff Portal -->
+            <div class="footer-col col-hours">
+                <h4 class="footer-heading">Dispensary Hours</h4>
+                <div class="footer-hours-card">
+                    <div class="hours-row">
+                        <span class="hours-day">Mon – Fri:</span>
+                        <span class="hours-time">{{ settings.hours_weekday|replace('Mon-Fri: ','') }}</span>
+                    </div>
+                    <div class="hours-row">
+                        <span class="hours-day">Saturday:</span>
+                        <span class="hours-time">{{ settings.hours_saturday|replace('Sat: ','') }}</span>
+                    </div>
+                    <div class="hours-row">
+                        <span class="hours-day">Sunday:</span>
+                        <span class="hours-time">{{ settings.hours_sunday }}</span>
+                    </div>
+                    <div class="footer-live-status">
+                        <span class="pulse-dot"></span>
+                        <span>Open 7 Days a Week For You</span>
+                    </div>
+                </div>
+
+                <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="footer-phone-cta">
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                    <span>{{ settings.phone }}</span>
+                </a>
+
+                <!-- Staff Login Link -->
+                <div class="footer-staff-wrap">
+                    <a href="{{ url_for('admin_dashboard') }}" class="footer-staff-link" title="Authorized Pharmacy Staff Administration">
+                        <i class="fas fa-lock" aria-hidden="true"></i>
+                        <span>Staff Admin Portal</span>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div class="footer-logo-bottom">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }}" height="36">
+
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom-bar">
+            <div class="footer-bottom-left">
+                <p>&copy; {{ now().year if now is defined else '2026' }} {{ settings.business_name }}. All rights reserved. | {{ settings.full_address }}</p>
             </div>
-            <p>&copy; {{ now().year if now is defined else '2026' }} {{ settings.business_name }}. All rights reserved. | {{ settings.address }}</p>
+            <div class="footer-bottom-links">
+                <a href="{{ url_for('legal', page='terms') }}">Terms of Service</a>
+                <span class="footer-dot">•</span>
+                <a href="{{ url_for('legal', page='privacy') }}">Privacy Policy</a>
+                <span class="footer-dot">•</span>
+                <a href="{{ url_for('legal', page='disclaimer') }}">Health Disclaimer</a>
+            </div>
         </div>
     </div>
 </footer>

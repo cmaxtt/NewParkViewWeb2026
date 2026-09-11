@@ -1,42 +1,53 @@
-/* ============================================
-   Park View Drugs - JavaScript
-   ============================================ */
+﻿/* ==========================================================================
+   Park View Drugs - Enhanced Client Scripts
+   ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // ==========================================
-    // MOBILE TOGGLE
-    // ==========================================
+    // ======================================================================
+    // 1. MOBILE MENU & DROPDOWN TOGGLE
+    // ======================================================================
     const mobileToggle = document.getElementById('mobileToggle');
     const mainNav = document.getElementById('mainNav');
 
     if (mobileToggle && mainNav) {
         mobileToggle.addEventListener('click', function() {
-            mainNav.classList.toggle('open');
-            mobileToggle.classList.toggle('active');
+            const isOpen = mainNav.classList.toggle('open');
+            mobileToggle.classList.toggle('active', isOpen);
+            mobileToggle.setAttribute('aria-expanded', String(isOpen));
         });
 
         document.addEventListener('click', function(e) {
             if (!mainNav.contains(e.target) && !mobileToggle.contains(e.target)) {
                 mainNav.classList.remove('open');
                 mobileToggle.classList.remove('active');
+                mobileToggle.setAttribute('aria-expanded', 'false');
             }
         });
     }
 
-    // Mobile dropdown toggle
-    document.querySelectorAll('.has-dropdown > a').forEach(function(link) {
+    // Mobile dropdown touch toggle
+    document.querySelectorAll('.has-dropdown > .nav-link').forEach(function(link) {
         link.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
+            if (window.innerWidth <= 900) {
                 e.preventDefault();
-                this.parentElement.classList.toggle('open');
+                const parent = this.parentElement;
+                const wasOpen = parent.classList.contains('open');
+                
+                // Close other open dropdowns on mobile
+                document.querySelectorAll('.has-dropdown.open').forEach(function(item) {
+                    if (item !== parent) item.classList.remove('open');
+                });
+
+                parent.classList.toggle('open', !wasOpen);
+                this.setAttribute('aria-expanded', String(!wasOpen));
             }
         });
     });
 
-    // ==========================================
-    // HERO CAROUSEL
-    // ==========================================
+    // ======================================================================
+    // 2. HERO CAROUSEL
+    // ======================================================================
     const track = document.getElementById('carouselTrack');
     const prevBtn = document.getElementById('carouselPrev');
     const nextBtn = document.getElementById('carouselNext');
@@ -47,12 +58,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalSlides = slides.length;
         let currentIndex = 0;
         let autoSlideInterval;
-        const AUTO_INTERVAL = 10000;
+        const AUTO_INTERVAL = 8000;
 
+        // Build indicators
+        dotsContainer.innerHTML = '';
         for (let i = 0; i < totalSlides; i++) {
             const dot = document.createElement('button');
+            dot.type = 'button';
             dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-            if (i === 0) dot.classList.add('active');
+            dot.setAttribute('role', 'tab');
+            if (i === 0) {
+                dot.classList.add('active');
+                dot.setAttribute('aria-selected', 'true');
+            } else {
+                dot.setAttribute('aria-selected', 'false');
+            }
             dot.addEventListener('click', function() {
                 goToSlide(i);
                 resetAutoSlide();
@@ -61,21 +81,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function goToSlide(index) {
-            currentIndex = index;
+            currentIndex = (index + totalSlides) % totalSlides;
             track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
             dotsContainer.querySelectorAll('button').forEach(function(dot, i) {
-                dot.classList.toggle('active', i === currentIndex);
+                const isActive = (i === currentIndex);
+                dot.classList.toggle('active', isActive);
+                dot.setAttribute('aria-selected', String(isActive));
             });
         }
 
         function nextSlide() {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            goToSlide(currentIndex);
+            goToSlide(currentIndex + 1);
         }
 
         function prevSlide() {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-            goToSlide(currentIndex);
+            goToSlide(currentIndex - 1);
         }
 
         function resetAutoSlide() {
@@ -96,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Touch/Swipe
+        // Swipe support
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -107,29 +127,36 @@ document.addEventListener('DOMContentLoaded', function() {
         track.addEventListener('touchend', function(e) {
             touchEndX = e.changedTouches[0].screenX;
             const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
+            if (Math.abs(diff) > 45) {
                 if (diff > 0) nextSlide();
                 else prevSlide();
                 resetAutoSlide();
             }
         }, { passive: true });
 
+        // Keyboard arrow navigation
         document.addEventListener('keydown', function(e) {
             if (e.key === 'ArrowLeft') { prevSlide(); resetAutoSlide(); }
             else if (e.key === 'ArrowRight') { nextSlide(); resetAutoSlide(); }
         });
 
+        // Pause on hover
+        track.addEventListener('mouseenter', function() { clearInterval(autoSlideInterval); });
+        track.addEventListener('mouseleave', function() { resetAutoSlide(); });
+
         autoSlideInterval = setInterval(nextSlide, AUTO_INTERVAL);
     }
 
-    // ==========================================
-    // STORE MODAL
-    // ==========================================
+    // ======================================================================
+    // 3. PHARMACY LOCATOR & DIRECTIONS MODAL
+    // ======================================================================
     window.openPharmacyFinder = function() {
         const modal = document.getElementById('pharmacyModal');
         if (modal) {
             modal.classList.add('open');
             document.body.style.overflow = 'hidden';
+            const closeBtn = modal.querySelector('.modal-close');
+            if (closeBtn) closeBtn.focus();
         }
     };
 
@@ -154,17 +181,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-        anchor.addEventListener('click', function(e) {
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-
-    // Weekly Flyer product display views. Four-up is the default on first visit.
+    // ======================================================================
+    // 4. WEEKLY FLYER VIEW SWITCHER
+    // ======================================================================
     const weeklyViewGrid = document.querySelector('[data-weekly-view-grid]');
     const weeklyViewButtons = document.querySelectorAll('[data-weekly-view]');
     if (weeklyViewGrid && weeklyViewButtons.length) {
@@ -179,15 +198,13 @@ document.addEventListener('DOMContentLoaded', function() {
         function setWeeklyProductView(view) {
             weeklyViewGrid.dataset.view = view;
             weeklyViewButtons.forEach(function(button) {
-                const isActive = button.dataset.weeklyView === view;
+                const isActive = (button.dataset.weeklyView === view);
                 button.classList.toggle('is-active', isActive);
                 button.setAttribute('aria-pressed', String(isActive));
             });
             try {
                 localStorage.setItem('weeklyFlyerProductView', view);
-            } catch (error) {
-                // The view still works when browser storage is unavailable.
-            }
+            } catch (error) {}
         }
 
         weeklyViewButtons.forEach(function(button) {
@@ -195,14 +212,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 setWeeklyProductView(button.dataset.weeklyView);
             });
         });
+
         setWeeklyProductView(selectedView);
     }
 
+    // ======================================================================
+    // 5. SMOOTH SCROLL FOR IN-PAGE ANCHORS
+    // ======================================================================
+    document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId && targetId !== '#') {
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
     });
 
-    // ==========================================
-    // SCROLL ANIMATIONS (fade-in)
-    // ==========================================
+    // ======================================================================
+    // 6. SCROLL FADE-IN ANIMATIONS
+    // ======================================================================
     const fadeEls = document.querySelectorAll('.fade-in');
     if (fadeEls.length && 'IntersectionObserver' in window) {
         const observer = new IntersectionObserver(function(entries) {
@@ -212,13 +244,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.12 });
         fadeEls.forEach(function(el) { observer.observe(el); });
     } else if (fadeEls.length) {
-        // Fallback: show all
         fadeEls.forEach(function(el) { el.classList.add('visible'); });
     }
 
-    console.log('%c Park View Drugs ', 'background: #1E7D29; color: white; font-size: 20px; font-weight: bold; padding: 8px 16px; border-radius: 4px;');
-    console.log('%c Your Local Pharmacy in San Fernando ', 'color: #5C524C; font-size: 14px;');
+    console.log('%c Park View Drugs ', 'background: #0284C7; color: white; font-size: 18px; font-weight: 800; padding: 6px 14px; border-radius: 4px;');
+    console.log('%c Professional Community Pharmacy - Esperance, San Fernando ', 'color: #D97706; font-size: 13px; font-weight: 600;');
 });

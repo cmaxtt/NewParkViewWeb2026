@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 396 82" width="396" height="82">
+  <defs>
+    <linearGradient id="sapphireGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A2540"/>
+      <stop offset="50%" stop-color="#0E3D6B"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#FBBF24"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="60%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+    <linearGradient id="crossGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.98"/>
+      <stop offset="100%" stop-color="#F0F9FF" stop-opacity="0.95"/>
+    </linearGradient>
+    <filter id="badgeShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0A2540" flood-opacity="0.18"/>
+    </filter>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- ================= EMBLEM ICON ================= -->
+  <g transform="translate(6, 5)">
+    <!-- Base Shield / Squircle -->
+    <rect x="0" y="0" width="72" height="72" rx="18" fill="url(#sapphireGrad)" filter="url(#badgeShadow)"/>
+    <!-- Gold Rim Accent -->
+    <rect x="0" y="0" width="72" height="72" rx="18" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+    
+    <!-- Medical Cross -->
+    <g transform="translate(36, 36)">
+      <!-- Cross Horizontal Bar -->
+      <rect x="-21" y="-7.5" width="42" height="15" rx="4" fill="url(#crossGrad)"/>
+      <!-- Cross Vertical Bar -->
+      <rect x="-7.5" y="-21" width="15" height="42" rx="4" fill="url(#crossGrad)"/>
+      
+      <!-- Inner Cross Border Line -->
+      <path d="M-6,-20 L6,-20 A1,1 0 0,1 7,-19 L7,-7 L19,-7 A1,1 0 0,1 20,-6 L20,6 A1,1 0 0,1 19,7 L7,7 L7,19 A1,1 0 0,1 6,20 L-6,20 A1,1 0 0,1 -7,19 L-7,7 L-19,7 A1,1 0 0,1 -20,6 L-20,-6 A1,1 0 0,1 -19,-7 L-7,-7 L-7,-19 A1,1 0 0,1 -6,-20 Z" 
+            fill="none" stroke="#0284C7" stroke-width="0.8" opacity="0.35"/>
+      
+      <!-- Park View Tree of Life & Wellness -->
+      <path d="M-3,14 C-3,8 -1.5,2 0,0 C1.5,2 3,8 3,14 Z" fill="#0A2540"/>
+      <path d="M-6,14 C-2,13 2,13 6,14 C4,16 -4,16 -6,14 Z" fill="url(#goldGrad)"/>
+      
+      <!-- Leaves -->
+      <path d="M0,0 C-5,-7 0,-16 0,-16 C0,-16 5,-7 0,0 Z" fill="url(#emeraldGrad)"/>
+      <path d="M0,0 C-7,-3 -13,-9 -12,-12 C-9,-13 -3,-7 0,0 Z" fill="url(#emeraldGrad)"/>
+      <path d="M0,0 C7,-3 13,-9 12,-12 C9,-13 3,-7 0,0 Z" fill="url(#emeraldGrad)"/>
+      <path d="M0,2 C-7,1 -14,-2 -15,-4 C-13,-6 -6,-2 0,2 Z" fill="#059669"/>
+      <path d="M0,2 C7,1 14,-2 15,-4 C13,-6 6,-2 0,2 Z" fill="#059669"/>
+      
+      <!-- Golden Core -->
+      <circle cx="0" cy="0" r="3.2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <circle cx="0" cy="0" r="1.5" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Corner Accents -->
+    <circle cx="9" cy="9" r="1.5" fill="#FBBF24" opacity="0.7"/>
+    <circle cx="63" cy="9" r="1.5" fill="#FBBF24" opacity="0.7"/>
+    <circle cx="9" cy="63" r="1.5" fill="#FBBF24" opacity="0.7"/>
+    <circle cx="63" cy="63" r="1.5" fill="#FBBF24" opacity="0.7"/>
+  </g>
+
+  <!-- ================= BRAND TYPOGRAPHY ================= -->
+  <!-- Primary Title: PARK VIEW -->
+  <text x="96" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="31" font-weight="900" fill="#0A2540" letter-spacing="1.5">PARK VIEW</text>
+
+  <!-- Secondary Badge: DRUGS & PHARMACY -->
+  <text x="97" y="55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="800" fill="#0284C7" letter-spacing="3.2">DRUGS &amp; PHARMACY</text>
+  
+  <!-- Mini Gold Sparkle Icon next to pharmacy -->
+  <path d="M268,49 L270,44 L272,49 L277,51 L272,53 L270,58 L268,53 L263,51 Z" fill="url(#goldGrad)"/>
+
+  <!-- Gold Gradient Divider Bar -->
+  <line x1="97" y1="63" x2="385" y2="63" stroke="url(#goldGrad)" stroke-width="1.6" stroke-linecap="round"/>
+
+  <!-- Tertiary Tagline with explicit vector dots -->
+  <text x="97" y="74" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="8.5" font-weight="700" fill="#64748B" letter-spacing="1.6">PRESCRIPTIONS</text>
+  <circle cx="187" cy="71" r="1.8" fill="#D97706"/>
+  <text x="196" y="74" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="8.5" font-weight="700" fill="#64748B" letter-spacing="1.6">HEALTH MART</text>
+  <circle cx="277" cy="71" r="1.8" fill="#D97706"/>
+  <text x="286" y="74" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="8.5" font-weight="700" fill="#64748B" letter-spacing="1.6">CLINICAL CARE</text>
+</svg>

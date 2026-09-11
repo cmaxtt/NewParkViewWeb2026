@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="favSapphire" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A2540"/>
+      <stop offset="60%" stop-color="#0E3D6B"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="favGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#FBBF24"/>
+    </linearGradient>
+    <linearGradient id="favEmerald" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="50%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#favSapphire)" stroke="url(#favGold)" stroke-width="2.5"/>
+  
+  <g transform="translate(32, 32)">
+    <!-- Cross -->
+    <rect x="-18" y="-6.5" width="36" height="13" rx="3.5" fill="#FFFFFF"/>
+    <rect x="-6.5" y="-18" width="13" height="36" rx="3.5" fill="#FFFFFF"/>
+    
+    <!-- Tree Trunk -->
+    <path d="M-2.5,12 C-2.5,7 -1.2,1.5 0,0 C1.2,1.5 2.5,7 2.5,12 Z" fill="#0A2540"/>
+    <path d="M-5,12 C-2,11 2,11 5,12 C3,14 -3,14 -5,12 Z" fill="url(#favGold)"/>
+    
+    <!-- Leaves -->
+    <path d="M0,0 C-4,-6 0,-13 0,-13 C0,-13 4,-6 0,0 Z" fill="url(#favEmerald)"/>
+    <path d="M0,0 C-6,-2 -11,-7 -10,-10 C-7,-11 -2,-6 0,0 Z" fill="url(#favEmerald)"/>
+    <path d="M0,0 C6,-2 11,-7 10,-10 C7,-11 2,-6 0,0 Z" fill="url(#favEmerald)"/>
+    
+    <!-- Golden Core -->
+    <circle cx="0" cy="0" r="2.8" fill="url(#favGold)"/>
+    <circle cx="0" cy="0" r="1.2" fill="#FFFFFF"/>
+  </g>
+</svg>

@@ -1,14 +1,44 @@
-<div class="modal-overlay" id="pharmacyModal">
+﻿<div class="modal-overlay" id="pharmacyModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-content">
-        <button class="modal-close" onclick="closePharmacyFinder()">&times;</button>
-        <h3>Visit {{ settings.business_name }}</h3>
-        <p>We're located near San Fernando. Give us a call or stop by during business hours.</p>
-        <div style="margin-bottom: 20px;">
-            <p style="margin-bottom: 8px;"><i class="fas fa-map-marker-alt" style="color: var(--color-primary); width: 20px;"></i> {{ settings.full_address }}</p>
-            <p style="margin-bottom: 8px;"><i class="fas fa-phone-alt" style="color: var(--color-primary); width: 20px;"></i> <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}">{{ settings.phone }}</a></p>
-            <p style="margin-bottom: 8px;"><i class="fas fa-clock" style="color: var(--color-primary); width: 20px;"></i> {{ settings.hours_weekday }}</p>
-            <p><i class="fas fa-clock" style="color: var(--color-primary); width: 20px;"></i> {{ settings.hours_saturday }}</p>
+        <button class="modal-close" onclick="closePharmacyFinder()" aria-label="Close dialog">&times;</button>
+        <div class="modal-header-badge">
+            <span class="pulse-dot"></span>
+            <span>Open Today: 8:00 AM – 11:00 PM</span>
         </div>
-        <a href="{{ settings.facebook_url }}" class="btn btn-primary" target="_blank"><i class="fab fa-facebook-f"></i> Follow Us on Facebook</a>
+        <h3 id="modal-title" class="modal-title">Visit {{ settings.business_name }}</h3>
+        <p class="modal-subtitle">Conveniently located on S.S. Erin Road in Esperance, serving San Fernando and surrounding communities.</p>
+        
+        <div class="modal-info-list">
+            <div class="modal-info-item">
+                <div class="modal-info-icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></div>
+                <div>
+                    <strong>Store Address</strong>
+                    <p>{{ settings.full_address }}</p>
+                </div>
+            </div>
+            <div class="modal-info-item">
+                <div class="modal-info-icon"><i class="fas fa-phone-alt" aria-hidden="true"></i></div>
+                <div>
+                    <strong>Direct Dispensary Phone</strong>
+                    <p><a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}">{{ settings.phone }}</a></p>
+                </div>
+            </div>
+            <div class="modal-info-item">
+                <div class="modal-info-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+                <div>
+                    <strong>Dispensary Operating Hours</strong>
+                    <p>{{ settings.hours_weekday }} · {{ settings.hours_saturday }} · {{ settings.hours_sunday }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions-grid">
+            <a href="https://maps.google.com/?q=Esperance+San+Fernando+Trinidad" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <i class="fas fa-directions" aria-hidden="true"></i> Open in Google Maps
+            </a>
+            <a href="https://wa.me/18682237508" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-modal">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp Us
+            </a>
+        </div>
     </div>
 </div>

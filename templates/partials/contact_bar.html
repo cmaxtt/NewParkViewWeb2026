@@ -1,7 +1,35 @@
-<div class="contact-bar">
-    <div class="container">
-        <span><i class="fas fa-phone-alt"></i> Call us: <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}">{{ settings.phone }}</a></span>
-        <span><i class="fas fa-map-marker-alt"></i> {{ settings.address }}</span>
-        <span><i class="fas fa-clock"></i> {{ settings.hours_weekday }} | {{ settings.hours_saturday }}</span>
+﻿<div class="announcement-bar" role="region" aria-label="Pharmacy Status and Quick Information">
+    <div class="container announcement-inner">
+        <div class="announcement-left">
+            <div class="live-status-indicator" title="Current Store Operating Status">
+                <span class="live-pulse-container" aria-hidden="true">
+                    <span class="pulse-ring"></span>
+                    <span class="pulse-dot"></span>
+                </span>
+                <span class="live-status-text">
+                    <strong>Open Today:</strong> 8:00 AM – 11:00 PM
+                </span>
+            </div>
+            <span class="announcement-divider" aria-hidden="true">|</span>
+            <div class="announcement-pill announcement-location">
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                <span>{{ settings.address }}</span>
+            </div>
+        </div>
+        <div class="announcement-right">
+            <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="announcement-pill announcement-phone">
+                <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                <span>Call Us: <strong>{{ settings.phone }}</strong></span>
+            </a>
+            <span class="announcement-divider" aria-hidden="true">|</span>
+            <div class="announcement-social">
+                <a href="{{ settings.facebook_url }}" target="_blank" rel="noopener noreferrer" aria-label="Visit Park View Drugs on Facebook" title="Follow us on Facebook">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                </a>
+                <a href="https://wa.me/18682237508" target="_blank" rel="noopener noreferrer" aria-label="Chat with our pharmacist on WhatsApp" title="WhatsApp Pharmacist Support">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,110 +1,255 @@
-<header class="site-header">
-    <div class="header-top">
+<header class="site-header" role="banner">
+    <div class="header-main">
         <div class="container header-inner">
-            <a href="{{ url_for('home') }}" class="logo">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ settings.business_name }} Logo" height="50">
+            <a href="{{ url_for('home') }}" class="brand-logo" aria-label="{{ settings.business_name }} Home">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="{{ settings.business_name }} Logo" class="logo-image" width="280" height="60">
             </a>
 
-            <div class="header-search">
-                <form role="search" class="search-form" action="{{ url_for('products') }}" method="get">
-                    <label for="header-search" class="sr-only">Search</label>
-                    <input type="search" id="header-search" name="keywords" class="search-input" placeholder="Search products..." autocomplete="off">
-                    <button type="submit" class="search-btn" aria-label="Search">
-                        <i class="fas fa-search"></i>
+            <div class="header-search-wrap">
+                <form role="search" class="header-search-form" action="{{ url_for('products') }}" method="get">
+                    <label for="header-search" class="sr-only">Search medications, vitamins and products</label>
+                    <div class="search-input-shell">
+                        <i class="fas fa-search search-lead-icon" aria-hidden="true"></i>
+                        <input type="search" id="header-search" name="keywords" class="search-input" placeholder="Search medications, vitamins, personal care..." autocomplete="off" value="{{ request.args.get('keywords', '') if request is defined else '' }}">
+                    </div>
+                    <button type="submit" class="search-submit-btn" aria-label="Search catalog">
+                        <span>Search</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </button>
                 </form>
             </div>
 
-            <button class="btn btn-pharmacy" onclick="openPharmacyFinder()">
-                <i class="fas fa-map-marker-alt"></i> Visit Our Store
-            </button>
+            <div class="header-actions">
+                <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="btn-refill-rx" title="Quick Prescription Refill Service">
+                    <span class="rx-pill-icon"><i class="fas fa-prescription-bottle-alt" aria-hidden="true"></i></span>
+                    <span class="rx-text">
+                        <span class="rx-label">Instant Action</span>
+                        <span class="rx-title">Refill Rx</span>
+                    </span>
+                </a>
 
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
+                <button type="button" class="btn-store-directions" onclick="openPharmacyFinder()" aria-label="Store Directions and Business Hours">
+                    <i class="fas fa-directions" aria-hidden="true"></i>
+                    <span class="directions-text">Directions</span>
+                </button>
+
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mainNav">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+            </div>
         </div>
     </div>
 
-    <nav class="main-nav" id="mainNav" role="navigation" aria-label="Menu">
-        <div class="container">
+    <nav class="main-nav" id="mainNav" role="navigation" aria-label="Main navigation">
+        <div class="container nav-container">
             <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint and request.endpoint == 'home' %}active{% endif %}">
+                        <i class="fas fa-home-alt" aria-hidden="true"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+
+                <!-- Mega Dropdown: Services -->
                 <li class="nav-item has-dropdown">
-                    <a href="{{ url_for('services') }}">Services <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown">
-                        <div class="dropdown-grid">
-                            <div class="dropdown-col">
-                                <h4><a href="{{ url_for('services') }}">Clinical Services</a></h4>
-                                <ul>
-                                    <li><a href="{{ url_for('service_detail', slug='minor-ailment') }}">Minor Ailment Assessment</a></li>
-                                    <li><a href="{{ url_for('service_detail', slug='vaccinations') }}">Vaccinations</a></li>
-                                    <li><a href="{{ url_for('service_detail', slug='prescription-refills') }}">Prescription Refills</a></li>
-                                    <li><a href="{{ url_for('service_detail', slug='compounding') }}">Compounding</a></li>
-                                    <li><a href="{{ url_for('service_detail', slug='medication-review') }}">Medication Review</a></li>
+                    <a href="{{ url_for('services') }}" class="nav-link {% if 'service' in (request.endpoint or '') or request.endpoint == 'minor_ailment' %}active{% endif %}" aria-haspopup="true" aria-expanded="false">
+                        <span>Services</span>
+                        <i class="fas fa-chevron-down nav-chevron" aria-hidden="true"></i>
+                    </a>
+                    <div class="mega-dropdown">
+                        <div class="mega-dropdown-grid">
+                            <div class="mega-col mega-links-col">
+                                <div class="mega-col-heading">
+                                    <i class="fas fa-hand-holding-medical" aria-hidden="true"></i>
+                                    <h4>Clinical & Pharmacy Services</h4>
+                                </div>
+                                <ul class="mega-link-list">
+                                    <li>
+                                        <a href="{{ url_for('service_detail', slug='minor-ailment') }}" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-stethoscope" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Minor Ailment Assessment</span>
+                                                <span class="mega-item-desc">Same-day pharmacist consultations & prescriptions for common ailments</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('service_detail', slug='prescription-refills') }}" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-prescription-bottle-alt" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Prescription Refills</span>
+                                                <span class="mega-item-desc">Fast call-in refills, synchronization, and compliance packaging</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('service_detail', slug='vaccinations') }}" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-syringe" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Vaccinations & Injections</span>
+                                                <span class="mega-item-desc">Seasonal flu vaccines, travel health immunizations & boosters</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('service_detail', slug='compounding') }}" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-mortar-pestle" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Custom Compounding</span>
+                                                <span class="mega-item-desc">Tailored formulations, custom dosages, and allergen-free preparations</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('service_detail', slug='medication-review') }}" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-clipboard-check" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Medication Review</span>
+                                                <span class="mega-item-desc">One-on-one comprehensive check for drug interactions & safety</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('service_detail', slug='delivery') }}" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-truck" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Community Home Delivery</span>
+                                                <span class="mega-item-desc">Reliable medication delivery straight to your home or workplace</span>
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
-                            <div class="dropdown-col">
-                                <h4><a href="{{ url_for('services') }}">Pharmacy Services</a></h4>
-                                <ul>
-                                    <li><a href="{{ url_for('service_detail', slug='delivery') }}">Home Delivery</a></li>
-                                    <li><a href="{{ url_for('minor_ailment') }}">Minor Ailment Treatment</a></li>
-                                </ul>
+
+                            <div class="mega-col mega-featured-col">
+                                <div class="featured-consult-badge">
+                                    <div class="consult-badge-header">
+                                        <span class="consult-sparkle"><i class="fas fa-star" aria-hidden="true"></i> Clinical Excellence</span>
+                                        <div class="pharmacist-avatar">
+                                            <i class="fas fa-user-md" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <h5 class="consult-badge-title">Consult a Licensed Pharmacist</h5>
+                                    <p class="consult-badge-desc">Have a question about prescription interactions, minor symptoms, or pediatric dosing? Our registered pharmacists are on duty 7 days a week.</p>
+                                    <div class="consult-badge-perks">
+                                        <span><i class="fas fa-check-circle" aria-hidden="true"></i> No appointment needed</span>
+                                        <span><i class="fas fa-check-circle" aria-hidden="true"></i> Private consultation room</span>
+                                    </div>
+                                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn-consult-action">
+                                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                                        <span>Call: {{ settings.phone }}</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </li>
+
+                <!-- Mega Dropdown: Products & Categories -->
                 <li class="nav-item has-dropdown">
-                    <a href="{{ url_for('products') }}">Products & Rewards <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown">
-                        <div class="dropdown-grid">
-                            <div class="dropdown-col">
-                                <h4><a href="{{ url_for('products') }}">Products</a></h4>
-                                <ul>
-                                    <li><a href="{{ url_for('products') }}?category=OTC">Over-the-Counter</a></li>
-                                    <li><a href="{{ url_for('products') }}?category=Vitamins">Vitamins & Supplements</a></li>
-                                    <li><a href="{{ url_for('products') }}?category=Natural">Natural Health</a></li>
-                                    <li><a href="{{ url_for('products') }}?category=Personal+Care">Personal Care</a></li>
+                    <a href="{{ url_for('products') }}" class="nav-link {% if request.endpoint and request.endpoint == 'products' %}active{% endif %}" aria-haspopup="true" aria-expanded="false">
+                        <span>Products & Aisle</span>
+                        <i class="fas fa-chevron-down nav-chevron" aria-hidden="true"></i>
+                    </a>
+                    <div class="mega-dropdown">
+                        <div class="mega-dropdown-grid">
+                            <div class="mega-col mega-links-col">
+                                <div class="mega-col-heading">
+                                    <i class="fas fa-th-large" aria-hidden="true"></i>
+                                    <h4>Aisle & Category Showcase</h4>
+                                </div>
+                                <ul class="mega-link-list">
+                                    <li>
+                                        <a href="{{ url_for('products') }}?category=OTC" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-tablets" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Over-the-Counter</span>
+                                                <span class="mega-item-desc">Analgesics, cold & allergy relief, digestive health & first aid</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('products') }}?category=Vitamins" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-leaf" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Vitamins & Supplements</span>
+                                                <span class="mega-item-desc">Immunity, multivitamin blends, calcium, zinc & specialized formulas</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('products') }}?category=Natural" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-seedling" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Natural Health Remedies</span>
+                                                <span class="mega-item-desc">Herbal teas, holistic remedies, plant extracts & organic wellness</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('products') }}?category=Personal+Care" class="mega-link-item">
+                                            <div class="mega-icon-box"><i class="fas fa-hand-sparkles" aria-hidden="true"></i></div>
+                                            <div class="mega-text-box">
+                                                <span class="mega-item-title">Personal Care & Hygiene</span>
+                                                <span class="mega-item-desc">Dermatological skincare, oral care, baby essentials & body care</span>
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
-                            <div class="dropdown-col">
-                                <h4>Rewards</h4>
-                                <ul>
-                                    <li><a href="{{ url_for('weekly_flyer') }}">Weekly Flyer</a></li>
-                                </ul>
+
+                            <div class="mega-col mega-featured-col">
+                                <div class="featured-flyer-badge">
+                                    <span class="consult-sparkle"><i class="fas fa-tags" aria-hidden="true"></i> Weekly Promotion</span>
+                                    <h5>Community Health Rewards</h5>
+                                    <p>Browse this week's flyer deals and member savings on essential healthcare products and daily wellness.</p>
+                                    <div class="flyer-badge-savings">
+                                        <span class="savings-tag">TTD Savings</span>
+                                        <span class="savings-sub">Updated Every Week</span>
+                                    </div>
+                                    <a href="{{ url_for('weekly_flyer') }}" class="btn-flyer-action">
+                                        <i class="fas fa-newspaper" aria-hidden="true"></i>
+                                        <span>View Weekly Flyer</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </li>
-                <li class="nav-item has-dropdown">
-                    <a href="{{ url_for('minor_ailment') }}">Health Advice <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown">
-                        <div class="dropdown-grid">
-                            <div class="dropdown-col">
-                                <ul>
-                                    <li><a href="{{ url_for('products') }}">Medication & Product Search</a></li>
-                                    <li><a href="{{ url_for('minor_ailment') }}">Minor Ailments</a></li>
-                                    <li><a href="{{ url_for('products') }}?category=Natural">Natural Health Products</a></li>
-                                    <li><a href="{{ url_for('services') }}">Pharmacy Advice</a></li>
-                                    <li><a href="{{ url_for('contact') }}">Community Support</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+
+                <!-- Health Advice -->
+                <li class="nav-item">
+                    <a href="{{ url_for('minor_ailment') }}" class="nav-link {% if request.endpoint and request.endpoint == 'minor_ailment' %}active{% endif %}">
+                        <i class="fas fa-heartbeat" aria-hidden="true"></i>
+                        <span>Minor Ailment Clinic</span>
+                    </a>
                 </li>
-                <li class="nav-item has-dropdown">
-                    <a href="{{ url_for('about') }}">About Us <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown">
-                        <div class="dropdown-grid">
-                            <div class="dropdown-col">
-                                <ul>
-                                    <li><a href="{{ url_for('about') }}">Our Story</a></li>
-                                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+
+                <!-- Weekly Flyer -->
+                <li class="nav-item">
+                    <a href="{{ url_for('weekly_flyer') }}" class="nav-link nav-flyer-link {% if request.endpoint and request.endpoint == 'weekly_flyer' %}active{% endif %}">
+                        <i class="fas fa-tag" aria-hidden="true"></i>
+                        <span>Weekly Flyer</span>
+                        <span class="flyer-hot-chip">Deals</span>
+                    </a>
                 </li>
-                <li class="nav-item"><a href="{{ url_for('weekly_flyer') }}">Weekly Flyer</a></li>
-                <li class="nav-item"><a href="{{ url_for('contact') }}" class="nav-find"><i class="fas fa-search-location"></i> Find Us</a></li>
+
+                <!-- About Us -->
+                <li class="nav-item">
+                    <a href="{{ url_for('about') }}" class="nav-link {% if request.endpoint and request.endpoint == 'about' %}active{% endif %}">
+                        <span>About</span>
+                    </a>
+                </li>
+
+                <!-- Contact & Locator -->
+                <li class="nav-item">
+                    <a href="{{ url_for('contact') }}" class="nav-link nav-contact-highlight {% if request.endpoint and request.endpoint == 'contact' %}active{% endif %}">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Contact & Visit</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

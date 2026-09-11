@@ -29,6 +29,18 @@ from waitress import serve
 from app import app, init_db
 
 
+def detect_machine_ip():
+    """Return this machine's primary IPv4 address for remote access."""
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        return None
+
+
 def detect_tailscale_ip():
     """Return this machine's current Tailscale IPv4 (100.x.y.z), if any."""
     try:
@@ -62,21 +74,23 @@ if __name__ == "__main__":
     with app.app_context():
         init_db()
 
+    machine_ip = detect_machine_ip()
     tailscale_ip = detect_tailscale_ip() or os.environ.get("PARKVIEW_TAILSCALE_IP") or None
     port = int(os.environ.get('PARKVIEW_PORT', '5050'))
-    binds = [f"127.0.0.1:{port}"]
-    if tailscale_ip:
-        binds.append(f"{tailscale_ip}:{port}")
+    bind_target = f"0.0.0.0:{port}"
 
-    print("=" * 52)
+    print("=" * 56)
     print("  Park View Drugs - Production Server")
-    print("=" * 52)
-    print(f"  Local:      http://127.0.0.1:{port}")
-    print(f"  Tailscale:  http://{tailscale_ip or '(not detected - loopback only)'}:{port}")
-    print(f"  Admin:      http://127.0.0.1:{port}/admin/login")
-    print(f"  Health:     http://127.0.0.1:{port}/healthz")
-    print("=" * 52)
+    print("=" * 56)
+    print(f"  Local Access:      http://127.0.0.1:{port}")
+    if machine_ip:
+        print(f"  Machine IP Remote: http://{machine_ip}:{port}")
+    if tailscale_ip:
+        print(f"  Tailscale Mesh:    http://{tailscale_ip}:{port}")
+    print(f"  Admin Portal:      http://127.0.0.1:{port}/admin/login")
+    print(f"  Health Check:      http://127.0.0.1:{port}/healthz")
+    print("=" * 56)
     print("  Server: Waitress (threads=4)")
-    print(f"  Bind:   {', '.join(binds)} (no LAN exposure)")
-    print("=" * 52)
-    serve(app, listen=binds, threads=4)
+    print(f"  Listening on: {bind_target}")
+    print("=" * 56)
+    serve(app, listen=bind_target, threads=4)

@@ -1,44 +1,306 @@
-{% extends "base.html" %}
-{% block title %}Minor Ailment Assessment - {{ settings.business_name }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}Minor Ailment Assessment & Prescribing Clinic — {{ settings.business_name }}{% endblock %}
+{% block meta_desc %}Fast, professional clinical care for common ailments at Park View Drugs. Our registered pharmacists assess and prescribe for allergies, cold sores, dermatitis, heartburn, UTIs and more.{% endblock %}
+
 {% block content %}
-<section class="page-hero" style="background: linear-gradient(135deg, #1E7D29 0%, #0C4A13 100%);">
+<!-- Minor Ailment Hero -->
+<section class="page-hero-modern">
     <div class="container">
-        <h1>Minor Ailment Assessment</h1>
-        <p>Fast, convenient care for common health concerns — right at your pharmacy.</p>
+        <span class="page-hero-tag">✦ Frontline Clinical Services</span>
+        <h1 class="page-hero-title">Minor Ailment Assessment & Prescribing Clinic</h1>
+        <p class="page-hero-subtitle">Skip long clinic queues. Our licensed pharmacists are authorized to evaluate symptoms, conduct private clinical consultations, and prescribe targeted medications on the spot.</p>
     </div>
 </section>
 
-<section class="page-section">
+<!-- Clinical Overview Bar -->
+<section class="clinical-overview-bar">
     <div class="container">
-        <div class="about-layout">
-            <div class="about-text">
-                <h2>Get the Care You Need, Close to Home</h2>
-                <p>Our pharmacists at {{ settings.business_name }} are trained to assess and prescribe for a range of minor ailments. Skip the wait and get treated quickly and conveniently.</p>
-                <p>In a private consultation, our pharmacist will assess your symptoms, recommend appropriate treatments, and prescribe medications when necessary.</p>
-                
-                <h3 style="font-size:20px;margin-top:30px;margin-bottom:12px;">Common Conditions We Treat:</h3>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;">
-                    <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--color-text);"><i class="fas fa-check-circle" style="color:var(--color-primary);"></i> Allergies</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--color-text);"><i class="fas fa-check-circle" style="color:var(--color-primary);"></i> Cold Sores</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--color-text);"><i class="fas fa-check-circle" style="color:var(--color-primary);"></i> Conjunctivitis</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--color-text);"><i class="fas fa-check-circle" style="color:var(--color-primary);"></i> Dermatitis</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--color-text);"><i class="fas fa-check-circle" style="color:var(--color-primary);"></i> Heartburn</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--color-text);"><i class="fas fa-check-circle" style="color:var(--color-primary);"></i> Hemorrhoids</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--color-text);"><i class="fas fa-check-circle" style="color:var(--color-primary);"></i> Insect Bites</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--color-text);"><i class="fas fa-check-circle" style="color:var(--color-primary);"></i> Urinary Tract Infection</div>
+        <div class="clinical-overview-grid">
+            <div class="overview-item">
+                <div class="overview-icon"><i class="fas fa-bolt" aria-hidden="true"></i></div>
+                <div class="overview-text">
+                    <strong>No Long Waits</strong>
+                    <span>Walk in today or call ahead</span>
                 </div>
-                <a href="{{ url_for('contact') }}" class="btn btn-primary">Visit Us Today <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="about-stats">
-                <div class="stat-card"><i class="fas fa-clock" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Same Day</span><span class="stat-label">Appointments Available</span></div>
-                <div class="stat-card"><i class="fas fa-dollar-sign" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Affordable</span><span class="stat-label">Covered by most insurance plans</span></div>
-                <div class="stat-card"><i class="fas fa-map-marker-alt" style="font-size:32px;color:var(--color-primary);margin-bottom:12px;display:block;"></i><span class="stat-num">Convenient</span><span class="stat-label">At your local pharmacy</span></div>
+            <div class="overview-item">
+                <div class="overview-icon"><i class="fas fa-user-shield" aria-hidden="true"></i></div>
+                <div class="overview-text">
+                    <strong>Private Consultation Room</strong>
+                    <span>100% confidential health triage</span>
+                </div>
+            </div>
+            <div class="overview-item">
+                <div class="overview-icon"><i class="fas fa-file-prescription" aria-hidden="true"></i></div>
+                <div class="overview-text">
+                    <strong>Direct Prescribing</strong>
+                    <span>Immediate dispensing at our counter</span>
+                </div>
+            </div>
+            <div class="overview-item">
+                <div class="overview-icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
+                <div class="overview-text">
+                    <strong>Open 7 Days a Week</strong>
+                    <span>Accessible community healthcare</span>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="cta-section">
-    <div class="container"><div class="cta-content"><h2>Ready To Visit? Come See Us Today</h2><p>We're conveniently located in Esperance and ready to help with all your health needs.</p><a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+<!-- 8 Condition Cards Grid -->
+<section class="page-section conditions-section">
+    <div class="container">
+        <div class="section-header-centered">
+            <span class="section-pill-tag">✦ 8 Treatable Clinical Conditions</span>
+            <h2 class="section-heading-primary">Common Conditions We Assess & Prescribe For</h2>
+            <p class="section-subtext">If you are experiencing any of the following ailments, our certified pharmacists can assess your symptoms and provide prescription-grade treatment immediately.</p>
+        </div>
+
+        <div class="conditions-grid">
+            <!-- 1. Allergies -->
+            <article class="condition-card">
+                <div class="condition-header">
+                    <div class="condition-icon-wrap icon-blue">
+                        <i class="fas fa-wind" aria-hidden="true"></i>
+                    </div>
+                    <span class="condition-badge">Respiratory</span>
+                </div>
+                <h3 class="condition-title">Allergic Rhinitis & Seasonal Allergies</h3>
+                <p class="condition-desc">Sneezing, runny or itchy nose, persistent congestion, watery itchy eyes triggered by dust, pollen, or environmental irritants.</p>
+                <div class="condition-treatments">
+                    <h4 class="treatment-heading"><i class="fas fa-pills" aria-hidden="true"></i> Pharmacist Treatments:</h4>
+                    <ul class="treatment-tags">
+                        <li>Non-drowsy 2nd Gen Antihistamines</li>
+                        <li>Prescription Corticosteroid Nasal Sprays</li>
+                        <li>Antihistamine Eye Drops</li>
+                    </ul>
+                </div>
+                <div class="condition-footer">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn-condition-action">Consult Pharmacist <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <!-- 2. Cold Sores -->
+            <article class="condition-card">
+                <div class="condition-header">
+                    <div class="condition-icon-wrap icon-amber">
+                        <i class="fas fa-virus" aria-hidden="true"></i>
+                    </div>
+                    <span class="condition-badge">Viral / Dermatology</span>
+                </div>
+                <h3 class="condition-title">Cold Sores (Herpes Labialis)</h3>
+                <p class="condition-desc">Tingling, itching sensation followed by painful fluid-filled blisters on or around the lip margins that require rapid intervention.</p>
+                <div class="condition-treatments">
+                    <h4 class="treatment-heading"><i class="fas fa-pills" aria-hidden="true"></i> Pharmacist Treatments:</h4>
+                    <ul class="treatment-tags">
+                        <li>Targeted Topical Antivirals (Acyclovir)</li>
+                        <li>Anesthetic & Barrier Creams</li>
+                        <li>Oral Antiviral Therapy (when indicated)</li>
+                    </ul>
+                </div>
+                <div class="condition-footer">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn-condition-action">Consult Pharmacist <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <!-- 3. Dermatitis & Eczema -->
+            <article class="condition-card">
+                <div class="condition-header">
+                    <div class="condition-icon-wrap icon-emerald">
+                        <i class="fas fa-hand-dots" aria-hidden="true"></i>
+                    </div>
+                    <span class="condition-badge">Dermatology</span>
+                </div>
+                <h3 class="condition-title">Dermatitis, Eczema & Pruritus</h3>
+                <p class="condition-desc">Dry, cracked, inflamed, intensely itchy skin patches or allergic contact reactions caused by soaps, chemicals, or weather changes.</p>
+                <div class="condition-treatments">
+                    <h4 class="treatment-heading"><i class="fas fa-pills" aria-hidden="true"></i> Pharmacist Treatments:</h4>
+                    <ul class="treatment-tags">
+                        <li>Prescription Corticosteroid Ointments</li>
+                        <li>Ceramide Barrier Creams</li>
+                        <li>Oral Antipruritic Therapeutics</li>
+                    </ul>
+                </div>
+                <div class="condition-footer">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn-condition-action">Consult Pharmacist <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <!-- 4. Heartburn & Acid Reflux -->
+            <article class="condition-card">
+                <div class="condition-header">
+                    <div class="condition-icon-wrap icon-gold">
+                        <i class="fas fa-fire-flame-curved" aria-hidden="true"></i>
+                    </div>
+                    <span class="condition-badge">Gastrointestinal</span>
+                </div>
+                <h3 class="condition-title">Heartburn & Acid Reflux (GERD)</h3>
+                <p class="condition-desc">Burning retrosternal chest pain, regurgitation of stomach acid, and sour indigestion post-meal or when reclining.</p>
+                <div class="condition-treatments">
+                    <h4 class="treatment-heading"><i class="fas fa-pills" aria-hidden="true"></i> Pharmacist Treatments:</h4>
+                    <ul class="treatment-tags">
+                        <li>Proton Pump Inhibitors (Omeprazole, Pantoprazole)</li>
+                        <li>H2-Receptor Antagonists</li>
+                        <li>Therapeutic Alginate Raft Suspensions</li>
+                    </ul>
+                </div>
+                <div class="condition-footer">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn-condition-action">Consult Pharmacist <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <!-- 5. Insect Bites & Stings -->
+            <article class="condition-card">
+                <div class="condition-header">
+                    <div class="condition-icon-wrap icon-blue">
+                        <i class="fas fa-bug" aria-hidden="true"></i>
+                    </div>
+                    <span class="condition-badge">Skin & Allergy</span>
+                </div>
+                <h3 class="condition-title">Insect Bites, Stings & Hives</h3>
+                <p class="condition-desc">Painful, itchy, or swollen localized reactions from mosquitoes, sandflies, wasps, or sudden environmental urticaria hives.</p>
+                <div class="condition-treatments">
+                    <h4 class="treatment-heading"><i class="fas fa-pills" aria-hidden="true"></i> Pharmacist Treatments:</h4>
+                    <ul class="treatment-tags">
+                        <li>Hydrocortisone Anti-Inflammatory Creams</li>
+                        <li>Fast-acting Oral Antihistamines</li>
+                        <li>Secondary Infection Antiseptics</li>
+                    </ul>
+                </div>
+                <div class="condition-footer">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn-condition-action">Consult Pharmacist <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <!-- 6. Conjunctivitis (Pink Eye) -->
+            <article class="condition-card">
+                <div class="condition-header">
+                    <div class="condition-icon-wrap icon-cyan">
+                        <i class="fas fa-eye" aria-hidden="true"></i>
+                    </div>
+                    <span class="condition-badge">Ophthalmic</span>
+                </div>
+                <h3 class="condition-title">Conjunctivitis (Pink Eye)</h3>
+                <p class="condition-desc">Redness of the sclera, foreign body sensation, grittiness, eyelid crusting, and watery or mucoid discharge.</p>
+                <div class="condition-treatments">
+                    <h4 class="treatment-heading"><i class="fas fa-pills" aria-hidden="true"></i> Pharmacist Treatments:</h4>
+                    <ul class="treatment-tags">
+                        <li>Antibacterial Eye Drops & Ointments</li>
+                        <li>Sterile Lubricating Eye Washes</li>
+                        <li>Ocular Decongestants & Compresses</li>
+                    </ul>
+                </div>
+                <div class="condition-footer">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn-condition-action">Consult Pharmacist <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <!-- 7. Urinary Tract Infections -->
+            <article class="condition-card">
+                <div class="condition-header">
+                    <div class="condition-icon-wrap icon-purple">
+                        <i class="fas fa-bacteria" aria-hidden="true"></i>
+                    </div>
+                    <span class="condition-badge">Urological</span>
+                </div>
+                <h3 class="condition-title">Uncomplicated Urinary Tract Infections</h3>
+                <p class="condition-desc">Burning sensation upon urination, uncomfortable frequency, urgency, and pelvic discomfort without fever or flank pain.</p>
+                <div class="condition-treatments">
+                    <h4 class="treatment-heading"><i class="fas fa-pills" aria-hidden="true"></i> Pharmacist Treatments:</h4>
+                    <ul class="treatment-tags">
+                        <li>Targeted Prescription Antimicrobial Regimens</li>
+                        <li>Urinary Alkalinizers (Symptom Relief)</li>
+                        <li>Prevention & Hydration Counseling</li>
+                    </ul>
+                </div>
+                <div class="condition-footer">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn-condition-action">Consult Pharmacist <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <!-- 8. Sprains, Strains & Joint Pain -->
+            <article class="condition-card">
+                <div class="condition-header">
+                    <div class="condition-icon-wrap icon-rose">
+                        <i class="fas fa-bone" aria-hidden="true"></i>
+                    </div>
+                    <span class="condition-badge">Musculoskeletal</span>
+                </div>
+                <h3 class="condition-title">Sprains, Strains & Joint Discomfort</h3>
+                <p class="condition-desc">Acute muscle pain, back strain, minor ligament sprains, or arthritic flare-ups resulting from physical work or exercise.</p>
+                <div class="condition-treatments">
+                    <h4 class="treatment-heading"><i class="fas fa-pills" aria-hidden="true"></i> Pharmacist Treatments:</h4>
+                    <ul class="treatment-tags">
+                        <li>Topical NSAID Gels (Diclofenac)</li>
+                        <li>Oral Anti-Inflammatory Analgesics</li>
+                        <li>Therapeutic Supports & Cold/Heat Therapy</li>
+                    </ul>
+                </div>
+                <div class="condition-footer">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn-condition-action">Consult Pharmacist <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- 3-Step Consultation Workflow -->
+<section class="clinic-workflow-section">
+    <div class="container">
+        <div class="workflow-card">
+            <div class="workflow-header">
+                <span class="section-pill-tag">✦ How It Works</span>
+                <h2 class="workflow-title">Your 3-Step Path to Relief</h2>
+                <p class="workflow-subtitle">No appointments, no long clinic queues — just fast, professional pharmacy care.</p>
+            </div>
+
+            <div class="workflow-steps-grid">
+                <div class="workflow-step">
+                    <div class="workflow-step-num">Step 1</div>
+                    <div class="workflow-icon"><i class="fas fa-door-open" aria-hidden="true"></i></div>
+                    <h3>Walk In or Call</h3>
+                    <p>Stop by our pharmacy in Esperance or call ahead. Our pharmacists are always available during store hours.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="workflow-step-num">Step 2</div>
+                    <div class="workflow-icon"><i class="fas fa-user-md" aria-hidden="true"></i></div>
+                    <h3>Private Consultation</h3>
+                    <p>Step into our private clinical room where our registered pharmacist conducts a thorough, confidential assessment.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="workflow-step-num">Step 3</div>
+                    <div class="workflow-icon"><i class="fas fa-prescription-bottle" aria-hidden="true"></i></div>
+                    <h3>Immediate Prescription</h3>
+                    <p>If appropriate, we prescribe and dispense your medication immediately, along with clear usage guidance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Executive CTA Section -->
+<section class="executive-cta-section">
+    <div class="container">
+        <div class="executive-cta-box">
+            <div class="executive-cta-content">
+                <span class="cta-pill-chip">✦ Ready To Help</span>
+                <h2 class="executive-cta-title">Not Sure If Your Condition Qualifies?</h2>
+                <p class="executive-cta-desc">Call our pharmacist directly at {{ settings.phone }} or walk into our Esperance location. If your condition requires physician care, we provide safe triage and referrals.</p>
+                <div class="executive-cta-actions">
+                    <a href="tel:{{ settings.phone|replace('(','')|replace(')','')|replace(' ','') }}" class="btn btn-accent btn-lg">
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                        <span>Call {{ settings.phone }}</span>
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="btn btn-frosted btn-lg">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Visit Our Pharmacy</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}

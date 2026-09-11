@@ -3,6 +3,8 @@
 ## Project Overview
 **Park View Drugs** — a locally owned pharmacy in **Esperance, San Fernando, Trinidad & Tobago**. Full-stack Flask + SQLite web application with admin panel.
 
+**Operating Mode:** YOLO Mode is permanently ENABLED. Proceed proactively and execute all tasks, code changes, file creations, test executions, and commands without asking for confirmation, pausing for check-ins, or requesting unnecessary reviews.
+
 **Live at (Tailscale):** http://100.89.199.87:5050/ (hpwin11 — tailnet wecaregd2026@)
 **Local:** http://127.0.0.1:5050/
 **Admin:** http://127.0.0.1:5050/admin/login — username `Admin`, password configured via the private runtime settings
@@ -139,14 +141,16 @@ C:\aa-NewWeb\
 
 ---
 
-## Brand Assets
-- **Logo:** `static/images/logo.png` (374×164 PNG from N:\PV-Pics\pvsuplogo.png)
-- **Primary Color:** `#1E7D29` (green)
-- **Dark Green:** `#1E471C`
-- **Light Green:** `#4FB151`
-- **Text Color:** `#3F322D` (warm dark brown)
-- **Body Text:** `#5C524C`
-- **Footer BG:** `#1E471C` (dark green)
+## Brand Assets & Theme
+- **Theme:** Royal Sapphire & Gold with Medical Slate
+- **Primary Sapphire:** `#0284C7` (Cyan/Sky Vibrant Medical Sapphire)
+- **Deep Navy Sapphire:** `#0A2540` & `#081C2E`
+- **Accent Gold:** `#D97706` (Royal Amber Gold) & `#FBBF24` (Luminous Gold)
+- **Healthcare Status Green:** `#10B981` (Live pulsating indicator)
+- **Surfaces:** `#F8FAFC` (Slate-50) & `#FFFFFF`
+- **Text Headings:** `#0F172A` (Rich Slate-900)
+- **Text Body:** `#334155` (Slate-700)
+- **Footer BG:** `#061524` / `#081C2E` (Midnight Sapphire)
 
 ## Business Details
 - **Name:** Park View Drugs
